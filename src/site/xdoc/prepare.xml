@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<document>
+	<properties>
+		<title></title>
+		<author email="christian.wiedemann@key-tec.de">
+			Christian Wiedemann
+		</author>
+	</properties>
+	<head>
+		<meta name="keyword" content="apache, maven, php" />
+	</head>
+	<title>Maven for PHP - prepare Maven</title>
+	<body>
+		<section name="Prepare Maven 2 for PHP for Maven">
+<p>First <a href="http://maven.apache.org/download.html">download Maven</a> and follow the <a href="http://maven.apache.org/run-maven/index.html#Quick_Start">installation instructions</a>.
+After that go to the settings.xml (~/.m2 on Unix/Mac OS X and C:\Documents and Settings\username\.m2 on Windows) and add the PHP for Maven repository. If there is no settings.xml create the settings.xml file. 
+<macro name="snippet">
+<param name="id" value="settings"/>
+<param name="file" value="src/site/include/settings.xml"/>
+</macro></p>
+<p>
+The last point is that your php.exe and the doxygen.exe must be part of the system path.
+</p> 
+</section>
+	</body>
+</document>

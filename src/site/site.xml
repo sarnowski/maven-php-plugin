@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="Maven">
+	<skin>
+		<groupId>org.apache.maven.skins</groupId>
+		<artifactId>maven-stylus-skin</artifactId>
+		<version>1.0</version>
+	</skin>
+	<bannerLeft>
+		<name>php-maven.org</name>
+		<src>images/logo.png</src>
+		<href>http://www.php-maven.org/</href>
+	</bannerLeft>
+	<!--  bannerRight>
+		<src>http://maven.apache.org/images/maven-small.gif</src>
+	</bannerRight-->
+	<body>
+		<links>
+			<item name="Maven" href="http://maven.apache.org/" />
+			<item name="KEY-TEC" href="http://www.key-tec.de/" />
+		</links>
+
+		<menu name="Main">
+			<item name="Welcome" href="index.html" />
+		</menu>
+		<menu name="Tutorial">
+			<item name="Preperation" href="prepare.html" />
+			<item name="PHP libaries - 5 minute starter guide"
+				href="php-lib-5min.html" />
+			<item name="PHP web project - 5 minute starter guide"
+				href="php-web-5min.html" />
+		</menu>
+		<menu name="Documentation">
+			<item name="Project documentation" href="documentation.html" />
+			<item name="The lifecycle" href="lifecycle.html" />
+			<item name="Plugin Goals" href="plugin-info.html" />
+		</menu>
+		
+	</body>
+</project>

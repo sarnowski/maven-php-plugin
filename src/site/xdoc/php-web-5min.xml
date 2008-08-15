@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<document>
+	<properties>
+		<author email="christian.wiedemann@key-tec.de">
+			Christian Wiedemann
+		</author>
+
+		<title>Maven for PHP - web project - 5 minute starter guide</title>
+	</properties>
+	<meta name="keyword" content="apache, maven, php" />
+	<body>
+		<section name="PHP web project - 5 minutes starter guide">
+			<subsection name="Create an project">
+			<p>
+			First prepare Maven and follow the <a href="prepare.html">preparation instructions.</a><br/>
+			After that, type on your command line, execute the following Maven goal:
+			(The archetype are differnt for PHP 4 and PHP 5)</p>
+			<b>PHP 4:</b>
+			<source>
+ 			
+mvn archetype:generate \
+-DarchetypeGroupId=org.phpmaven \
+-DarchetypeArtifactId=php4-web-archetype \
+-DarchetypeVersion=1.0-ALPHA \
+-DgroupId=org.sample \
+-DartifactId=my-app \
+</source>
+<b>PHP 5:</b>
+<source> 			
+mvn archetype:generate \
+-DarchetypeGroupId=org.phpmaven \
+-DarchetypeArtifactId=php5-web-archetype \
+-DarchetypeVersion=1.0-ALPHA \
+-DgroupId=org.sample \
+-DartifactId=my-app \
+			</source>
+			The result will look like
+			<source>
+my-app 
+	|-- pom.xml 
+	`-- src 
+		|-- main 
+			 `-- php 
+				 `-- org 
+					 `-- sample  
+						`-- app.php
+				`-- webapp
+					`-- index.php
+		|`-- test 
+			`-- php 
+				`-- org 
+					`-- sample 
+						`-- apptest.php
+			`-- webapp
+				`-- index.php
+		|`-- site
+			`-- doxygen 
+				`-- doxygen.conf
+			</source>
+			<p>
+			
+			<ul>
+			<li><b>src/main/php</b> - contains the project source code</li>
+			<li><b>src/main/webapp</b> - ontains the web data</li>
+			<li><b>src/test/php</b> - contains the test source code</li>
+			<li><b>src/test/webapp</b> -contains the web test data</li>
+			<li><b>pom.xml</b> - the project's Project Object Model, or POM.</li>
+			</ul>
+			</p>
+		</subsection>
+		<subsection name="The POM">
+		<p>
+			For PHP 4 (1.*) and PHP 5 (3.*) differnt PHPUnit versions are used. So there are differnt dependencies in the pom. 
+<macro name="snippet">
+<param name="id" value="pom"/>
+<param name="file" value="src/site/include/pom_web.xml"/>
+</macro></p>
+		</subsection>
+		<subsection name="What did I just do?">
+			<p>What did I just do?</p>
+			You executed the Maven goal archetype:generate, and passed
+			in various parameters to that goal. The prefix archetype is
+			the plugin that contains the goal.
+			This goal create an default project structure for your PHP 4 project.
+		</subsection>
+		<subsection name="Build the Project">
+			Switch to your sample project directory 
+			<source>cd my-app</source>
+			and run:  
+			<source>mvn package</source>
+			The command line will print out various actions, and end with the following:
+			<source>
+ ...
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESSFUL
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 6 seconds
+[INFO] Finished at: Thu Jul 20 19:15:06 CDT 2008
+[INFO] Final Memory: 3M/6M
+[INFO] ------------------------------------------------------------------------			
+			</source>
+Maven has created an zip and a tar package under the target folder of the project.  		
+		</subsection>
+		<subsection name="What has Maven done?">
+		<p>
+		
+	"Maven for PHP" validates the php code with the php.exe runs phpunit tests and creates an assembly for the web project.</p>
+		</subsection>
+		<subsection name="Documentation">
+		<p>
+		Go to the <a href="documentation.html">documentation section</a>
+		</p> 
+		</subsection>
+		</section>
+	</body>
+</document>

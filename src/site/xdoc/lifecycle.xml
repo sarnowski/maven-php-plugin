@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<document>
+	<properties>
+		<author email="christian.wiedemann@key-tec.de">
+			Christian Wiedemann
+		</author>
+		<head>
+		<meta name="keyword" content="apache, maven, php" />
+		<title>Maven for PHP - The lifecycle</title>
+	</head>
+	</properties>
+	<meta name="keyword" content="apache, maven, php" />
+	<body>
+		<section name="The lifecylce">
+		<p>
+	<img src="images/lifecycle.gif"/>
+</p>
+		
+		</section>
+		
+	</body>
+</document>

@@ -1,0 +1,114 @@
+body {
+	font-family: verdana
+}
+
+#breadcrumbs {
+	background-color: #0071B5;
+	border:0px;
+}
+
+#leftColumn {
+	margin: 16px 0 0 10px;
+	border: 0px;
+	border-right: 1px solid #BDDFEF;
+	background-color: white;
+}
+
+#navcolumn {
+	padding: 0px 0 0 5px;
+	background-color: white;
+}
+
+h2 {
+	padding: 0px 0px 0px 0px;
+	border: 0px solid #999;
+	color: #393842;
+	font-family: verdana;
+	background-color: white;
+	font-weight: normal;
+	font-size: 18px;
+}
+
+h3 {
+	padding: 0px 0px 0px 0px;
+	border: 0px solid #999;
+	color: #393842;
+	font-family: verdana;
+	background-color: white;
+	font-size: 14px;
+}
+
+p {
+	font-family: verdana
+}
+
+.xleft {
+	color: white;
+	font-weight: bold
+}
+
+#navcolumn li {
+	list-style-type: none;
+	background-image: none;
+	background-repeat: no-repeat;
+	background-position: 0 0.4em;
+	padding-left: 16px;
+	list-style-position: outside;
+	line-height: 1.2em;
+}
+
+#navcolumn h5 {
+	font-size: smaller;
+	border-bottom: 0px solid #aaaaaa;
+	padding-top: 2px;
+	color: #393842;
+}
+
+a:link {
+	color: #393842;
+}
+
+a:visited {
+	color: #393842;
+}
+
+a:active,a:hover {
+	color: black;
+}
+
+#navcolumn li.expanded {
+	background-image: none;
+}
+
+#navcolumn li.collapsed {
+	background-image: none;
+}
+
+table.bodyTable th {
+	background: #0071B5;
+}
+
+table.bodyTable {
+	margin: 0px;
+	padding: 0px;
+	cell-spacing: 0px;
+	cell-padding: 0px;
+	background: #BDDFEF;
+	border: 0px;
+	border-spacing: 0px;
+}
+
+table.bodyTable th,table.bodyTable td {
+	spacing: 0px;
+	border-spacing: 0px; cellpadding : 0px;
+	border: 0px;
+	cellpadding: 0px;
+}
+
+table.bodyTable tr.a {
+	background-color: white;
+}
+
+table.bodyTable tr.b {
+	background-color: white;
+}

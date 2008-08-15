@@ -1,0 +1,55 @@
+<!-- START SNIPPET: settings -->
+<settings>
+	<profiles>
+		<profile>
+			<id>profile-php-maven</id>
+			<pluginRepositories>
+				<pluginRepository>
+					<id>release-repo1.php-maven.org</id>
+					<name>PHP-Maven 2 Release Repository</name>
+					<url>http://repo1.php-maven.org/release</url>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</pluginRepository>
+				<pluginRepository>
+					<id>snapshot-repo1.php-maven.org</id>
+					<name>PHP-Maven 2 Snapshot Repository</name>
+					<url>http://repo1.php-maven.org/snapshot</url>
+					<releases>
+						<enabled>false</enabled>
+					</releases>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+				</pluginRepository>
+			</pluginRepositories>
+			<repositories>
+				<repository>
+					<id>release-repo1.php-maven.org</id>
+					<name>PHP-Maven 2 Release Repository</name>
+					<url>http://repo1.php-maven.org/release</url>
+					<releases>
+						<enabled>true</enabled>
+					</releases>
+				</repository>
+				<repository>
+					<id>snapshot-repo1.php-maven.org</id>
+					<name>PHP-Maven 2 Snapshot Repository</name>
+					<url>http://repo1.php-maven.org/snapshot</url>
+					<releases>
+						<enabled>false</enabled>
+					</releases>
+					<snapshots>
+						<enabled>true</enabled>
+					</snapshots>
+				</repository>
+			</repositories>
+		</profile>
+	</profiles>
+
+	<activeProfiles>
+		<activeProfile>profile-php-maven</activeProfile>
+	</activeProfiles>
+</settings>
+<!-- END SNIPPET: settings -->

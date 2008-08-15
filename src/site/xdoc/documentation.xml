@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<document>
+	<properties>
+		<title></title>
+		<author email="christian.wiedemann@key-tec.de">
+			Christian Wiedemann
+		</author>
+	</properties>
+	<title>Maven for PHP - create documentation</title>
+		<meta name="keyword" content="apache, maven, php" />
+	<body>
+		<section name="Create documentation for your project.">
+
+<p>
+"PHP for Maven" extends the default documentation of Maven with an doxygen Goall.
+The goal is configured through:
+</p>
+<macro name="snippet"> 
+<param name="id" value="doxygen"/>
+<param name="file" value="src/site/include/pom.xml"/>
+</macro>
+<p>
+To create an documentation run:</p>
+<source>
+mvn site
+</source>
+<subsection name="What happend?">
+Maven generates an standard documenation. Through the doxygen goal a api doc is created. The doxygen configuration file must be located under src/site/doxygen/doxygen.conf.
+Following parameters of the doxygen conf will be replaced through the plugin.
+<source>
+INPUT
+OUTPUT_DIRECTORY
+PROJECT_NAME
+PROJECT_NUMBER
+</source>
+
+</subsection>
+
+
+ 		
+</section>
+
+	</body>
+</document>
