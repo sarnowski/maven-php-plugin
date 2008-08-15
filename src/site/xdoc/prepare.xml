@@ -22,5 +22,13 @@ After that go to the settings.xml (~/.m2 on Unix/Mac OS X and C:\Documents and S
 The last point is that your php.exe and the doxygen.exe must be part of the system path.
 </p> 
 </section>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+var pageTracker = _gat._getTracker("UA-5308244-1");
+pageTracker._trackPageview();
+</script>
 	</body>
 </document>
