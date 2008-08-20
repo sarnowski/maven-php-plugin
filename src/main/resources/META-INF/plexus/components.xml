@@ -37,9 +37,9 @@
 					<process-resources>
 						org.apache.maven.plugins:maven-resources-plugin:resources
 					</process-resources>
-					<validate>
+					<compile>
 						org.phpmaven:maven-php-plugin:php-validate
-					</validate>
+					</compile>
 					<process-test-resources>
 						org.apache.maven.plugins:maven-resources-plugin:testResources
 					</process-test-resources>
