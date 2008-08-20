@@ -13,7 +13,14 @@
 	<name>PHP - Maven-plugin</name>
 	<url>http://www.php-maven.org</url>
 	<description>Java like maven-lifecycle for php.</description>
-
+	<licenses>
+		<license>
+			<name>Apache 2</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+			<comments>A business-friendly OSS license</comments>
+		</license>
+	</licenses>
 	<issueManagement>
 		<system>Trac</system>
 		<url>http://trac.php-maven.org/</url>
@@ -51,13 +58,13 @@
 	</developers>
 	<!--  scm>
 		<connection>
-			scm:svn:http://svn.wakaleo.com/hoteldatabase/
+		scm:svn:http://svn.wakaleo.com/hoteldatabase/
 		</connection>
 		<developerConnection>
-			scm:svn:http://svn.wakaleo.com/hoteldatabase/
+		scm:svn:http://svn.wakaleo.com/hoteldatabase/
 		</developerConnection>
 		<url>http://svn.wakaleo.com/viewcvs.cgi/hoteldatabase/</url>
-	</scm-->
+		</scm-->
 
 	<dependencies>
 		<dependency>
@@ -122,12 +129,10 @@
 
 	<reporting>
 		<plugins>
-
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>taglist-maven-plugin</artifactId>
 			</plugin>
-
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>

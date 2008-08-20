@@ -24,7 +24,7 @@
 		</menu>
 		<menu name="Tutorial">
 			<item name="Preperation" href="prepare.html" />
-			<item name="PHP libaries - 5 minute starter guide"
+			<item name="PHP libraries - 5 minute starter guide"
 				href="php-lib-5min.html" />
 			<item name="PHP web project - 5 minute starter guide"
 				href="php-web-5min.html" />

@@ -5,29 +5,25 @@
 		<author email="christian.wiedemann@key-tec.de">
 			Christian Wiedemann
 		</author>
+		<meta name="keyword" content="apache, maven, php, plugin" />
+		<title>Maven for PHP - prepare Maven</title>
 	</properties>
-	<head>
-		<meta name="keyword" content="apache, maven, php" />
-	</head>
-	<title>Maven for PHP - prepare Maven</title>
+	
 	<body>
 		<section name="Prepare Maven 2 for PHP for Maven">
-<p>First <a href="http://maven.apache.org/download.html">download Maven</a> and follow the <a href="http://maven.apache.org/run-maven/index.html#Quick_Start">installation instructions</a>.
-After that go to the settings.xml (~/.m2 on Unix/Mac OS X and C:\Documents and Settings\username\.m2 on Windows) and add the PHP for Maven repository. If there is no settings.xml create the settings.xml file. 
+<p>First, <a href="http://maven.apache.org/download.html">download Maven</a> and follow the <a href="http://maven.apache.org/run-maven/index.html#Quick_Start">installation instructions.</a>
+Then, go to the settings.xml (~/.m2 on Unix/Mac OS X and C:\Documents and Settings\username\.m2 on Windows) and add the PHP for Maven repository. If there is no settings.xml you must create the settings.xml file first. 
 <macro name="snippet">
 <param name="id" value="settings"/>
 <param name="file" value="src/site/include/settings.xml"/>
 </macro></p>
 <p>
-The last point is that your php.exe and the doxygen.exe must be part of the system path.
+Finally, your php.exe and doxygen.exe must be part of the system path.
 </p> 
 </section>
+<script src="http://www.google-analytics.com/ga.js" type="text/javascript"></script>
 <script type="text/javascript">
-var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-</script>
-<script type="text/javascript">
-var pageTracker = _gat._getTracker("UA-5308244-1");
+var pageTracker = _gat._getTracker('UA-5308244-1');
 pageTracker._trackPageview();
 </script>
 	</body>

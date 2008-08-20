@@ -5,16 +5,16 @@
 			Christian Wiedemann
 		</author>
 
-		<title>Maven for PHP - libaries - 5 minute starter guide</title>
+		<title>Maven for PHP libraries - 5 minutes starter guide</title>
 	</properties>
 	<meta name="keyword" content="apache, maven, php" />
 	<body>
 		<section name="PHP libraries  - 5 minutes starter guide">
-			<subsection name="Create an project">
+			<subsection name="Create a project">
 			<p>
-			First prepare Maven and follow the <a href="prepare.html">preparation instructions.</a><br/>
-			After that, type on your command line, execute the following Maven goal:
-			(The archetypes are differnt for PHP 4 and PHP 5)</p>
+			First, prepare Maven and follow the <a href="prepare.html">preparation instructions.</a><br/>
+			Next, type the following Maven goal in your command line and execute it
+			(Note that the archetypes are different for PHP 4 and PHP 5.):</p>
 			<b>PHP 4:</b> 
 			<source>
 	
@@ -35,7 +35,7 @@ mvn archetype:generate \
 -DartifactId=my-app \
 			</source>
 			<p>
-			The result will look like:
+			The result will look like this:
 			</p>
 			<source>
 my-app 
@@ -59,31 +59,30 @@ my-app
 			<ul>
 			<li><b>src/main/php</b> - contains the project source code</li>
 			<li><b>the src/test/php</b> - contains the test source code</li>
-			<li><b>pom.xml</b> - the project's Project Object Model, or POM.</li>
+			<li><b>pom.xml</b> The project's Project Object Model, or POM, looks like this:</li>
 			</ul>
 			</p>
 		</subsection>
 		<subsection name="The POM">
 		<p>
-			PHP 4 (1.*) and PHP 5 (3.*) uses differnt PHPUnit versions. So there are differnt dependencies in the pom. 
+			PHP 4 (1.*) and PHP 5 (3.*) use different PHPUnit versions. Accordingly, there are different dependencies in the POM.
 <macro name="snippet">
 <param name="id" value="pom"/>
 <param name="file" value="src/site/include/pom.xml"/>
 </macro></p>
 		</subsection>
-		<subsection name="What did I just do?">
-			<p>What did I just do?</p>
-			You executed the Maven goal archetype:generate, and passed
-			in various parameters to that goal. The prefix archetype is
-			the plugin that contains the goal.
-			This goal create an default project structure for your PHP project.
+		<subsection name="What have I just done?">
+			<p>What have I just done?</p>
+			You have just executed the Maven goal archetype:generate and passed various parameters to that goal. The prefix archetype is
+			the plugin containing the goal.
+			This goal created a default project structure for your PHP project.
 		</subsection>
-		<subsection name="Build the Project">
+		<subsection name="Build the project">
 			Switch to your sample project directory 
 			<source>cd my-app</source>
 			and run:  
 			<source>mvn package</source>
-			The command line will print out various actions, and end with the following:
+			The command line will print out various actions, ending with the following:
 			<source>
  ...
 [INFO] ------------------------------------------------------------------------
@@ -94,20 +93,17 @@ my-app
 [INFO] Final Memory: 3M/6M
 [INFO] ------------------------------------------------------------------------			
 			</source>
-Maven has created an jar package under the target folder of th project.  		
+Maven created a jar package under the project's target folder.  		
 		</subsection>
 		<subsection name="Project documentation">
 		<p>
-		Go to the <a href="documentation.html">documentation section</a>
+		Go to the <a href="documentation.html">"Documentation" section.</a>
 		</p> 
 		</subsection>
 		</section>
-		<script type="text/javascript">
-var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-</script>
+<script src="http://www.google-analytics.com/ga.js" type="text/javascript"></script>
 <script type="text/javascript">
-var pageTracker = _gat._getTracker("UA-5308244-1");
+var pageTracker = _gat._getTracker('UA-5308244-1');
 pageTracker._trackPageview();
 </script>
 	</body>

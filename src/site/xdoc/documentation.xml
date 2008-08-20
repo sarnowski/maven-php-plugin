@@ -1,51 +1,54 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <document>
 	<properties>
-		<title></title>
+		<title />
+
 		<author email="christian.wiedemann@key-tec.de">
 			Christian Wiedemann
 		</author>
+		<title>Maven for PHP - Create documentation</title>
+
+		<meta content="apache, maven, php" name="keyword" />
 	</properties>
-	<title>Maven for PHP - create documentation</title>
-		<meta name="keyword" content="apache, maven, php" />
 	<body>
-		<section name="Create documentation for your project.">
+		<section name="Create documentation for your project">
+			<p>
+				"PHP for Maven" extends the Maven default documentation
+				by adding a doxygen goal. This goal is configured
+				through:
+			</p>
 
-<p>
-"PHP for Maven" extends the default documentation of Maven with an doxygen Goall.
-The goal is configured through:
-</p>
-<macro name="snippet"> 
-<param name="id" value="doxygen"/>
-<param name="file" value="src/site/include/pom.xml"/>
-</macro>
-<p>
-To create an documentation run:</p>
-<source>
-mvn site
-</source>
-<subsection name="What happend?">
-Maven generates an standard documenation. Through the doxygen goal a api doc is created. The doxygen configuration file must be located under src/site/doxygen/doxygen.conf.
-Following parameters of the doxygen conf will be replaced through the plugin.
-<source>
-INPUT
-OUTPUT_DIRECTORY
-PROJECT_NAME
+			<macro name="snippet">
+				<param name="id" value="doxygen" />
+
+				<param name="file" value="src/site/include/pom.xml" />
+			</macro>
+
+			<p>To create a documentation simply run:</p>
+
+			<source>mvn site</source>
+
+			<subsection name="What happened?">
+				Maven generates a standard documenation. Through the
+				doxygen goal, an api doc is created. The doxygen
+				configuration file must be located under
+				src/site/doxygen/doxygen.conf. The following parameters
+				of the doxygen.conf will be replaced by the plugin.
+				<source>
+INPUT 
+OUTPUT_DIRECTORY 
+PROJECT_NAME 
 PROJECT_NUMBER
-</source>
+				</source>
+			</subsection>
+		</section>
 
-</subsection>
-
-
- 		
-</section>
-<script type="text/javascript">
-var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-</script>
-<script type="text/javascript">
-var pageTracker = _gat._getTracker("UA-5308244-1");
-pageTracker._trackPageview();
-</script>
+		<script src="http://www.google-analytics.com/ga.js"
+			type="text/javascript">
+		</script>
+		<script type="text/javascript">
+			var pageTracker = _gat._getTracker('UA-5308244-1');
+			pageTracker._trackPageview();
+		</script>
 	</body>
 </document>

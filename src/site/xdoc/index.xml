@@ -6,59 +6,57 @@
 		</author>
 
 		<title>Welcome to Maven for PHP</title>
+		<meta name="keyword" content="apache, maven, php" />
 	</properties>
-	<meta name="keyword" content="apache, maven, php" />
+	
 	<body>
 
 <section name="Welcome to Maven for PHP">
-Maven for PHP uses the power of Maven for PHP project's build, reporting and documentation.
-It adapts the Maven build lifecycle to the PHP world. It fully supports PHP 4 and PHP 5.
-PHP for Maven uses <a href="http://www.phpunit.de/" target="_blank"><b>PHPUnit</b></a> for unit test and <a href="http://www.stack.nl/~dimitri/doxygen/" target="_blank"><b>doxygen</b></a> to create the api documentation.
-<br/>Use a <b>PHP library project</b> to create an library which should be used from other PHP libraries or PHP web projects. Use a <b>PHP web project</b> for a standalone web project. 
+Maven for PHP uses the power of Maven for building, reporting on and creating documentations of PHP projects.
+It adapts the Maven build lifecycle to the PHP world while fully supporting PHP 4 and PHP 5.
+PHP for Maven uses <a href="http://www.phpunit.de/" target="_blank"><b>PHPUnit</b></a> for unit testing and <a href="http://www.stack.nl/~dimitri/doxygen/" target="_blank"><b>doxygen</b></a> for creating the api documentation.
+<br/>Use a <b>PHP library project</b> to create a library that can be used by other PHP libraries or PHP web projects. Use a <b>PHP web project</b> to create a standalone web project. 
  
 <subsection name="Getting started">
 <p>
-This links will help you to get started with Maven for PHP.
+This link will help you get started with Maven for PHP.
 
 </p>
- <p><b>First learn Maven</b></p>
+ <p><b>First steps for working with Maven</b></p>
 <ul>
-<li><a href="http://maven.apache.org/download.html"><span style="white-space: nowrap; font-weight: bold; font-size: 1.25em;">Download Maven</span><br/>First of all download and install maven.</a></li>
+<li><a href="http://maven.apache.org/download.html"><span style="white-space: nowrap; font-weight: bold; font-size: 1.25em;">Download Maven</span><br/>First, download and install Maven.</a></li>
 <li><a href="http://maven.apache.org/guides/getting-started/maven-in-five-minutes.html">
-<span style="white-space: nowrap; font-weight: bold; font-size: 1.25em;">Learn Maven</span><br/>After the Maven installation learn the Maven basics.</a></li>
+<span style="white-space: nowrap; font-weight: bold; font-size: 1.25em;">Learn about Maven</span><br/>Having finished with Maven installation, learn about the Maven basics.</a></li>
 </ul>
-<p><b>Than learn Maven for PHP</b></p>
+<p><b>Then learn about "Maven for PHP".</b></p>
 <ul>
-<li><a href="prepare.html"><span style="white-space: nowrap; font-weight: bold; font-size: 1.25em;">Prepare Maven for PHP</span><br/>Prepare the Maven configuration to use "Maven for PHP"</a></li>
-<li><a href="php-lib-5min.html"><span style="white-space: nowrap; font-weight: bold; font-size: 1.25em;">PHP library project - 5 minutes starter guide</span><br/>Use the PHP library archetype for PHP libaries. These libaries can be used from other libaries or from PHP web projects.<br/></a></li>
-<li><a href="php-web-5min.html"><span style="white-space: nowrap; font-weight: bold; font-size: 1.25em;">PHP web project - 5 minutes starter guide</span><br/>Use the PHP web archetype for PHP web projects. Use PHP libaries as dependencies.<br/></a></li>
-<li><a href="lifecycle.html"><span style="white-space: nowrap; font-weight: bold; font-size: 1.25em;">The lifecycle</span><br/>To get a better understanding have a look at the lifecycle.<br/></a></li>
+<li><a href="prepare.html"><span style="white-space: nowrap; font-weight: bold; font-size: 1.25em;">Prepare Maven for PHP</span><br/>Prepare the Maven configuration to be able to use "Maven for PHP".</a></li>
+<li><a href="php-lib-5min.html"><span style="white-space: nowrap; font-weight: bold; font-size: 1.25em;">PHP library project - 5 minutes starter guide</span><br/>Use the PHP library archetype for PHP libraries. These libraries can be used by other libraries or by PHP web projects.<br/></a></li>
+<li><a href="php-web-5min.html"><span style="white-space: nowrap; font-weight: bold; font-size: 1.25em;">PHP web project - 5 minutes starter guide</span><br/>Use the PHP web archetype for PHP web projects. Use PHP libraries as dependencies.<br/></a></li>
+<li><a href="lifecycle.html"><span style="white-space: nowrap; font-weight: bold; font-size: 1.25em;">The lifecycle</span><br/>For a better understanding take a look at the lifecycle.<br/></a></li>
 </ul>
 
 </subsection>
 <subsection name="Project documentation">
 <ul>
-<li><a href="http://www.javaworld.com/javaworld/jw-02-2006/jw-0227-maven.html"><span style="white-space: nowrap; font-weight: bold; font-size: 1.25em;">Get the most out of Maven 2 site generation</span><br/>A good starting point to learn maven documentation.</a></li>
+<li><a href="http://www.javaworld.com/javaworld/jw-02-2006/jw-0227-maven.html"><span style="white-space: nowrap; font-weight: bold; font-size: 1.25em;">Get the most out of Maven 2 site generation</span><br/>A good starting point is to study the Maven documentation.</a></li>
 <li><a href="documentation.html">
-<span style="white-space: nowrap; font-weight: bold; font-size: 1.25em;">Create your documentation</span><br/>Create the PHP documentation.</a></li>
+<span style="white-space: nowrap; font-weight: bold; font-size: 1.25em;">Create your documentation</span><br/>Create PHP documentation</a></li>
 </ul>
 </subsection> 
 <subsection name="Features">
 <ul>
 <li><span style="white-space: nowrap; font-weight: bold; font-size: 1.25em;">Own Maven lifecycle for PHP</span></li>
 <li><span style="white-space: nowrap; font-weight: bold; font-size: 1.25em;">Supports PHP 4 and PHP 5</span></li>
-<li><span style="white-space: nowrap; font-weight: bold; font-size: 1.25em;">Archtypes for web and library projects.</span></li>
-<li><span style="white-space: nowrap; font-weight: bold; font-size: 1.25em;">Supports PHPUnit.</span></li>
-<li><span style="white-space: nowrap; font-weight: bold; font-size: 1.25em;">Supports doxygen for API documentation.</span></li>
+<li><span style="white-space: nowrap; font-weight: bold; font-size: 1.25em;">Archetypes for web and library projects</span></li>
+<li><span style="white-space: nowrap; font-weight: bold; font-size: 1.25em;">Supports PHP unit</span></li>
+<li><span style="white-space: nowrap; font-weight: bold; font-size: 1.25em;">Supports doxygen for API documentation</span></li>
 </ul>
 </subsection> 
 </section>
+<script src="http://www.google-analytics.com/ga.js" type="text/javascript"></script>
 <script type="text/javascript">
-var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-</script>
-<script type="text/javascript">
-var pageTracker = _gat._getTracker("UA-5308244-1");
+var pageTracker = _gat._getTracker('UA-5308244-1');
 pageTracker._trackPageview();
 </script>
 </body>
