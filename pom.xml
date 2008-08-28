@@ -1,18 +1,23 @@
-<!DOCTYPE document PUBLIC
-  "-//Apache Software Foundation//DTD XDOC 1.0//EN"
-  "http://maven.apache.org/dtd/xdoc_1_0.dtd" [
-  <!ENTITY escapeXmlExample SYSTEM "file:src/site/include/settings.xml">
-]>
 <project>
 
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.phpmaven</groupId>
 	<artifactId>maven-php-plugin</artifactId>
 	<packaging>maven-plugin</packaging>
-	<version>1.0-ALPHA</version>
 	<name>PHP - Maven-plugin</name>
 	<url>http://www.php-maven.org</url>
+	<version>1.0-SNAPSHOT</version>
+	<groupId>org.phpmaven</groupId>
 	<description>Java like maven-lifecycle for php.</description>
+	<parent>
+		<groupId>org.phpmaven</groupId>
+		<artifactId>multimaster</artifactId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
+	<scm>
+		<developerConnection>
+			scm:cvs:pserver:christian.wiedemann:cwiedemanncvspuw@cvs.key-tec.de:/php-maven:org.phpmaven.plugin
+		</developerConnection>
+	</scm>
 	<licenses>
 		<license>
 			<name>Apache 2</name>
@@ -36,11 +41,11 @@
 		<snapshotRepository>
 			<id>repo1.php-maven.org</id>
 			<name>repo1-snapshot</name>
-			<url>ftp://195.30.248.185/snapshot</url>
+			<url>ftp://www.php-maven.org/snapshot</url>
 		</snapshotRepository>
 		<site>
 			<id>www.php-maven.org</id>
-			<url>ftp://195.30.248.185</url>
+			<url>ftp://www.php-maven.org</url>
 		</site>
 	</distributionManagement>
 	<developers>
@@ -56,16 +61,6 @@
 			<timezone>-2</timezone>
 		</developer>
 	</developers>
-	<!--  scm>
-		<connection>
-		scm:svn:http://svn.wakaleo.com/hoteldatabase/
-		</connection>
-		<developerConnection>
-		scm:svn:http://svn.wakaleo.com/hoteldatabase/
-		</developerConnection>
-		<url>http://svn.wakaleo.com/viewcvs.cgi/hoteldatabase/</url>
-		</scm-->
-
 	<dependencies>
 		<dependency>
 			<groupId>org.apache.maven.reporting</groupId>

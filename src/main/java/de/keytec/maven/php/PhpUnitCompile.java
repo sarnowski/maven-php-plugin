@@ -1,6 +1,8 @@
 package de.keytec.maven.php;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +21,7 @@ import org.xml.sax.SAXException;
 /**
  * PHPUnit executes <a href="http://www.phpunit.de/">phpunit</a> TestCases and
  * generate SourceFire Reports.
+ * 
  * @requiresDependencyResolution test
  * @goal phpunit
  */
@@ -168,33 +171,60 @@ public class PhpUnitCompile extends AbstractPhpCompile {
 	}
 
 	protected void executePhpFile(File file) throws MojoExecutionException {
+		String targetFile = resultFolder.getAbsolutePath() + "/"
+				+ file.getName().replace(".php", ".xml");
 		try {
-			String command = phpExe + getCompilerArgs()
-					+ " -d include_path=\";"
-					+ file.getParentFile().getAbsolutePath() + ";"
-					+ baseDir.getAbsoluteFile() + testDirectory + ";"
-					+ new Statics(baseDir).getTargetClassesFolder() + ";"
-					+ new Statics(baseDir).getPhpInc() + ";"
-					+ baseDir.getAbsolutePath() + sourceDirectory + ";"
+			try {
+				String command = phpExe + getCompilerArgs()
+						+ " -d include_path=\";"
+						+ file.getParentFile().getAbsolutePath() + ";"
+						+ baseDir.getAbsoluteFile() + testDirectory + ";"
+						+ new Statics(baseDir).getTargetClassesFolder() + ";"
+						+ new Statics(baseDir).getPhpInc() + ";"
+						+ baseDir.getAbsolutePath() + sourceDirectory + ";"
 
-					+ "\" \"" + new Statics(baseDir).getPhpInc();
-			String targetFile = resultFolder.getAbsolutePath() + "/"
-					+ file.getName().replace(".php", ".xml");
-			if (getPhpVersion() == PHPVersion.PHP5) {
-				command += "/PHPUnit/TextUI/Maven.php\" \""
-						+ file.getAbsolutePath() + "\" \"" + targetFile + "\"";
-			} else if (getPhpVersion() == PHPVersion.PHP4) {
-				command += "/XMLWriter.php\" \"" + file.getAbsolutePath()
-						+ "\" \"" + targetFile + "\"";
+						+ "\" \"" + new Statics(baseDir).getPhpInc();
+
+				if (getPhpVersion() == PHPVersion.PHP5) {
+					command += "/PHPUnit/TextUI/Maven.php\" \""
+							+ file.getAbsolutePath() + "\" \"" + targetFile
+							+ "\"";
+				} else if (getPhpVersion() == PHPVersion.PHP4) {
+					command += "/XMLWriter.php\" \"" + file.getAbsolutePath()
+							+ "\" \"" + targetFile + "\"";
+				}
+				phpCompile(command, file);
+				File targetFileObj = new File(targetFile);
+				if (targetFileObj.exists()) {
+					parseResultingXML(targetFileObj);
+				} else {
+					writeFailure(file, targetFile);
+					throw new PhpCompileException(command, 0, file,
+							getCurrentCommandLineOutput().toString());
+				}
+
+			} catch (PhpExecutionError ex) {
+				writeFailure(file, targetFile);
+				throw ex;
+			} catch (PhpCompileException pex) {
+				writeFailure(file, targetFile);
+				throw pex;
 			}
-			phpCompile(command, file);
-			parseResultingXML(new File(targetFile));
-		} catch (PhpExecutionError ex) {
-			getLog().error("Testcase: " + file.getName() + " fails. ");
-
 		} catch (Exception e) {
 			throw new MojoExecutionException(e.getMessage(), e);
 		}
+
+	}
+
+	private void writeFailure(File testCase, String targetReportFilePath)
+			throws IOException {
+		String logFile = targetReportFilePath.replace(".xml", ".txt");
+		getLog().error("Testcase: " + testCase.getName() + " fails.");
+		getLog().error("See log: " + logFile);
+		FileWriter fstream = new FileWriter(logFile);
+		BufferedWriter out = new BufferedWriter(fstream);
+		out.write(getCurrentCommandLineOutput().toString());
+		out.close();
 
 	}
 

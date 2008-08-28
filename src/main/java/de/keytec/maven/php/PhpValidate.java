@@ -71,7 +71,8 @@ public class PhpValidate extends AbstractPhpCompile {
 
 	public void execute() throws MojoExecutionException {
 		try {
-			prepareCompileDependencies();
+			if (!ignoreValidate)
+				prepareCompileDependencies();
 			File file = new File(baseDir.getAbsolutePath() + sourceDirectory);
 			goRecursiveAndCall(file);
 		} catch (Exception e) {

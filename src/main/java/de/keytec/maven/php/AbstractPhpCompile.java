@@ -24,7 +24,10 @@ public abstract class AbstractPhpCompile extends AbstractMojo implements
 	 * @readonly
 	 */
 	protected File baseDir;
-
+	private StringBuffer currentBuffer;
+	protected StringBuffer getCurrentCommandLineOutput() { 
+		return currentBuffer;
+	}
 	/**
 	 * PHP Compile args. Use php -h to get a list of all php compile arguments.
 	 * @parameter
@@ -159,12 +162,13 @@ public abstract class AbstractPhpCompile extends AbstractMojo implements
 
 	}
 	protected final void prepareDependencies(List elements) throws IOException{
-		getLog().info("Prepare dependencies");
+		
 		File targetFile = new File(baseDir.toString() + Statics.phpinc);
 		targetFile.mkdirs();
 		for (int i = 0; i < elements.size(); i++) {
 			File sourceFile = new File((String) elements.get(i));
 			if (sourceFile.isFile()) {
+				getLog().debug("unjar dependency: "+ sourceFile);
 				unjar(sourceFile, targetFile);
 			}
 		}
@@ -213,6 +217,7 @@ public abstract class AbstractPhpCompile extends AbstractMojo implements
 					}
 
 				});
+		currentBuffer=bufferOutBuffer;
 		String errString = bufferErrBuffer.toString();
 		if (!"".equals(errString)) {
 			throw new PhpCompileException(commandString,PhpCompileException.ERROR, file,

@@ -2,9 +2,7 @@ package de.keytec.maven.php;
 
 import java.io.File;
 
-
 public class PhpCompileException extends Exception {
-
 
 	private static final long serialVersionUID = 1L;
 	private final File phpFile;
@@ -14,8 +12,8 @@ public class PhpCompileException extends Exception {
 	private final int errorType;
 	private final String commandString;
 
-	public PhpCompileException(String commandString,int errorType, File phpFile,
-			String phpErrorMessage) {
+	public PhpCompileException(String commandString, int errorType,
+			File phpFile, String phpErrorMessage) {
 		this.commandString = commandString;
 		this.errorType = errorType;
 		this.phpFile = phpFile;
@@ -23,7 +21,7 @@ public class PhpCompileException extends Exception {
 	}
 
 	public String getMessage() {
-		return "Type: " + errorType + " " + phpErrorMessage + " in "
-				+ phpFile.toString() +" ("+commandString+")+\n";
+		return "\n" + phpErrorMessage + " in\nFile:\n " + phpFile.toString()
+				+ "\nCommand:\n " + commandString + "+\n";
 	}
 }
