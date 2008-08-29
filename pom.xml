@@ -5,7 +5,6 @@
 	<packaging>maven-plugin</packaging>
 	<name>PHP - Maven-plugin</name>
 	<url>http://www.php-maven.org</url>
-	<version>1.0-SNAPSHOT</version>
 	<groupId>org.phpmaven</groupId>
 	<description>Java like maven-lifecycle for php.</description>
 	<parent>
@@ -30,24 +29,6 @@
 		<system>Trac</system>
 		<url>http://trac.php-maven.org/</url>
 	</issueManagement>
-	<distributionManagement>
-		<!-- use the following if you're not using a snapshot version. -->
-		<repository>
-			<id>repo1.php-maven.org</id>
-			<name>repo1-release</name>
-			<url>ftp://195.30.248.185/release</url>
-		</repository>
-		<!-- use the following if you ARE using a snapshot version. -->
-		<snapshotRepository>
-			<id>repo1.php-maven.org</id>
-			<name>repo1-snapshot</name>
-			<url>ftp://www.php-maven.org/snapshot</url>
-		</snapshotRepository>
-		<site>
-			<id>www.php-maven.org</id>
-			<url>ftp://www.php-maven.org</url>
-		</site>
-	</distributionManagement>
 	<developers>
 		<developer>
 			<id>cw</id>
@@ -102,15 +83,6 @@
 	</dependencies>
 
 	<build>
-		<extensions>
-			<extension>
-				<groupId>org.apache.maven.wagon</groupId>
-				<artifactId>wagon-ftp</artifactId>
-				<version>1.0-20080208</version>
-
-			</extension>
-		</extensions>
-
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
