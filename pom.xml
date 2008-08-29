@@ -5,7 +5,6 @@
 	<packaging>maven-plugin</packaging>
 	<name>PHP - Maven-plugin</name>
 	<url>http://www.php-maven.org</url>
-	<groupId>org.phpmaven</groupId>
 	<description>Java like maven-lifecycle for php.</description>
 	<parent>
 		<groupId>org.phpmaven</groupId>
