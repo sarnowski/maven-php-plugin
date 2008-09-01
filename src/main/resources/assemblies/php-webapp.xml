@@ -14,8 +14,8 @@
 	</dependencySets>
 	<fileSets>
 		<fileSet>
-			<directory>src/main/php</directory>
-			<outputDirectory>/</outputDirectory>
+			<directory>src/main/webapp</directory>
+			<outputDirectory>/htdocs</outputDirectory>
 			<useDefaultExcludes>true</useDefaultExcludes>
 		</fileSet>
 	</fileSets>
