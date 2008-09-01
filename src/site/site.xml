@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <project name="Maven">
+	<version position="left" />
+
 	<skin>
 		<groupId>org.apache.maven.skins</groupId>
 		<artifactId>maven-stylus-skin</artifactId>
@@ -12,7 +14,7 @@
 	</bannerLeft>
 	<!--  bannerRight>
 		<src>http://maven.apache.org/images/maven-small.gif</src>
-	</bannerRight-->
+		</bannerRight-->
 	<body>
 		<links>
 			<item name="Maven" href="http://maven.apache.org/" />
@@ -30,11 +32,12 @@
 				href="php-web-5min.html" />
 		</menu>
 		<menu name="Documentation">
-			<item name="Project documentation" href="documentation.html" />
+			<item name="Project documentation"
+				href="documentation.html" />
 			<item name="Project deployment" href="deploy.html" />
 			<item name="The lifecycle" href="lifecycle.html" />
 			<item name="Plugin Goals" href="plugin-info.html" />
 		</menu>
-		
+
 	</body>
 </project>
