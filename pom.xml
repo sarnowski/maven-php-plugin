@@ -12,15 +12,17 @@
 		<version>1.0-SNAPSHOT-3</version>
 	</parent>
 	<scm>
-		<developerConnection>scm:cvs:pserver:christian.wiedemann:cwiedemanncvspuw@cvs.key-tec.de:/php-maven:org.phpmaven.plugin</developerConnection>
+		<connection>scm:cvs:pserver:christian.wiedemann:cwiedemanncvspuw@cvs.key-tec.de:/php-maven:org.phpmaven.plugin</connection>
 		<tag>multimaster-1_0-ALPHA</tag>
 	</scm>
 	<licenses>
 		<license>
-			<name>Apache 2</name>
+			<name>  The Apache Software License, Version 2.0
+</name>
 			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
 			<distribution>repo</distribution>
-			<comments>A business-friendly OSS license</comments>
+			<comments></comments>
+			
 		</license>
 	</licenses>
 	<issueManagement>
@@ -126,6 +128,11 @@
 					</reportSet>
 				</reportSets>
 			</plugin>
+			<plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>changes-maven-plugin</artifactId>
+      </plugin>
+			
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-plugin-plugin</artifactId>
