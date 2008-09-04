@@ -11,9 +11,6 @@
 		<artifactId>multimaster</artifactId>
 		<version>1.0-ALPHA-2</version>
 	</parent>
-	<scm>
-		<connection>scm:cvs:pserver:christian.wiedemann:cwiedemanncvspuw@cvs.key-tec.de:/php-maven:org.phpmaven.plugin</connection>
-	</scm>
 	<licenses>
 		<license>
 			<name>  The Apache Software License, Version 2.0
