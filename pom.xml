@@ -9,11 +9,10 @@
 	<parent>
 		<groupId>org.phpmaven</groupId>
 		<artifactId>multimaster</artifactId>
-		<version>1.0-SNAPSHOT-3</version>
+		<version>1.0-ALPHA-2</version>
 	</parent>
 	<scm>
 		<connection>scm:cvs:pserver:christian.wiedemann:cwiedemanncvspuw@cvs.key-tec.de:/php-maven:org.phpmaven.plugin</connection>
-		<tag>multimaster-1_0-ALPHA</tag>
 	</scm>
 	<licenses>
 		<license>
@@ -111,7 +110,8 @@
 							<report>project-team</report>
 							<report>license</report>
 							<report>scm</report>
-
+							<report>mailing-list</report>
+							 <report>issue-tracking</report>
 						</reports>
 					</reportSet>
 				</reportSets>
