@@ -7,8 +7,10 @@ import java.util.List;
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.wagon.PathUtils;
 import org.codehaus.plexus.util.DirectoryWalkListener;
 import org.codehaus.plexus.util.DirectoryWalker;
+import org.codehaus.plexus.util.FileUtils;
 import org.codehaus.plexus.util.cli.CommandLineException;
 import org.codehaus.plexus.util.cli.CommandLineUtils;
 import org.codehaus.plexus.util.cli.Commandline;
@@ -105,7 +107,24 @@ public abstract class AbstractPhpCompile extends AbstractMojo implements
 			}
 		}
 	}
-
+	protected final void copyToTargetFolder(String sourceDirectory, File sourceFile,String targetClassFolder) throws MojoExecutionException { 
+		String relative = PathUtils.toRelative(new File(baseDir.toString()
+				+ sourceDirectory), sourceFile.toString());
+		
+		getLog().debug("Relative :" + relative);
+		File targetFile = new File(baseDir.toString()
+				+ targetClassFolder + "/" + relative);
+		
+		if (targetFile.getParentFile().getName().equalsIgnoreCase("cvs")) {
+			return;
+		}
+		getLog().debug("copy from:" + sourceFile + " to: " + targetFile.toString());
+		try {
+			FileUtils.copyFileIfModified(sourceFile, targetFile);
+		} catch (IOException e) {
+			throw new MojoExecutionException(e.getMessage(), e);
+		}
+	}
 	public final PHPVersion getPhpVersion() throws CommandLineException,
 			PhpExecutionError {
 		if (phpVersion != null) {
@@ -130,7 +149,9 @@ public abstract class AbstractPhpCompile extends AbstractMojo implements
 				});
 		String errString = bufferErrBuffer.toString();
 		PHPVersion phpVersion = inputConsumer.getPhpVersion();
+		getLog().debug("PHPVersion: " + phpVersion.toString());
 		if (executeCommandLine != 0 || errString.length() != 0) {
+			getLog().error("Error while execution php -v\n"+ errString.toString()+"\n comandLine:"+executeCommandLine+"\n"+bufferOutBuffer.toString());
 			throw new PhpExecutionError();
 		}
 		this.phpVersion = phpVersion;
@@ -258,6 +279,7 @@ public abstract class AbstractPhpCompile extends AbstractMojo implements
 				handleProcesedFile(file);
 			}
 		} catch (Exception e) {
+			getLog().debug(e);
 			compilerExceptions.add(e);
 		}
 	}

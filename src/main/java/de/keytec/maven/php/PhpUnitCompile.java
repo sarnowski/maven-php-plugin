@@ -178,7 +178,8 @@ public class PhpUnitCompile extends AbstractPhpCompile {
 				String command = phpExe + getCompilerArgs()
 						+ " -d include_path=\";"
 						+ file.getParentFile().getAbsolutePath() + ";"
-						+ baseDir.getAbsoluteFile() + testDirectory + ";"
+						+ new Statics(baseDir).getTargetTestClassesFolder()+ ";"
+						+ baseDir+"/"+testDirectory+ ";"
 						+ new Statics(baseDir).getTargetClassesFolder() + ";"
 						+ new Statics(baseDir).getPhpInc() + ";"
 						+ baseDir.getAbsolutePath() + sourceDirectory + ";"
@@ -230,6 +231,7 @@ public class PhpUnitCompile extends AbstractPhpCompile {
 
 	@Override
 	protected void handleProcesedFile(File file) throws MojoExecutionException {
+		copyToTargetFolder(testDirectory,file,Statics.targetTestClassesFolder);
 	}
 
 }

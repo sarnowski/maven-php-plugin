@@ -6,7 +6,6 @@
 	<name>PHP - Maven-plugin</name>
 	<url>http://www.php-maven.org</url>
 	<description>Java like maven-lifecycle for php.</description>
-	<version>1.0-SNAPSHOT-4</version>
 	<parent>
 		<groupId>org.phpmaven</groupId>
 		<artifactId>multimaster</artifactId>

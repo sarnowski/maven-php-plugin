@@ -85,21 +85,6 @@ public class PhpValidate extends AbstractPhpCompile {
 
 	@Override
 	protected void handleProcesedFile(File file) throws MojoExecutionException {
-		String relative = PathUtils.toRelative(new File(baseDir.toString()
-				+ sourceDirectory), file.toString());
-		
-		File targetFile = new File(baseDir.toString()
-				+ Statics.targetClassesFolder + "/" + relative);
-		
-		if (targetFile.getParentFile().getName().equalsIgnoreCase("cvs")) {
-			return;
-		}
-		targetFile.getParentFile().mkdirs();
-		getLog().debug("copy from:" + file + " to: " + targetFile.toString());
-		try {
-			FileUtils.copyFileToDirectory(file, targetFile.getParentFile());
-		} catch (IOException e) {
-			throw new MojoExecutionException(e.getMessage(), e);
-		}
+		copyToTargetFolder(sourceDirectory,file,Statics.targetClassesFolder);
 	}
 }

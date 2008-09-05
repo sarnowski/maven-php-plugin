@@ -6,6 +6,7 @@ final public class Statics {
 	
 	public static final String testRootFolder = "/src/test/php";
 	public static final String targetClassesFolder = "/target/classes";
+	public static final String targetTestClassesFolder = "/target/test-classes";
 	
 	public static final String phpinc = "/target/phpinc";
 	private final File baseDir;
@@ -15,6 +16,9 @@ final public class Statics {
 	}
 	public String getTargetClassesFolder() {
 		return baseDir.getAbsoluteFile()+targetClassesFolder;
+	}
+	public String getTargetTestClassesFolder() {
+		return baseDir.getAbsoluteFile()+targetTestClassesFolder;
 	}
 	public String getPhpInc() { 
 		return baseDir.getAbsoluteFile()+phpinc;
