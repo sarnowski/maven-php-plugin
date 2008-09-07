@@ -35,7 +35,7 @@ public class PhpUnitCompile extends AbstractPhpCompile {
 	 * @required
 	 * @readonly
 	 */
-	private List testClasspathElements;
+	private List<String> testClasspathElements;
 
 	File resultFolder;
 	/**
@@ -176,13 +176,14 @@ public class PhpUnitCompile extends AbstractPhpCompile {
 		try {
 			try {
 				String command = phpExe + getCompilerArgs()
-						+ " -d include_path=\";"
-						+ file.getParentFile().getAbsolutePath() + ";"
-						+ new Statics(baseDir).getTargetTestClassesFolder()+ ";"
-						+ baseDir+"/"+testDirectory+ ";"
-						+ new Statics(baseDir).getTargetClassesFolder() + ";"
-						+ new Statics(baseDir).getPhpInc() + ";"
-						+ baseDir.getAbsolutePath() + sourceDirectory + ";"
+						+ " -d include_path=\""+File.pathSeparator
+
+						+ file.getParentFile().getAbsolutePath() + File.pathSeparator
+						+ new Statics(baseDir).getTargetTestClassesFolder()+ File.pathSeparator
+						+ baseDir+"/"+testDirectory+ File.pathSeparator
+						+ new Statics(baseDir).getTargetClassesFolder() + File.pathSeparator
+						+ new Statics(baseDir).getPhpInc() + File.pathSeparator
+						+ baseDir.getAbsolutePath() + sourceDirectory + File.pathSeparator
 
 						+ "\" \"" + new Statics(baseDir).getPhpInc();
 

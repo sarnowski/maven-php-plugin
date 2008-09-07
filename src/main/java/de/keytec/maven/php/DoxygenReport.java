@@ -100,7 +100,7 @@ public class DoxygenReport extends AbstractMavenReport {
 				FileWriter fileWriter = new FileWriter(
 						generatedDoxygenConfigFile);
 				Set<Object> keySet = properties.keySet();
-				for (Iterator iterator = keySet.iterator(); iterator.hasNext();) {
+				for (Iterator<Object> iterator = keySet.iterator(); iterator.hasNext();) {
 					String key = (String) iterator.next();
 					String value = properties.getProperty(key);
 					fileWriter.append(key + "=" + value + "\n");

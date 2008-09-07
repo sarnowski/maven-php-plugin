@@ -42,7 +42,7 @@ public abstract class AbstractPhpCompile extends AbstractMojo implements
 	 * @required
 	 * @readonly	
 	 */
-	private List classpathElements;
+	private List<String> classpathElements;
 	
 	/**
 	 * The php source folder.
@@ -129,7 +129,7 @@ public abstract class AbstractPhpCompile extends AbstractMojo implements
 			PhpExecutionError {
 		if (phpVersion != null) {
 			return phpVersion;
-		}
+		} 
 		String commandString = phpExe + " -v";
 		getLog().debug("Try to execute command: " + commandString);
 		final StringBuffer bufferErrBuffer = new StringBuffer();
@@ -160,7 +160,7 @@ public abstract class AbstractPhpCompile extends AbstractMojo implements
 
 	private void unjar(File jarFile, File destDir) throws IOException {
 		java.util.jar.JarFile jar = new java.util.jar.JarFile(jarFile);
-		java.util.Enumeration items = jar.entries();
+		java.util.Enumeration<java.util.jar.JarEntry> items = jar.entries();
 		while (items.hasMoreElements()) {
 			java.util.jar.JarEntry file = (java.util.jar.JarEntry) items
 					.nextElement();
@@ -182,7 +182,7 @@ public abstract class AbstractPhpCompile extends AbstractMojo implements
 		}
 
 	}
-	protected final void prepareDependencies(List elements) throws IOException{
+	protected final void prepareDependencies(List<String> elements) throws IOException{
 		
 		File targetFile = new File(baseDir.toString() + Statics.phpinc);
 		targetFile.mkdirs();

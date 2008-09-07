@@ -1,9 +1,5 @@
 package de.keytec.maven.php;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.util.Properties;
-
 import junit.framework.TestCase;
 
 public class TestDoxygenReport extends TestCase {

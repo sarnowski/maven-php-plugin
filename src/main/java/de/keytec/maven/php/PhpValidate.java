@@ -1,11 +1,8 @@
 package de.keytec.maven.php;
 
 import java.io.File;
-import java.io.IOException;
 
 import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.maven.wagon.PathUtils;
-import org.codehaus.plexus.util.FileUtils;
 
 
 
@@ -56,9 +53,9 @@ public class PhpValidate extends AbstractPhpCompile {
 	}
 	protected void executePhpFile(File file) throws MojoExecutionException {
 		
-		String commandString = phpExe +  getCompilerArgs()+" -d include_path=\";"
-				+ file.getParentFile().getAbsolutePath() + ";"
-				+ baseDir.getAbsolutePath() + Statics.phpinc + ";" + baseDir
+		String commandString = phpExe +  getCompilerArgs()+" -d include_path=\"" + File.pathSeparator
+				+ file.getParentFile().getAbsolutePath() + File.pathSeparator
+				+ baseDir.getAbsolutePath() + Statics.phpinc + File.pathSeparator + baseDir
 				+ sourceDirectory + "\" \"" + file.getAbsolutePath() + "\"";
 		try {
 			if (ignoreValidate == false && isExcluded(file)==false) {
