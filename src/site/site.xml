@@ -18,7 +18,8 @@
 	<body>
 		<links>
 			<item name="Maven" href="http://maven.apache.org/" />
-			<item name="KEY-TEC" href="http://www.key-tec.de/" />
+			<item name="PHPUnit" href="http://www.phpunit.de/" />
+			<item name="doxygen" href="http://www.stack.nl/~dimitri/doxygen/" />
 		</links>
 
 		<menu name="Main">
@@ -35,9 +36,16 @@
 			<item name="Project documentation"
 				href="documentation.html" />
 			<item name="Project deployment" href="deploy.html" />
+			<item name="FAQ" href="faq.html" />
 			<item name="The lifecycle" href="lifecycle.html" />
 			<item name="Plugin Goals" href="plugin-info.html" />
+			<item name="Licence" href="license.html" />
+			
 		</menu>
-
+		<menu name="Support">
+			<item name="Google group" href="http://groups.google.de/group/maven-for-php" />
+			<item name="Issue tracking" href="issue-tracking.html" />
+			
+		</menu>
 	</body>
 </project>

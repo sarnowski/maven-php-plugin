@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<document>
+	<properties>
+		<title>Maven for PHP</title>
+		<author email="christian.wiedemann@key-tec.de">cw</author>
+	</properties>
+	<body>
+		<release date="2008-09-01" version="1.0-ALPHA-2"
+			description="2. ALPHA release">
+			<action dev="cw" type="add" >
+				New assemblies: php-lib, php-lib-with-dependencies
+			</action>
+			<action dev="cw" type="add">
+				Better errorhandling for PHPUnit tests.
+			</action>
+			<action dev="cw" type="fix">
+				Bugfix for the XMLWriter for PHPUnit 4
+			</action>
+		</release>
+		<release version="1.0-ALPHA" date="2008-08-18" description="1. Alpha release">
+		</release>
+
+	</body>
+</document>

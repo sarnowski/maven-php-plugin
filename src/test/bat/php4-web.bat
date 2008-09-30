@@ -1,4 +1,4 @@
-del my-app
-call mvn archetype:generate -DarchetypeGroupId=org.phpmaven -DarchetypeArtifactId=php4-web-archetype -DarchetypeVersion=1.0-ALPHA -DgroupId=org.sample -DartifactId=my-app
-cd my-app
-call mvn package
+call versions.bat
+call php4.bat
+call mvn archetype:generate -DarchetypeGroupId=org.phpmaven -DarchetypeArtifactId=php4-web-archetype -DarchetypeVersion=%PHPMAVENVERSION% -DgroupId=org.sample -DartifactId=my-app
+call testit

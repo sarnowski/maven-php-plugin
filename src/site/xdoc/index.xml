@@ -16,6 +16,13 @@ Maven for PHP uses the power of Maven for building, reporting on and creating do
 It adapts the Maven build lifecycle to the PHP world while fully supporting PHP 4 and PHP 5.
 PHP for Maven uses <a href="http://www.phpunit.de/" target="_blank"><b>PHPUnit</b></a> for unit testing and <a href="http://www.stack.nl/~dimitri/doxygen/" target="_blank"><b>doxygen</b></a> for creating the api documentation.
 <br/>Use a <b>PHP library project</b> to create a library that can be used by other PHP libraries or PHP web projects. Use a <b>PHP web project</b> to create a standalone web project. 
+
+<subsection name="ALPHA-2 release">
+<p>
+ALPHA-2 is released.<br/>
+Have a look at the <a href="changes-report.html">release history</a>
+</p>
+</subsection>
  
 <subsection name="Getting started">
 <p>
@@ -37,6 +44,14 @@ This link will help you get started with Maven for PHP.
 </ul>
 
 </subsection>
+<subsection name="Getting support">
+<ul>
+<!--  <li><a href="faq.html"><span style="white-space: nowrap; font-weight: bold; font-size: 1.25em;">Go to the faq page.</span></a></li>-->
+<li><a href="http://trac.php-maven.org"><span style="white-space: nowrap; font-weight: bold; font-size: 1.25em;">Go to trac.php-maven.org</span></a><br/>Click on New Ticket to open an ticket.</li>
+<li><a href="http://groups.google.de/group/maven-for-php"><span style="white-space: nowrap; font-weight: bold; font-size: 1.25em;">Join google group</span></a><br/></li>
+<li><a href="mailto:christian.wiedemann@key-tec.de"><span style="white-space: nowrap; font-weight: bold; font-size: 1.25em;">Write an email</span></a><br/>If you don't find an answer write me an email.</li>
+</ul>
+</subsection> 
 <subsection name="Project documentation">
 <ul>
 <li><a href="http://www.javaworld.com/javaworld/jw-02-2006/jw-0227-maven.html"><span style="white-space: nowrap; font-weight: bold; font-size: 1.25em;">Get the most out of Maven 2 site generation</span><br/>A good starting point is to study the Maven documentation.</a></li>
@@ -49,7 +64,7 @@ This link will help you get started with Maven for PHP.
 <li><span style="white-space: nowrap; font-weight: bold; font-size: 1.25em;">Own Maven lifecycle for PHP</span></li>
 <li><span style="white-space: nowrap; font-weight: bold; font-size: 1.25em;">Supports PHP 4 and PHP 5</span></li>
 <li><span style="white-space: nowrap; font-weight: bold; font-size: 1.25em;">Archetypes for web and library projects</span></li>
-<li><span style="white-space: nowrap; font-weight: bold; font-size: 1.25em;">Supports PHP unit</span></li>
+<li><span style="white-space: nowrap; font-weight: bold; font-size: 1.25em;">Supports PHPUnit</span></li>
 <li><span style="white-space: nowrap; font-weight: bold; font-size: 1.25em;">Supports doxygen for API documentation</span></li>
 </ul>
 </subsection> 

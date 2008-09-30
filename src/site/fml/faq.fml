@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<faqs title="FAQ">
+	<part id="about">
+		<faq>
+			<question>
+				How to configure the path to the php.exe
+			</question>
+			<answer>Comming soon!</answer>
+		</faq>
+
+
+
+
+	</part>
+</faqs>
+
