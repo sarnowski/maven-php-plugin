@@ -9,18 +9,19 @@
 	<parent>
 		<groupId>org.phpmaven</groupId>
 		<artifactId>multimaster</artifactId>
-		<version>1.0-SNAPSHOT</version>
+		<version>1.0-BETA-1</version>
 	</parent>
 	<scm>
 		<connection>scm:cvs:pserver:christian.wiedemann:cwiedemanncvspuw@cvs.key-tec.de:/org.phpmaven.multimaster/php-maven:org.phpmaven.plugin</connection>
-	</scm> 
+	  <tag>1.0-BETA-1</tag>
+  </scm> 
 	<licenses>
 		<license>
 			<name>  The Apache Software License, Version 2.0
 </name>
 			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
 			<distribution>repo</distribution>
-			<comments></comments>
+			<comments />
 			
 		</license>
 	</licenses>
