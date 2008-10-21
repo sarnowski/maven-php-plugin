@@ -1,6 +1,7 @@
 package org.phpmaven.plugin.report;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.util.Locale;
 import java.util.Properties;
@@ -25,7 +26,7 @@ public class PHPDocumentor extends AbstractApiDocReport {
 	 * 
 	 * @parameter expression="phpdoc"
 	 * @required
-	 */
+	 */ 
 	public String phpDocFilePath = "phpdoc";
 	/**
 	 * Path to the php executable.
@@ -52,26 +53,33 @@ public class PHPDocumentor extends AbstractApiDocReport {
 	 * @readonly
 	 */
 	protected File generatedPhpDocConfigFile;
-
+	private void writeReport() {
+		if (getSink()!=null)  { 
+		getSink()
+				.rawText(
+						"<a href=\"phpdocumentor/HTMLframesConverter/default/index.html\" target=\"_blank\">Show documention<br><iframe src=\"phpdocumentor/HTMLframesConverter/default/index.html\" frameborder=0 style=\"border=0px;width:100%;height:400px\">");
+		}
+	}
 	@Override
 	protected void executeReport(Locale locale) throws MavenReportException {
 		try {
 			if (phpDocConfigFile.isFile()) {
 				Properties properties = new Properties();
-				properties.load(new FileReader(phpDocConfigFile));
+				
+				properties.load(new FileInputStream(phpDocConfigFile));
 				properties.put("directory", getProject().getBasedir() + "/"
 						+ getSourceDirectory());
 				properties.put("target", getApiDocOutputDirectory()
-						.getAbsoluteFile().getPath());
+						.getAbsoluteFile().getPath()+"/"+getFolderName());
 				
 				writePropFile(properties, generatedPhpDocConfigFile,"[Parse Data]");
 				String path = System.getProperty("java.library.path");
+				getLog().debug("PATH: "+ path);
 				String[] paths = path.split(File.pathSeparator);
 				File phpDocFile = null;
 				if (phpDocFilePath.equals("phpdoc")) {
 					for (int i = 0; i < paths.length; i++) {
 						String cpath = paths[i] + "/phpdoc";
-						System.out.println(cpath);
 						File file = new File(cpath);
 						if (file.isFile()) {
 							phpDocFile = file;
@@ -84,10 +92,9 @@ public class PHPDocumentor extends AbstractApiDocReport {
 				}
 				if (phpDocFile == null || !phpDocFile.isFile()) {
 					throw new PHPDocumentorNotFoundException();
-				}
+				} 
 				String executing = phpExe
 				+ " phpdoc -c \"" + generatedPhpDocConfigFile.getAbsolutePath()+"\"";
-				System.out.println(executing);
 				Commandline commandLine = new Commandline(executing
 						);
 				commandLine.setWorkingDirectory(phpDocFile.getParent());
@@ -107,28 +114,31 @@ public class PHPDocumentor extends AbstractApiDocReport {
 
 						});
 				if (executeCommandLine==1) { 
-					throw new PHPDocumentorNotFoundException();
+					throw new PHPDocumentorExecuteException(phpDocFile.getParent());
 				}
+				
 			}
 		} catch (Exception e) {
 			throw new MavenReportException(e.getMessage(), e);
 		}
+		writeReport();
 	}
 
 	public String getDescription(Locale locale) {
-		return "";
+		return "PHPDocumentor generated documentation";
 	}
 
 	public String getName(Locale locale) {
-		return "phpdocumentor";
+		return "PHPDocumentor";
 	}
 
 	public String getOutputName() {
 		return "apidocs/phpdocumentor";
 	}
-    public boolean isExternalReport()
-    {
-        return true;
-    }
+	@Override
+	protected String getFolderName() {
+		// TODO Auto-generated method stub
+		return "phpdocumentor";
+	}
 
 }

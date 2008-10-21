@@ -1,6 +1,7 @@
 package org.phpmaven.plugin.report;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.util.Locale;
 import java.util.Properties;
@@ -51,15 +52,17 @@ public class DoxygenReport extends AbstractApiDocReport {
 	protected void executeReport(Locale locale) throws MavenReportException {
 		try {
 			if (doxygenConfigFile.isFile()) {
-				System.out.println("hello");
 				Properties properties = new Properties();
-				properties.load(new FileReader(doxygenConfigFile));
+				properties.load(new FileInputStream(doxygenConfigFile));
 				properties.put("INPUT",  getProject().getBasedir()+"/"+ getSourceDirectory());
 				properties.put("OUTPUT_DIRECTORY", getApiDocOutputDirectory()
-						.getAbsoluteFile().getPath());
+						.getAbsoluteFile().getPath()+"/doxygen");
 				properties.put("PROJECT_NAME", getProject().getGroupId() + ":"
 						+ getProject().getArtifactId());
 				properties.put("PROJECT_NUMBER", getProject().getVersion());
+				properties.put("STRIP_FROM_PATH",properties.get("INPUT"));
+				properties.put("STRIP_FROM_INC_PATH",properties.get("INPUT"));
+
 
 				writePropFile(properties, generatedDoxygenConfigFile,null);
 				// properties.store(new FileWriter(generatedDoxygenConfigFile),
@@ -93,7 +96,7 @@ public class DoxygenReport extends AbstractApiDocReport {
 
 		getSink()
 				.rawText(
-						"<a href=\"html/index.html\" target=\"_blank\">Show documention<br><iframe src=\"html/doxygen/index.html\" frameborder=0 style=\"border=0px;width:100%;height:400px\">");
+						"<a href=\"doxygen/html/index.html\" target=\"_blank\">Show documention<br><iframe src=\"doxygen/html/index.html\" frameborder=0 style=\"border=0px;width:100%;height:400px\">");
 
 	}
 
@@ -104,12 +107,17 @@ public class DoxygenReport extends AbstractApiDocReport {
 	}
 
 	public String getName(Locale locale) {
-		return "Doxygen";
+		return "doxygen";
 	}
 
 	public String getOutputName() {
-		// TODO Auto-generated method stub
 		return "apidocs/doxygen";
+	}
+
+	@Override
+	protected String getFolderName() {
+		// TODO Auto-generated method stub
+		return "doxygen";
 	}
 
 

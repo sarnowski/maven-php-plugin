@@ -1,3 +1,3 @@
 cd my-app
-call mvn package -X
+call mvn clean package site 
 cd..

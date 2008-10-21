@@ -18,11 +18,11 @@ import org.apache.maven.reporting.AbstractMavenReport;
  * 
  */
 public abstract class AbstractApiDocReport extends AbstractMavenReport {
-
+	protected abstract String getFolderName();
 	/**
 	 * The output directory of doxygen generated documentation.
 	 * 
-	 * @parameter expression="${project.build.directory}/site/apidocs/phpdoc"
+	 * @parameter expression="${project.build.directory}/site/apidocs"
 	 * @required
 	 */
 	protected File outputApiDocDirectory;
