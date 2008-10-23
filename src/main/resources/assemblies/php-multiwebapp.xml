@@ -1,0 +1,22 @@
+<assembly>
+	<id>php-multiwebapp</id>
+	<formats>
+		<format>tar.gz</format>
+		<format>tar.bz2</format>
+		<format>zip</format>
+	</formats>
+	<dependencySets>
+		<dependencySet>
+			<outputDirectory>phpinc</outputDirectory>
+			<unpack>true</unpack>
+		</dependencySet>
+	</dependencySets>
+	<fileSets>
+		<fileSet>
+			<directory>src/main/webapp</directory>
+			<outputDirectory>projects/${artifactId}/htdocs</outputDirectory>
+			<useDefaultExcludes>true</useDefaultExcludes>
+		</fileSet>
+	</fileSets>
+	
+</assembly>
