@@ -20,18 +20,21 @@ public abstract class AbstractPhpCompile extends AbstractMojo implements
 		DirectoryWalkListener {
 
 	private ArrayList<Exception> compilerExceptions = new ArrayList<Exception>();
-
+	private final static ArrayList ERRORIDENTIFIERS = new ArrayList();
 	/**
 	 * @parameter expression="${project.basedir}" required="true"
 	 * @readonly
 	 */
 	protected File baseDir;
 	private StringBuffer currentBuffer;
-	protected StringBuffer getCurrentCommandLineOutput() { 
+
+	protected StringBuffer getCurrentCommandLineOutput() {
 		return currentBuffer;
 	}
+
 	/**
 	 * PHP Compile args. Use php -h to get a list of all php compile arguments.
+	 * 
 	 * @parameter
 	 */
 	private String compileArgs;
@@ -40,10 +43,10 @@ public abstract class AbstractPhpCompile extends AbstractMojo implements
 	 * 
 	 * @parameter expression="${project.compileClasspathElements}"
 	 * @required
-	 * @readonly	
+	 * @readonly
 	 */
 	private List<String> classpathElements;
-	
+
 	/**
 	 * The php source folder.
 	 * 
@@ -60,6 +63,25 @@ public abstract class AbstractPhpCompile extends AbstractMojo implements
 	 */
 	protected String phpExe;
 	private PHPVersion phpVersion;
+
+	public AbstractPhpCompile() {
+		ERRORIDENTIFIERS.add("Error");
+		ERRORIDENTIFIERS.add("Parse error");
+		ERRORIDENTIFIERS.add("Warning");
+		ERRORIDENTIFIERS.add("Fatal error");
+		ERRORIDENTIFIERS.add("Notice");
+	}
+
+	private boolean isError(String line) {
+		for (int i = 0; i < ERRORIDENTIFIERS.size(); i++) {
+			if (line.startsWith((String) ERRORIDENTIFIERS.get(i) + ":")
+					|| line.startsWith("<b>" + (String) ERRORIDENTIFIERS.get(i)
+							+ "</b>:")) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 	protected String getCompilerArgs() {
 		if (compileArgs == null) {
@@ -106,29 +128,35 @@ public abstract class AbstractPhpCompile extends AbstractMojo implements
 			}
 		}
 	}
-	protected final void copyToTargetFolder(String sourceDirectory, File sourceFile,String targetClassFolder) throws MojoExecutionException { 
+
+	protected final void copyToTargetFolder(String sourceDirectory,
+			File sourceFile, String targetClassFolder)
+			throws MojoExecutionException {
 		String relative = PathUtils.toRelative(new File(baseDir.toString()
 				+ sourceDirectory), sourceFile.toString());
-		
+
 		getLog().debug("Relative :" + relative);
-		File targetFile = new File(baseDir.toString()
-				+ targetClassFolder + "/" + relative);
-		
+		File targetFile = new File(baseDir.toString() + targetClassFolder + "/"
+				+ relative);
+
 		if (targetFile.getParentFile().getName().equalsIgnoreCase("cvs")) {
 			return;
 		}
-		getLog().debug("copy from:" + sourceFile + " to: " + targetFile.toString());
+		getLog().debug(
+				"copy from:" + sourceFile + " to: " + targetFile.toString());
 		try {
+			
 			FileUtils.copyFileIfModified(sourceFile, targetFile);
 		} catch (IOException e) {
 			throw new MojoExecutionException(e.getMessage(), e);
 		}
 	}
+
 	public final PHPVersion getPhpVersion() throws CommandLineException,
 			PhpExecutionError {
 		if (phpVersion != null) {
 			return phpVersion;
-		} 
+		}
 		String commandString = phpExe + " -v";
 		getLog().debug("Try to execute command: " + commandString);
 		final StringBuffer bufferErrBuffer = new StringBuffer();
@@ -149,7 +177,10 @@ public abstract class AbstractPhpCompile extends AbstractMojo implements
 		PHPVersion phpVersion = inputConsumer.getPhpVersion();
 		getLog().debug("PHPVersion: " + phpVersion.toString());
 		if (executeCommandLine != 0 || errString.length() != 0) {
-			getLog().error("Error while execution php -v\n"+ errString.toString()+"\n comandLine:"+executeCommandLine+"\n"+bufferOutBuffer.toString());
+			getLog().error(
+					"Error while execution php -v\n" + errString.toString()
+							+ "\n comandLine:" + executeCommandLine + "\n"
+							+ bufferOutBuffer.toString());
 			throw new PhpExecutionError();
 		}
 		this.phpVersion = phpVersion;
@@ -159,6 +190,7 @@ public abstract class AbstractPhpCompile extends AbstractMojo implements
 	private void unjar(File jarFile, File destDir) throws IOException {
 		java.util.jar.JarFile jar = new java.util.jar.JarFile(jarFile);
 		java.util.Enumeration<java.util.jar.JarEntry> items = jar.entries();
+		
 		while (items.hasMoreElements()) {
 			java.util.jar.JarEntry file = (java.util.jar.JarEntry) items
 					.nextElement();
@@ -168,7 +200,6 @@ public abstract class AbstractPhpCompile extends AbstractMojo implements
 				f.mkdir();
 				continue;
 			}
-
 			java.io.InputStream is = jar.getInputStream(file); // get the input
 			// stream
 			java.io.FileOutputStream fos = new java.io.FileOutputStream(f);
@@ -180,22 +211,25 @@ public abstract class AbstractPhpCompile extends AbstractMojo implements
 		}
 
 	}
-	protected final void prepareDependencies(List<String> elements) throws IOException{
-		
+
+	protected final void prepareDependencies(List<String> elements)
+			throws IOException {
+
 		File targetFile = new File(baseDir.toString() + Statics.phpinc);
 		targetFile.mkdirs();
 		for (int i = 0; i < elements.size(); i++) {
 			File sourceFile = new File((String) elements.get(i));
 			if (sourceFile.isFile()) {
-				getLog().debug("unjar dependency: "+ sourceFile);
+				getLog().debug("unjar dependency: " + sourceFile);
 				unjar(sourceFile, targetFile);
 			}
 		}
 	}
+
 	protected final void prepareCompileDependencies() throws IOException {
 		prepareDependencies(classpathElements);
 	}
-	
+
 	protected final void phpCompile(String commandString, final File file)
 			throws PhpCompileException, CommandLineException, PhpExecutionError {
 		getLog().debug(
@@ -206,17 +240,12 @@ public abstract class AbstractPhpCompile extends AbstractMojo implements
 		Commandline commandLine = new Commandline(commandString);
 
 		final boolean ignoreIncludeErrors = getIgnoreIncludeErrors();
+
 		int executeCommandLine = CommandLineUtils.executeCommandLine(
 				commandLine, new StreamConsumer() {
 					public void consumeLine(String line) {
 						getLog().debug("system.out: " + line);
-						if (line != null
-								&& (line.startsWith("Parse error:")
-										|| line.startsWith("Error:")
-										|| line.startsWith("Warning:") || line
-										.startsWith("<b>Fatal error</b>:"))
-
-						) {
+						if (isError(line) == true) {
 							if (ignoreIncludeErrors == false
 									|| (ignoreIncludeErrors == true
 											&& !line.contains("require_once") && !line
@@ -234,11 +263,11 @@ public abstract class AbstractPhpCompile extends AbstractMojo implements
 					}
 
 				});
-		currentBuffer=bufferOutBuffer;
+		currentBuffer = bufferOutBuffer;
 		String errString = bufferErrBuffer.toString();
 		if (!"".equals(errString)) {
-			throw new PhpCompileException(commandString,PhpCompileException.ERROR, file,
-					errString);
+			throw new PhpCompileException(commandString,
+					PhpCompileException.ERROR, file, errString);
 		}
 		if (executeCommandLine == 1) {
 			throw new PhpExecutionError();

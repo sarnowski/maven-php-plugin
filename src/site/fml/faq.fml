@@ -3,13 +3,78 @@
 	<part id="about">
 		<faq>
 			<question>
-				How to configure the path to the php.exe
+				How to configure the "Maven for PHP" plugin?
 			</question>
-			<answer>Comming soon!</answer>
+			<answer>
+			"Maven for PHP" is configured like every other maven plugin. 
+			Here are a sample configuration:
+<source>
+<project>
+......
+			<plugin>
+				<groupId>org.phpmaven</groupId>
+				<artifactId>maven-php-plugin</artifactId>
+				<extensions>true</extensions>
+				<configuration>
+				    <phpExe>
+					    $pathTOYourPHPFolder/php.exe
+				    </phpExe>
+				    <ignoreValidate>false</ignoreValidate>
+				    <excludeFromValidation>
+				        <file>controller.php</file>
+				        <file>tree.php</file>
+				    </excludeFromValidation>
+				     
+			    </configuration>
+			</plugin>
+......			
+</project>
+
+			</source>
+			You can find a full list of all possible parameters under <a href="http://www.php-maven.org/plugin-info.html">Plugin Goals</a>
+			</answer>
 		</faq>
+<faq>
+<question>
+				Where can i find the source code?
+			</question>
+			<answer>
+			Look <a href="source.html">here</a> 
+			</answer>
+		</faq>
+	
+<faq>
+<question>
+				PHP validated fails because PHP is looking for files which are central included.   
+			</question>
+			<answer>
+			You can include files central with the -d argument. You must exclude that file from the validation.
+			<source>
+<project>
+......
+			<plugin>
+				<groupId>org.phpmaven</groupId>
+				<artifactId>maven-php-plugin</artifactId>
+				<extensions>true</extensions>
+				<configuration>
+					<compileArgs>
+						-d auto_prepend_file=core.php
+					</compileArgs>
+				    <excludeFromValidation>
+				        <file>core.php</file>
+				    </excludeFromValidation>
+				     
+			    </configuration>
+			</plugin>
+......			
+</project>
 
-
-
+			</source> 
+</answer>
+			
+		
+		
+		</faq>
 
 	</part>
 </faqs>

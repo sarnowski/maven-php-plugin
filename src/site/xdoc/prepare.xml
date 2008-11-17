@@ -22,6 +22,9 @@
 		<li>
 		<a href="http://www.php.net">doygen</a>
 		</li>
+		<li>
+		<a href="http://www.phpdoc.org/">phpdocumentor</a>
+		</li>
 		</ul>
 		</subsection>
 		<subsection name="Prepare Maven 2">
@@ -32,7 +35,7 @@ Then, go to the settings.xml (~/.m2 on Unix/Mac OS X and C:\Documents and Settin
 <param name="file" value="src/site/include/settings.xml"/>
 </macro></p>
 <p>
-Finally, your php.exe and doxygen.exe must be part of the system path.
+Finally, your php.exe and doxygen.exe and phpdoc must be part of the system path.
 </p> 
 </subsection>
 </section>

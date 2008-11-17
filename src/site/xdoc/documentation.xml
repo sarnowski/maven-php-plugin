@@ -12,23 +12,31 @@
 	</properties>
 	<body>
 		<section name="Create documentation for your project">
-			<p>
-				"PHP for Maven" extends the Maven default documentation
-				by adding a doxygen goal. This goal is configured
-				through:
-			</p>
+		<p>To create a documentation simply run:</p>
 
 			<macro name="snippet">
 				<param name="id" value="doxygen" />
-
 				<param name="file" value="src/site/include/pom.xml" />
 			</macro>
-
-			<p>To create a documentation simply run:</p>
-
+			
 			<source>mvn site</source>
 
+			Following documentations will be created.
+		<subsection name="PHPDocumentor">
+		<p>
+				"PHP for Maven" extends the Maven default documentation
+				by adding a phpdocumentor goal. 
+			</p>
+			
+			</subsection>
+		<subsection name="Doxygen">
+			<p>
+				"PHP for Maven" extends the Maven default documentation
+				by adding a doxygen goal. 
+			</p>
+
 			<subsection name="What happened?">
+				Doxygen:<br/>
 				Maven generates a standard documenation. Through the
 				doxygen goal, an api doc is created. The doxygen
 				configuration file must be located under
@@ -40,6 +48,16 @@ OUTPUT_DIRECTORY
 PROJECT_NAME 
 PROJECT_NUMBER
 				</source>
+				PHPDocumentor:<br/>
+				Through the phpdocumnetor goal, an api doc is created. The phpdocumnetor
+				configuration file must be located under
+				src/site/phpdoc/phpdoc.conf. The following parameters
+				of the phpdoc.conf will be replaced by the plugin.
+				<source>
+directory 
+target 
+				</source>
+			</subsection>
 			</subsection>
 		</section>
 
