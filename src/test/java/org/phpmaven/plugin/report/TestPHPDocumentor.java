@@ -21,6 +21,6 @@ public class TestPHPDocumentor extends TestCase{
 		doc.phpDocConfigFile=new File(mavenProject.getBasedir()+"/src/site/phpdoc/phpdoc.config");
 		doc.generatedPhpDocConfigFile=new File(mavenProject.getBasedir()+"/target/site/phpdoc/phpdoc.ini");
 		doc.outputApiDocDirectory=new File(mavenProject.getBasedir()+"target/site/apidocs/phpdoc");
-		doc.executeReport(new Locale("de"));
+		//doc.executeReport(new Locale("de"));
 	}
 }

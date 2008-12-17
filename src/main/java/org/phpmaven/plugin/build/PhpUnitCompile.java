@@ -39,11 +39,19 @@ public class PhpUnitCompile extends AbstractPhpCompile {
 
 	File resultFolder;
 	/**
+	 * If the parameter is set only this testFile will run. 
+	 * NB: do not specify the file path. Only specify the file name.
+	 * 
+	 * @parameter expression=""
+	 */
+	private String testFile="";
+	/**
 	 * The test source Folder.
 	 * 
 	 * @parameter expression="/src/test/php"
 	 * @required
 	 */
+	
 	private String testDirectory;
 
 	protected final void prepareTestDependencies() throws IOException {
@@ -52,7 +60,8 @@ public class PhpUnitCompile extends AbstractPhpCompile {
 
 	public void execute() throws MojoExecutionException, MojoFailureException {
 		try {
-
+			testFile = System.getProperty("testFile")!=null?System.getProperty("testFile"):"";
+			
 			resultFolder = new File(baseDir.getAbsoluteFile()
 					+ "/target/surefire-reports");
 
@@ -173,18 +182,19 @@ public class PhpUnitCompile extends AbstractPhpCompile {
 	protected void executePhpFile(File file) throws MojoExecutionException {
 		String targetFile = resultFolder.getAbsolutePath() + "/"
 				+ file.getName().replace(".php", ".xml");
+		if (!"".equals(testFile) && !file.getName().equals(testFile)) { 
+			return;
+		}
 		try {
 			try {
 				String command = phpExe + getCompilerArgs()
 						+ " -d include_path=\""+File.pathSeparator
-
+						+ baseDir.getAbsolutePath() + sourceDirectory + File.pathSeparator
+						+ baseDir+"/"+testDirectory+ File.pathSeparator
+						+ new Statics(baseDir).getPhpInc() + File.pathSeparator
 						+ file.getParentFile().getAbsolutePath() + File.pathSeparator
 						+ new Statics(baseDir).getTargetTestClassesFolder()+ File.pathSeparator
-						+ baseDir+"/"+testDirectory+ File.pathSeparator
 						+ new Statics(baseDir).getTargetClassesFolder() + File.pathSeparator
-						+ new Statics(baseDir).getPhpInc() + File.pathSeparator
-						+ baseDir.getAbsolutePath() + sourceDirectory + File.pathSeparator
-
 						+ "\" \"" + new Statics(baseDir).getPhpInc();
 
 				if (getPhpVersion() == PHPVersion.PHP5) {

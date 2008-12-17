@@ -11,6 +11,7 @@ import org.apache.maven.wagon.PathUtils;
 import org.codehaus.plexus.util.DirectoryWalkListener;
 import org.codehaus.plexus.util.DirectoryWalker;
 import org.codehaus.plexus.util.FileUtils;
+import org.codehaus.plexus.util.IOUtil;
 import org.codehaus.plexus.util.cli.CommandLineException;
 import org.codehaus.plexus.util.cli.CommandLineUtils;
 import org.codehaus.plexus.util.cli.Commandline;
@@ -31,7 +32,7 @@ public abstract class AbstractPhpCompile extends AbstractMojo implements
 	protected StringBuffer getCurrentCommandLineOutput() {
 		return currentBuffer;
 	}
-
+	protected String flushPHPOutput = System.getProperty("flushPHPOutput")!=null?System.getProperty("flushPHPOutput"):"false";
 	/**
 	 * PHP Compile args. Use php -h to get a list of all php compile arguments.
 	 * 
@@ -194,18 +195,24 @@ public abstract class AbstractPhpCompile extends AbstractMojo implements
 		while (items.hasMoreElements()) {
 			java.util.jar.JarEntry file = (java.util.jar.JarEntry) items
 					.nextElement();
+			
 			java.io.File f = new java.io.File(destDir + java.io.File.separator
 					+ file.getName());
+			if (f.exists() && f.length() ==  file.getSize()) {
+				continue;
+			}
 			if (file.isDirectory()) { // if its a directory, create it
 				f.mkdir();
 				continue;
 			}
+			
 			java.io.InputStream is = jar.getInputStream(file); // get the input
 			// stream
 			java.io.FileOutputStream fos = new java.io.FileOutputStream(f);
-			while (is.available() > 0) { // write contents of 'is' to 'fos'
-				fos.write(is.read());
-			}
+			IOUtil.copy(is, fos);
+//			while (is.available() > 0) { // write contents of 'is' to 'fos'
+//				fos.write(is.read());
+//			}
 			fos.close();
 			is.close();
 		}
@@ -244,7 +251,12 @@ public abstract class AbstractPhpCompile extends AbstractMojo implements
 		int executeCommandLine = CommandLineUtils.executeCommandLine(
 				commandLine, new StreamConsumer() {
 					public void consumeLine(String line) {
-						getLog().debug("system.out: " + line);
+						
+						if (flushPHPOutput.equals("true")) {
+							getLog().info("php.out: " + line);
+						}else { 
+							getLog().debug("php.out: " + line);
+						}
 						if (isError(line) == true) {
 							if (ignoreIncludeErrors == false
 									|| (ignoreIncludeErrors == true
@@ -258,7 +270,7 @@ public abstract class AbstractPhpCompile extends AbstractMojo implements
 					}
 				}, new StreamConsumer() {
 					public void consumeLine(String line) {
-						getLog().debug("system.err: " + line);
+						getLog().debug("php.err: " + line);
 						bufferErrBuffer.append(line);
 					}
 

@@ -40,6 +40,14 @@
 			<plugin>
 				<groupId>org.phpmaven</groupId>
 				<artifactId>maven-php-plugin</artifactId>
+				<!-- Optional -->
+				<reportSet>
+						<reports>
+							<report>doxygen</report>
+							<report>phpdocumentor</report>
+						</reports>
+					</reportSet>
+					<!-- / Optional -->
 			</plugin>
 		<!-- END SNIPPET: doxygen -->
 		<!-- Surfire Documentation -->
