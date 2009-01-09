@@ -82,6 +82,7 @@ public class PhpUnitCompile extends AbstractPhpCompile {
 					.println("-------------------------------------------------------");
 			goRecursiveAndCall(new File(baseDir.getAbsoluteFile()
 					+ testDirectory));
+			 
 			System.out.println();
 			System.out.println("Results :");
 			System.out.println();
@@ -95,6 +96,9 @@ public class PhpUnitCompile extends AbstractPhpCompile {
 			}
 			System.out.println("Tests run: " + completeTests + ", Failures: "
 					+ completeFailures + ", Errors: " + completeErrors + "\n");
+			if (completeErrors!=0 || completeFailures!=0) { 
+				throw new PHPUnitTestCaseFailureException(completeErrors,completeFailures);
+			}
 		} catch (Exception e) {
 			throw new MojoExecutionException(e.getMessage(), e);
 		}
@@ -205,7 +209,11 @@ public class PhpUnitCompile extends AbstractPhpCompile {
 					command += "/XMLWriter.php\" \"" + file.getAbsolutePath()
 							+ "\" \"" + targetFile + "\"";
 				}
+				try { 
 				phpCompile(command, file);
+				} catch (PhpExecutionError ex) {
+					writeFailure(file, targetFile);
+				}
 				File targetFileObj = new File(targetFile);
 				if (targetFileObj.exists()) {
 					parseResultingXML(targetFileObj);
@@ -215,9 +223,7 @@ public class PhpUnitCompile extends AbstractPhpCompile {
 							getCurrentCommandLineOutput().toString());
 				}
 
-			} catch (PhpExecutionError ex) {
-				writeFailure(file, targetFile);
-				throw ex;
+			
 			} catch (PhpCompileException pex) {
 				writeFailure(file, targetFile);
 				throw pex;

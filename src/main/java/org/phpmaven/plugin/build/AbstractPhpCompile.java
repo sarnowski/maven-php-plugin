@@ -74,6 +74,7 @@ public abstract class AbstractPhpCompile extends AbstractMojo implements
 	}
 
 	private boolean isError(String line) {
+		line = line.trim();
 		for (int i = 0; i < ERRORIDENTIFIERS.size(); i++) {
 			if (line.startsWith((String) ERRORIDENTIFIERS.get(i) + ":")
 					|| line.startsWith("<b>" + (String) ERRORIDENTIFIERS.get(i)
