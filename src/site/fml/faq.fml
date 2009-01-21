@@ -3,6 +3,13 @@
 	<part id="about">
 		<faq>
 			<question>
+				Is there a way to run only one unit test?
+			</question>
+	<answer>
+	Yes use the -DtestFile option. For example run mvn testfile.php 
+	</answer>
+		<faq>
+			<question>
 				How to configure the "Maven for PHP" plugin?
 			</question>
 			<answer>

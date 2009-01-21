@@ -14,7 +14,7 @@
 				Add support to show php output. (use the -DflushPHPOutput=true)
 			</action>
 			<action dev="cw" type="update" >
-				Unjar dependencies only unjars files if they have changed.(size changed). unit testing is a lot faster.
+				Unjar dependencies only unjars files if they have changed.(size changed). unit testing is now a lot faster.
 			</action>
 			<action dev="cw" type="update" >
 				Changed the order of the include path at phpunit. Now it is not necassary to run phpvalidate before testing
