@@ -43,6 +43,9 @@
 			<item name="Source code" href="source.html" />
 			
 		</menu>
+		<menu name="Articles">
+			<item name="Zend Framework Integration" href="zendframework.html"/>
+		</menu>
 		<menu name="Support">
 			<item name="Google group" href="http://groups.google.de/group/maven-for-php" />
 			<item name="Issue tracking" href="issue-tracking.html" />
