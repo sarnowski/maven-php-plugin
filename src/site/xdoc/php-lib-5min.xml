@@ -20,7 +20,7 @@
 mvn archetype:generate \
 -DarchetypeGroupId=org.phpmaven \
 -DarchetypeArtifactId=php4-lib-archetype \
--DarchetypeVersion=1.0-BETA-2 \
+-DarchetypeVersion=1.0 \
 -DgroupId=org.sample \
 -DartifactId=my-app \
 </source>
@@ -29,7 +29,7 @@ mvn archetype:generate \
 mvn archetype:generate \
 -DarchetypeGroupId=org.phpmaven \
 -DarchetypeArtifactId=php5-lib-archetype \
--DarchetypeVersion=1.0-BETA-2 \
+-DarchetypeVersion=1.0 \
 -DgroupId=org.sample \
 -DartifactId=my-app \
 			</source>
