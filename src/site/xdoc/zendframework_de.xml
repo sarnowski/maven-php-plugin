@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<document>
+	<properties>
+		<author email="christian.wiedemann@key-tec.de">
+			Christian Wiedemann
+		</author>
+
+		<title>Using Zend Framework in your Maven PHP Project</title>
+	</properties>
+	<meta name="keyword" content="apache, maven, php" />
+	<body>
+		<section name="Ein neues Zend Framework Projekt mit Mavenintegration erstellen">
+			<subsection name="Ordnerstruktur">
+				<p>Als erstes wird mithilfe von <a href="php-web-5min.html">PHP web project - 5 minute starter guide</a> ein neues PHP-Maven Webprojekt erzeugt. In dieses muss nun die typische Zend Framework Projektstruktur integriert werden:</p>
+				<source>
+my-project
+	|-- pom.xml 
+	`-- src 
+		`-- main 
+			 |-- php
+			 |	 `-- org
+			 |	 	 `-- sample
+			 |		 	 |-- controllers 
+			 |		  	 |-- forms
+			 |		 	 |-- layouts
+			 |		 	 |-- models
+			 |		 	 `-- views
+			 `-- webapp
+			 	 |-- images
+			 	 |-- styles
+			 	 `-- index.php
+				</source>
+				Wie man sieht sind hier die beiden typischen Zend Framework Basisordner "application" und "public" in die Ordner "php/org/sample" und "webapp" integriert worden.
+			</subsection>
+			<subsection name="pom.xml">
+				Als nächstes wird die pom.xml des Projektes angepasst, genauer gesagt die Abhängigkeit zum Zend Framework hinzugefü;gt:
+				<source>
+				<![CDATA[
+<dependencies>
+	<dependency>
+		<groupId>com.zend</groupId>
+		<artifactId>zend-framework</artifactId>
+		<version>1.7.5</version>
+	</dependency>
+</dependencies>	
+  ]]>
+				</source>			
+			</subsection>
+			<subsection name="Installieren">
+				Folgender Befehl auf der Kommandozeile installiert nun das Projekt, läd das Zend Framework herunter und entpackt es in den Ordner "my-project/target/phpinc".
+				<source>
+					mvn install
+				</source>
+			</subsection>
+		</section>
+		<section name="Ein bestehendes Zend Framework Projekt auf Maven umstellen">
+			<subsection name="Vorbereitung">
+				Als erstes bitte das "Ein neues Zend Framework Projekt mit Mavenintegration erstellen" Tutorial bearbeiten, um die richtige Ordnerstruktur und eine pom.xml zu erzeugen.<br/>
+				Als nächstes müssen sämtliche "../application" Pfade in der index.php angepasst werden (in unserem Beispiel zu "../php/org/sample). 
+			</subsection>
+			<subsection name="php:validate und der Autoloader">
+				Wird in der Applikation der Zend Autoloader  verwendet, kann dies zu Problemen während dem maven goal "php:validate" führen. <br/>
+				Um diesen Problemen aus dem Weg zu gehen, ist es ratsam die Initialisierung des Autoloaders in einem eigenen PHP-Script vorzunehmen, welches unter "src/main/php/org/sample/registerautoload.php" abgelegt wird:
+				<source><![CDATA[
+					<?php
+					require_once "Zend/Loader.php";
+					Zend_Loader::registerAutoload();
+					?>
+				]]>
+				</source>
+				Dieses file wird nun in der pom.xml als "auto prepend" hinzugefügt:
+				<source>
+				<![CDATA[
+			<plugin>
+				<groupId>org.phpmaven</groupId>
+				<artifactId>maven-php-plugin</artifactId>
+				<extensions>true</extensions>
+				<version>1.0-BETA-2</version>	
+				<configuration>
+					<compileArgs>
+						-d auto_prepend_file=registerautoload.php
+					</compileArgs>
+					<ignoreValidate>false</ignoreValidate>
+				</configuration>
+			</plugin>
+				]]>
+				</source>
+				Nun wird der Zend Autoloader während "php:validate" initialisiert und es sollte zu keinen Class-Loading Problemen mehr kommen.
+			</subsection>
+		</section>
+<script src="http://www.google-analytics.com/ga.js" type="text/javascript"></script>
+<script type="text/javascript">
+var pageTracker = _gat._getTracker('UA-5308244-1');
+pageTracker._trackPageview();
+</script>
+	</body>
+	
+</document>
