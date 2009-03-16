@@ -46,8 +46,7 @@ Zend Framework:
 
       <subsection name="Install"> The following command in the command line
     then installs the project, downloads the Zend Framework and
-      unzips it to the "my-project/target/phpinc" folder. <source> mvn
-      install </source> </subsection>
+      unzips it to the "my-project/target/phpinc" folder. <source> mvn install </source> </subsection>
     </section>
 
     <section name="Convert an existing Zend Framework project to Maven">
