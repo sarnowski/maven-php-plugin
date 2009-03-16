@@ -15,9 +15,22 @@
       href="php-web-5min.html">PHP web project - 5 minute starter guide.</a>
  In this web project, the typical
       Zend Framework project structure must be integrated:</p> <source>
-      my-project |-- pom.xml `-- src `-- main |-- php | `-- org | `-- sample |
-      |-- controllers | |-- forms | |-- layouts | |-- models | `-- views `--
-      webapp |-- images |-- styles `-- index.php </source> As you can see, integration includes the two typical Zend Framework basic folders called "application" and
+      my-project 
+      |-- pom.xml 
+      `-- src 
+      		`-- main 
+	      		|-- php 
+	      		|    `-- org 
+	      		|         `-- sample
+	     		|             |-- controllers 
+	     		|             |-- forms 
+	     		|             |-- layouts 
+	     		|             |-- models 
+	     		|              `-- views
+	     		`-- webapp 
+	     			|-- images 
+	     			|-- styles 
+	     			`-- index.php </source> As you can see, integration includes the two typical Zend Framework basic folders called "application" and
       "public", which now are featured under the "php/org/sample" and "webapp" folders.
       </subsection>
 
