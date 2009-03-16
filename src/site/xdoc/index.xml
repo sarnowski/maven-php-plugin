@@ -17,9 +17,9 @@ It adapts the Maven build lifecycle to the PHP world while fully supporting PHP 
 PHP for Maven uses <a href="http://www.phpunit.de/" target="_blank"><b>PHPUnit</b></a> for unit testing and <a href="http://www.stack.nl/~dimitri/doxygen/" target="_blank"><b>doxygen</b></a> for creating the api documentation.
 <br/>Use a <b>PHP library project</b> to create a library that can be used by other PHP libraries or PHP web projects. Use a <b>PHP web project</b> to create a standalone web project. 
 
-<subsection name="BETA-2 release">
+<subsection name="First release">
 <p>
-BETA-2 is released.<br/>
+1.0 is released.<br/>
 Have a look at the <a href="changes-report.html">release history</a>
 </p>
 </subsection>

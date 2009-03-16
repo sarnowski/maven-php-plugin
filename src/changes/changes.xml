@@ -5,6 +5,15 @@
 		<author email="christian.wiedemann@key-tec.de">cw</author>
 	</properties>
 	<body>
+	<release date="2008-03-16" version="1.0"
+			description="First release">
+			<action dev="cw" type="add" >
+				Excludes added. Now you can exclude folders and files from validation.
+			</action>
+			<action dev="cw" type="add" >
+				SCM folders files will be excluded now.
+			</action>
+	</release>
 	<release date="2008-11-20" version="1.0-BETA-2"
 			description="2. BETA release">
 			<action dev="cw" type="add" >
