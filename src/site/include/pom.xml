@@ -48,7 +48,7 @@
 						</reports>
 					</reportSet>
 					<!-- / Optional -->
-			</plugin>
+			
 		<!-- END SNIPPET: doxygen -->
 		<!-- Surfire Documentation -->
 			<plugin>

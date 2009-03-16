@@ -32,6 +32,10 @@
 				href="php-lib-5min.html" />
 			<item name="PHP web project - 5 minute starter guide"
 				href="php-web-5min.html" />
+			<item name="3rd party libraries - How to install 3rd party libraries"
+				href="add3partylibs.html" />
+			<item name="Fast unit testing - How to run unit tests quickly"
+				href="unittesting.html" />
 		</menu>
 		<menu name="Documentation">
 			<item name="Project documentation"

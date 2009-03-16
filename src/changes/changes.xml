@@ -8,6 +8,12 @@
 	<release date="2008-11-20" version="1.0-BETA-2"
 			description="2. BETA release">
 			<action dev="cw" type="add" >
+				PHPUnit 3.3.9 is now supported.
+			</action>
+			<action dev="cw" type="add" >
+				Adding the Maven PHPUnit 3.x bridge PHP file automaticly. Now newer installed versions of PHPUnit can be used.
+			</action>
+			<action dev="cw" type="add" >
 				Add support to run only one unit test. (use the -DtestFile argument at the commandline)
 			</action>
 			<action dev="cw" type="add" >

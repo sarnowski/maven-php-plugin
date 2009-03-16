@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +14,8 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
+import org.codehaus.plexus.util.FileUtils;
+import org.codehaus.plexus.util.cli.CommandLineException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -54,8 +57,18 @@ public class PhpUnitCompile extends AbstractPhpCompile {
 	
 	private String testDirectory;
 
-	protected final void prepareTestDependencies() throws IOException {
+	protected final void prepareTestDependencies() throws IOException, CommandLineException, PhpExecutionError {
+		
 		prepareDependencies(testClasspathElements);
+		
+		if (getPhpVersion()==PHPVersion.PHP5) {
+			File mavenTestFile = new File(
+					 new Statics(baseDir).getPhpInc() +"/PHPUnit/TextUI/Maven.php");
+			if (!mavenTestFile.exists()) { 
+				URL mavenUrl = getClass().getResource("Maven.php");
+				FileUtils.copyURLToFile(mavenUrl, mavenTestFile);
+			}
+		}
 	}
 
 	public void execute() throws MojoExecutionException, MojoFailureException {
@@ -186,9 +199,15 @@ public class PhpUnitCompile extends AbstractPhpCompile {
 	protected void executePhpFile(File file) throws MojoExecutionException {
 		String targetFile = resultFolder.getAbsolutePath() + "/"
 				+ file.getName().replace(".php", ".xml");
+		
 		if (!"".equals(testFile) && !file.getName().equals(testFile)) { 
 			return;
 		}
+		System.out.println(file.getName().toLowerCase());
+		if (!file.getName().toLowerCase().endsWith("test.php")) { 
+			return;
+		}
+			
 		try {
 			try {
 				String command = phpExe + getCompilerArgs()

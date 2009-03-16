@@ -32,6 +32,15 @@ public abstract class AbstractPhpCompile extends AbstractMojo implements
 	protected StringBuffer getCurrentCommandLineOutput() {
 		return currentBuffer;
 	}
+	/**
+	 * @parameter
+	 */
+	public String[] excludes=new String[0];
+	/**
+	 * @parameter
+	 */
+	public String[] includes=new String[0];
+
 	protected String flushPHPOutput = System.getProperty("flushPHPOutput")!=null?System.getProperty("flushPHPOutput"):"false";
 	/**
 	 * PHP Compile args. Use php -h to get a list of all php compile arguments.
@@ -147,7 +156,6 @@ public abstract class AbstractPhpCompile extends AbstractMojo implements
 		getLog().debug(
 				"copy from:" + sourceFile + " to: " + targetFile.toString());
 		try {
-			
 			FileUtils.copyFileIfModified(sourceFile, targetFile);
 		} catch (IOException e) {
 			throw new MojoExecutionException(e.getMessage(), e);
@@ -199,7 +207,7 @@ public abstract class AbstractPhpCompile extends AbstractMojo implements
 			
 			java.io.File f = new java.io.File(destDir + java.io.File.separator
 					+ file.getName());
-			if (f.exists() && f.length() ==  file.getSize()) {
+			if (f.exists() ) {
 				continue;
 			}
 			if (file.isDirectory()) { // if its a directory, create it
@@ -330,6 +338,13 @@ public abstract class AbstractPhpCompile extends AbstractMojo implements
 		DirectoryWalker walker = new DirectoryWalker();
 		walker.setBaseDir(parentFolder);
 		walker.addDirectoryWalkListener(this);
+		walker.addSCMExcludes();
+		for(int i =0; excludes!=null && i<excludes.length;i++ ) { 
+			walker.addExclude(excludes[i]);	
+		}
+		for(int i =0; includes!=null && i<includes.length;i++ ) { 
+			walker.addInclude(excludes[i]);	
+		}
 		walker.scan();
 		if (compilerExceptions.size() != 0) {
 			throw new MuilplePhpCompileException(compilerExceptions);

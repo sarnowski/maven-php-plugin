@@ -17,9 +17,9 @@ It adapts the Maven build lifecycle to the PHP world while fully supporting PHP 
 PHP for Maven uses <a href="http://www.phpunit.de/" target="_blank"><b>PHPUnit</b></a> for unit testing and <a href="http://www.stack.nl/~dimitri/doxygen/" target="_blank"><b>doxygen</b></a> for creating the api documentation.
 <br/>Use a <b>PHP library project</b> to create a library that can be used by other PHP libraries or PHP web projects. Use a <b>PHP web project</b> to create a standalone web project. 
 
-<subsection name="BETA-1 release">
+<subsection name="BETA-2 release">
 <p>
-BETA-1 is released.<br/>
+BETA-2 is released.<br/>
 Have a look at the <a href="changes-report.html">release history</a>
 </p>
 </subsection>
@@ -40,7 +40,9 @@ This link will help you get started with Maven for PHP.
 <li><a href="prepare.html"><span style="white-space: nowrap; font-weight: bold; font-size: 1.25em;">Prepare Maven for PHP</span><br/>Prepare the Maven configuration to be able to use "Maven for PHP".</a></li>
 <li><a href="php-lib-5min.html"><span style="white-space: nowrap; font-weight: bold; font-size: 1.25em;">PHP library project - 5 minutes starter guide</span><br/>Use the PHP library archetype for PHP libraries. These libraries can be used by other libraries or by PHP web projects.<br/></a></li>
 <li><a href="php-web-5min.html"><span style="white-space: nowrap; font-weight: bold; font-size: 1.25em;">PHP web project - 5 minutes starter guide</span><br/>Use the PHP web archetype for PHP web projects. Use PHP libraries as dependencies.<br/></a></li>
-<li><a href="lifecycle.html"><span style="white-space: nowrap; font-weight: bold; font-size: 1.25em;">The lifecycle</span><br/>For a better understanding take a look at the lifecycle.<br/></a></li>
+<li><a href="add3partylibs.html"><span style="white-space: nowrap; font-weight: bold; font-size: 1.25em;">3rd party libraries - How to install 3rd party libraries</span><br/>The tutorial will help you to install 3rd party PHP libraries.<br/></a></li>
+<li><a href="unittesting.html"><span style="white-space: nowrap; font-weight: bold; font-size: 1.25em;">Fast unit testing</span><br/>The tutorial will show you how to run unit tests quickly.<br/></a></li>
+
 </ul>
 
 </subsection>

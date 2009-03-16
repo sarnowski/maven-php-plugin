@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<document>
+	<properties>
+		<author email="christian.wiedemann@key-tec.de">
+			Christian Wiedemann
+		</author>
+
+		<title>Maven for PHP - How to install 3rd party libraries.
+		</title>
+	</properties>
+	<meta name="keyword" content="apache, maven, php" />
+	<body>
+		<section name="How to install a 3rd party library.">
+			<subsection name="Prepare the 3rd party library">
+				<p>
+					This tutorial will show how to use a third party library as an
+					maven dependency. I use PHPUnit as an sample 3 party library.
+					First, download the source code and unzip it. (For example
+					<a href="http://pear.phpunit.de/get/PHPUnit-3.3.9.tar">http://pear.phpunit.de/get/PHPUnit-3.3.9.tar
+					</a>
+					)
+				So now create a zip,tar,tgz where the first "source folder" is the
+				root folder of the zip. At PHPUnit the root folder of the zip should
+				be PHPUnit not PHPUnit-3.3.9.
+			</p>
+			</subsection>
+			<subsection name="Install the library to your local repository.">
+				<p>
+					Than run the install:install goal. For PHPUnit the call looks like.
+					<source>
+install:install-file -Dfile=PHPUnit.zip -DgroupId=org.phpunit -DartifactId=phpunit5 -Dversion=3.3.9 -Dpackaging=jar -DgeneratePom=true
+	</source>
+					Than you can add a dependency in your pom. PHP for Maven will
+					simple unzip these dependency and add it to your include path.
+					<br />
+					For more informations visit
+					<a
+						href="http://maven.apache.org/guides/mini/guide-3rd-party-jars-local.html">
+						Guide to deploying 3rd party JARs to remote repository</a>
+					at the maven website.
+
+				</p>
+			</subsection>
+
+			<subsection name="Deploy the library to an remote repository.">
+				<p>
+					To deploy the third party library to an remote repository call mvn
+					deploy:deploy-file.
+					<source>
+mvn deploy:deploy-file -DgroupId=org.phpunit -DartifactId=phpunit5 -Dversion=3.3.9 -Dpackaging=jar -Dfile=PHPUnit.zip -DrepositoryId=Id in your settings -Durl= scp: //
+					</source>
+				</p>
+			</subsection>
+		</section>
+		<script src="http://www.google-analytics.com/ga.js" type="text/javascript"></script>
+		<script type="text/javascript">
+			var pageTracker = _gat._getTracker('UA-5308244-1');
+			pageTracker._trackPageview();
+</script>
+	</body>
+
+</document>

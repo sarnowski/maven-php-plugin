@@ -1,13 +1,24 @@
 <?xml version="1.0"?>
 <faqs title="FAQ">
 	<part id="about">
-		<faq>
-			<question>
-				Is there a way to run only one unit test?
+
+<faq>
+<question>
+				Is there a way to show the PHP file output?
 			</question>
-	<answer>
-	Yes use the -DtestFile option. For example run mvn testfile.php 
-	</answer>
+			<answer>
+			Yes, use the -DflushPHPOutput=true parameter in your commandline.
+			</answer>
+		</faq>
+<faq>
+<question>
+				Is there a way to run one unit test?
+			</question>
+			<answer>
+			Yes, use the -DtestFile=file.php parameter in your commandline. 
+			</answer>
+		</faq>
+		
 		<faq>
 			<question>
 				How to configure the "Maven for PHP" plugin?
