@@ -192,6 +192,7 @@ public class PhpUnitCompile extends AbstractPhpCompile {
 
 			);
 			System.out.println(surefireResult.toString());
+			System.out.println();
 			surefireResults.add(surefireResult);
 		}
 	}
@@ -203,7 +204,7 @@ public class PhpUnitCompile extends AbstractPhpCompile {
 		if (!"".equals(testFile) && !file.getName().equals(testFile)) { 
 			return;
 		}
-		System.out.println(file.getName().toLowerCase());
+		
 		if (!file.getName().toLowerCase().endsWith("test.php")) { 
 			return;
 		}

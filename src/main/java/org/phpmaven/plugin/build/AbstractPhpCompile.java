@@ -150,9 +150,6 @@ public abstract class AbstractPhpCompile extends AbstractMojo implements
 		File targetFile = new File(baseDir.toString() + targetClassFolder + "/"
 				+ relative);
 
-		if (targetFile.getParentFile().getName().equalsIgnoreCase("cvs")) {
-			return;
-		}
 		getLog().debug(
 				"copy from:" + sourceFile + " to: " + targetFile.toString());
 		try {
