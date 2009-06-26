@@ -2,6 +2,10 @@ package org.phpmaven.plugin.report;
 
 public class PHPDocumentorExecuteException extends Exception {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private final String parent;
 
 	public PHPDocumentorExecuteException(String parent) {

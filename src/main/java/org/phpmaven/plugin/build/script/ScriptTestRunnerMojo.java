@@ -16,7 +16,6 @@ import org.codehaus.plexus.util.cli.StreamConsumer;
 import org.phpmaven.plugin.build.ExecutionError;
 import org.phpmaven.plugin.build.FileHelper;
 import org.phpmaven.plugin.build.MultipleCompileException;
-import org.phpmaven.plugin.build.UnitTestCaseFailureException;
 
 /**
  * 

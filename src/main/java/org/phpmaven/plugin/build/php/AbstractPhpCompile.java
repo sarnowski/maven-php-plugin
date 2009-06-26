@@ -13,15 +13,15 @@ import org.codehaus.plexus.util.cli.CommandLineException;
 import org.codehaus.plexus.util.cli.CommandLineUtils;
 import org.codehaus.plexus.util.cli.Commandline;
 import org.codehaus.plexus.util.cli.StreamConsumer;
+import org.phpmaven.plugin.build.ExecutionError;
 import org.phpmaven.plugin.build.FileHelper;
 import org.phpmaven.plugin.build.MultipleCompileException;
-import org.phpmaven.plugin.build.ExecutionError;
 
 public abstract class AbstractPhpCompile extends AbstractMojo implements
 		DirectoryWalkListener {
 
 	private ArrayList<Exception> compilerExceptions = new ArrayList<Exception>();
-	private final static ArrayList ERRORIDENTIFIERS = new ArrayList();
+	private final static ArrayList<String> ERRORIDENTIFIERS = new ArrayList<String>();
 	/**
 	 * @parameter expression="${project.basedir}" required="true"
 	 * @readonly

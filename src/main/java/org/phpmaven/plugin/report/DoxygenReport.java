@@ -2,7 +2,6 @@ package org.phpmaven.plugin.report;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileReader;
 import java.util.Locale;
 import java.util.Properties;
 
