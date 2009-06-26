@@ -1,4 +1,4 @@
-package org.phpmaven.plugin.build;
+package org.phpmaven.plugin.build.php;
 
 import java.io.File;
 

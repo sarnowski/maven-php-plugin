@@ -1,8 +1,9 @@
-package org.phpmaven.plugin.build;
+package org.phpmaven.plugin.build.php;
 
 import java.io.File;
 
 import org.apache.maven.plugin.MojoExecutionException;
+import org.phpmaven.plugin.build.FileHelper;
 
 
 
@@ -82,6 +83,7 @@ public class PhpValidate extends AbstractPhpCompile {
 
 	@Override
 	protected void handleProcesedFile(File file) throws MojoExecutionException {
-		copyToTargetFolder(sourceDirectory,file,Statics.targetClassesFolder);
+		
+		FileHelper.copyToTargetFolder(baseDir,sourceDirectory,file,Statics.targetClassesFolder);
 	}
 }

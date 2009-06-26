@@ -1,4 +1,4 @@
-package org.phpmaven.plugin.build;
+package org.phpmaven.plugin.build.php;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -16,6 +16,9 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.codehaus.plexus.util.FileUtils;
 import org.codehaus.plexus.util.cli.CommandLineException;
+import org.phpmaven.plugin.build.FileHelper;
+import org.phpmaven.plugin.build.ExecutionError;
+import org.phpmaven.plugin.build.UnitTestCaseFailureException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -57,9 +60,9 @@ public class PhpUnitCompile extends AbstractPhpCompile {
 	
 	private String testDirectory;
 
-	protected final void prepareTestDependencies() throws IOException, CommandLineException, PhpExecutionError {
+	protected final void prepareTestDependencies() throws IOException, CommandLineException, ExecutionError {
 		
-		prepareDependencies(testClasspathElements);
+		FileHelper.prepareDependencies(baseDir.toString() + Statics.phpinc,testClasspathElements);
 		
 		if (getPhpVersion()==PHPVersion.PHP5) {
 			File mavenTestFile = new File(
@@ -110,7 +113,7 @@ public class PhpUnitCompile extends AbstractPhpCompile {
 			System.out.println("Tests run: " + completeTests + ", Failures: "
 					+ completeFailures + ", Errors: " + completeErrors + "\n");
 			if (completeErrors!=0 || completeFailures!=0) { 
-				throw new PHPUnitTestCaseFailureException(completeErrors,completeFailures);
+				throw new UnitTestCaseFailureException(completeErrors,completeFailures);
 			}
 		} catch (Exception e) {
 			throw new MojoExecutionException(e.getMessage(), e);
@@ -126,10 +129,10 @@ public class PhpUnitCompile extends AbstractPhpCompile {
 	 * private void compileReports() throws Exception { File[] listFiles =
 	 * resultFolder.listFiles(); for (int i = 0; i < listFiles.length; i++) { if
 	 * (!listFiles[i].isFile()) { continue; } File xmlFile = listFiles[i]; //
-	 * JAXP liest Daten über die Source-Schnittstelle Source xmlSource = new
+	 * JAXP liest Daten ï¿½ber die Source-Schnittstelle Source xmlSource = new
 	 * StreamSource(xmlFile); Source xsltSource = new
 	 * StreamSource(getClass().getResourceAsStream("sunfire.xslt")); // das
-	 * Factory-Pattern unterstützt verschiedene XSLT-Prozessoren
+	 * Factory-Pattern unterstï¿½tzt verschiedene XSLT-Prozessoren
 	 * TransformerFactory transFact = TransformerFactory.newInstance();
 	 * Transformer trans = transFact.newTransformer(xsltSource); File surfire =
 	 * new File(baseDir .getAbsoluteFile() + "/target/surefire-reports/" +
@@ -231,7 +234,7 @@ public class PhpUnitCompile extends AbstractPhpCompile {
 				}
 				try { 
 				phpCompile(command, file);
-				} catch (PhpExecutionError ex) {
+				} catch (ExecutionError ex) {
 					writeFailure(file, targetFile);
 				}
 				File targetFileObj = new File(targetFile);
@@ -268,7 +271,7 @@ public class PhpUnitCompile extends AbstractPhpCompile {
 
 	@Override
 	protected void handleProcesedFile(File file) throws MojoExecutionException {
-		copyToTargetFolder(testDirectory,file,Statics.targetTestClassesFolder);
+		FileHelper.copyToTargetFolder(baseDir,testDirectory,file,Statics.targetTestClassesFolder);
 	}
 
 }

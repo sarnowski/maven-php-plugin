@@ -1,9 +1,9 @@
 package org.phpmaven.plugin.build;
 
-public class PhpExecutionError extends Exception {
+public class ExecutionError extends Exception {
 	
 	public String getMessage() {
-		return "Execution of php failed. Maybe the php.exe is not in path";
+		return "Execution of the script failed. ";
 	}
 
 	private static final long serialVersionUID = 1L;

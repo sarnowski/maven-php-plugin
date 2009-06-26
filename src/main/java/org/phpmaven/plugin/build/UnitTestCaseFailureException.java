@@ -1,11 +1,11 @@
 package org.phpmaven.plugin.build;
 
-public class PHPUnitTestCaseFailureException extends Exception {
+public class UnitTestCaseFailureException extends Exception {
 
 	private final int completeFailures;
 	private final int completeErrors;
 
-	public PHPUnitTestCaseFailureException(int completeErrors,
+	public UnitTestCaseFailureException(int completeErrors,
 			int completeFailures) {
 				this.completeErrors = completeErrors;
 				this.completeFailures = completeFailures;
@@ -19,7 +19,7 @@ public class PHPUnitTestCaseFailureException extends Exception {
 	@Override
 	public String getMessage() {
 		
-		return "PHPUnit fails with "+completeFailures+" failures and "+completeErrors+" errors.";
+		return "Unit Test fails with "+completeFailures+" failures and "+completeErrors+" errors.";
 	}
 
 }

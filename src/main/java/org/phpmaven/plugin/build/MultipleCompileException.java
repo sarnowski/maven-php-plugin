@@ -2,14 +2,14 @@ package org.phpmaven.plugin.build;
 
 import java.util.ArrayList;
 
-public class MuilplePhpCompileException extends Exception {
+public class MultipleCompileException extends Exception {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	private final ArrayList<Exception> exceptions;
-	public MuilplePhpCompileException(ArrayList<Exception> exceptions){
+	public MultipleCompileException(ArrayList<Exception> exceptions){
 		this.exceptions = exceptions;
 		
 	}

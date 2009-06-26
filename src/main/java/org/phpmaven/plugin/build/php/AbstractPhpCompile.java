@@ -1,4 +1,4 @@
-package org.phpmaven.plugin.build;
+package org.phpmaven.plugin.build.php;
 
 import java.io.File;
 import java.io.IOException;
@@ -7,15 +7,15 @@ import java.util.List;
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.maven.wagon.PathUtils;
 import org.codehaus.plexus.util.DirectoryWalkListener;
 import org.codehaus.plexus.util.DirectoryWalker;
-import org.codehaus.plexus.util.FileUtils;
-import org.codehaus.plexus.util.IOUtil;
 import org.codehaus.plexus.util.cli.CommandLineException;
 import org.codehaus.plexus.util.cli.CommandLineUtils;
 import org.codehaus.plexus.util.cli.Commandline;
 import org.codehaus.plexus.util.cli.StreamConsumer;
+import org.phpmaven.plugin.build.FileHelper;
+import org.phpmaven.plugin.build.MultipleCompileException;
+import org.phpmaven.plugin.build.ExecutionError;
 
 public abstract class AbstractPhpCompile extends AbstractMojo implements
 		DirectoryWalkListener {
@@ -32,16 +32,19 @@ public abstract class AbstractPhpCompile extends AbstractMojo implements
 	protected StringBuffer getCurrentCommandLineOutput() {
 		return currentBuffer;
 	}
-	/**
-	 * @parameter
-	 */
-	public String[] excludes=new String[0];
-	/**
-	 * @parameter
-	 */
-	public String[] includes=new String[0];
 
-	protected String flushPHPOutput = System.getProperty("flushPHPOutput")!=null?System.getProperty("flushPHPOutput"):"false";
+	/**
+	 * @parameter
+	 */
+	public String[] excludes = new String[0];
+	/**
+	 * @parameter
+	 */
+	public String[] includes = new String[0];
+
+	protected String flushPHPOutput = System.getProperty("flushPHPOutput") != null ? System
+			.getProperty("flushPHPOutput")
+			: "false";
 	/**
 	 * PHP Compile args. Use php -h to get a list of all php compile arguments.
 	 * 
@@ -140,27 +143,10 @@ public abstract class AbstractPhpCompile extends AbstractMojo implements
 		}
 	}
 
-	protected final void copyToTargetFolder(String sourceDirectory,
-			File sourceFile, String targetClassFolder)
-			throws MojoExecutionException {
-		String relative = PathUtils.toRelative(new File(baseDir.toString()
-				+ sourceDirectory), sourceFile.toString());
 
-		getLog().debug("Relative :" + relative);
-		File targetFile = new File(baseDir.toString() + targetClassFolder + "/"
-				+ relative);
-
-		getLog().debug(
-				"copy from:" + sourceFile + " to: " + targetFile.toString());
-		try {
-			FileUtils.copyFileIfModified(sourceFile, targetFile);
-		} catch (IOException e) {
-			throw new MojoExecutionException(e.getMessage(), e);
-		}
-	}
 
 	public final PHPVersion getPhpVersion() throws CommandLineException,
-			PhpExecutionError {
+			ExecutionError {
 		if (phpVersion != null) {
 			return phpVersion;
 		}
@@ -188,63 +174,19 @@ public abstract class AbstractPhpCompile extends AbstractMojo implements
 					"Error while execution php -v\n" + errString.toString()
 							+ "\n comandLine:" + executeCommandLine + "\n"
 							+ bufferOutBuffer.toString());
-			throw new PhpExecutionError();
+			throw new ExecutionError();
 		}
 		this.phpVersion = phpVersion;
 		return phpVersion;
 	}
 
-	private void unjar(File jarFile, File destDir) throws IOException {
-		java.util.jar.JarFile jar = new java.util.jar.JarFile(jarFile);
-		java.util.Enumeration<java.util.jar.JarEntry> items = jar.entries();
-		
-		while (items.hasMoreElements()) {
-			java.util.jar.JarEntry file = (java.util.jar.JarEntry) items
-					.nextElement();
-			
-			java.io.File f = new java.io.File(destDir + java.io.File.separator
-					+ file.getName());
-			if (f.exists() ) {
-				continue;
-			}
-			if (file.isDirectory()) { // if its a directory, create it
-				f.mkdir();
-				continue;
-			}
-			
-			java.io.InputStream is = jar.getInputStream(file); // get the input
-			// stream
-			java.io.FileOutputStream fos = new java.io.FileOutputStream(f);
-			IOUtil.copy(is, fos);
-//			while (is.available() > 0) { // write contents of 'is' to 'fos'
-//				fos.write(is.read());
-//			}
-			fos.close();
-			is.close();
-		}
-
-	}
-
-	protected final void prepareDependencies(List<String> elements)
-			throws IOException {
-
-		File targetFile = new File(baseDir.toString() + Statics.phpinc);
-		targetFile.mkdirs();
-		for (int i = 0; i < elements.size(); i++) {
-			File sourceFile = new File((String) elements.get(i));
-			if (sourceFile.isFile()) {
-				getLog().debug("unjar dependency: " + sourceFile);
-				unjar(sourceFile, targetFile);
-			}
-		}
-	}
-
 	protected final void prepareCompileDependencies() throws IOException {
-		prepareDependencies(classpathElements);
+		FileHelper.prepareDependencies(baseDir.toString() + Statics.phpinc,
+				classpathElements);
 	}
 
 	protected final void phpCompile(String commandString, final File file)
-			throws PhpCompileException, CommandLineException, PhpExecutionError {
+			throws PhpCompileException, CommandLineException, ExecutionError {
 		getLog().debug(
 				"Try to execute command (" + getPhpVersion() + "): "
 						+ commandString);
@@ -257,10 +199,10 @@ public abstract class AbstractPhpCompile extends AbstractMojo implements
 		int executeCommandLine = CommandLineUtils.executeCommandLine(
 				commandLine, new StreamConsumer() {
 					public void consumeLine(String line) {
-						
+
 						if (flushPHPOutput.equals("true")) {
 							getLog().info("php.out: " + line);
-						}else { 
+						} else {
 							getLog().debug("php.out: " + line);
 						}
 						if (isError(line) == true) {
@@ -288,7 +230,7 @@ public abstract class AbstractPhpCompile extends AbstractMojo implements
 					PhpCompileException.ERROR, file, errString);
 		}
 		if (executeCommandLine == 1) {
-			throw new PhpExecutionError();
+			throw new ExecutionError();
 		}
 	}
 
@@ -324,7 +266,7 @@ public abstract class AbstractPhpCompile extends AbstractMojo implements
 	}
 
 	protected final void goRecursiveAndCall(File parentFolder)
-			throws MuilplePhpCompileException {
+			throws MultipleCompileException {
 		if (!parentFolder.isDirectory()) {
 			getLog()
 					.error(
@@ -336,15 +278,15 @@ public abstract class AbstractPhpCompile extends AbstractMojo implements
 		walker.setBaseDir(parentFolder);
 		walker.addDirectoryWalkListener(this);
 		walker.addSCMExcludes();
-		for(int i =0; excludes!=null && i<excludes.length;i++ ) { 
-			walker.addExclude(excludes[i]);	
+		for (int i = 0; excludes != null && i < excludes.length; i++) {
+			walker.addExclude(excludes[i]);
 		}
-		for(int i =0; includes!=null && i<includes.length;i++ ) { 
-			walker.addInclude(excludes[i]);	
+		for (int i = 0; includes != null && i < includes.length; i++) {
+			walker.addInclude(excludes[i]);
 		}
 		walker.scan();
 		if (compilerExceptions.size() != 0) {
-			throw new MuilplePhpCompileException(compilerExceptions);
+			throw new MultipleCompileException(compilerExceptions);
 		}
 		/*
 		 * File[] listFiles = parentFolder.listFiles(); for (int i = 0; i <
