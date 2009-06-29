@@ -5,6 +5,15 @@
 		<author email="christian.wiedemann@key-tec.de">cw</author>
 	</properties>
 	<body>
+	<release date="2008-26-06" version="1.1"
+			description="First release">
+			<action dev="cw" type="add" >
+				Added support for other scriptin languages
+			</action>
+			<action dev="cw" type="update" >
+				SCM folders files will be excluded now.
+			</action>
+	</release>
 	<release date="2008-03-16" version="1.0"
 			description="First release">
 			<action dev="cw" type="add" >

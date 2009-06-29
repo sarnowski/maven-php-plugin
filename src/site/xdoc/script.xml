@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+	<properties>
+		<title />
+
+		<author email="christian.wiedemann@key-tec.de">
+			Christian Wiedemann
+		</author>
+		<title>Maven for Script - Mavenize other scripting languages such as Python, Jython, Delphi, Ruby and so on.... </title>
+
+		<meta content="apache, maven, php" name="keyword" />
+	</properties>
+	<body>
+		<section name="Mavenize Python, Jython, Delphi, Ruby and so on....">
+		
+		<subsection name="A new lifecycle: script">
+		A new lifecycle with two new goals handles the build process for scripts.<br/>
+		In the compile phase the goal scriptcopy simple copies the file from the source folder to target/classes and unjars  all dependent jars.<br/>
+		In the test phase the goal runs through each file under the test folder and executes an commandline command on that test file.
+		</subsection>
+<subsection name="Sample pom for Python">
+<source>
+<![CDATA[
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+...
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.phpmaven</groupId>
+				<artifactId>maven-php-plugin</artifactId>
+				<version>1.1-SNAPSHOT</version>
+				<configuration>
+				<!-- the command which is executed on each file-->
+					<command>python *{file}</command>
+				<!-- the command which is executed on startup of the test process -->
+					<startupCommand>
+					export PYTHONPATH=*{sourceDirectory}*{file.pathSeparator}*{includeDirectory}*{file.pathSeparator}*{testDirectory}
+					</startupCommand>
+				</configuration>
+				<extensions>true</extensions>
+				<!-- the test goal parses the output of the script and searches for errors  -->
+				<errorIdentifiers>
+					<errorIdentifier>Error:</errorIdentifier>
+				</errorIdentifiers>
+			</plugin>
+		</plugins>
+	</build>
+...
+	<dependencies>
+		<dependency>
+			<groupId>org.sample.scirpt</groupId>
+			<artifactId>samplescript
+			</artifactId>
+			<version>1.1-ALPHA</version>
+		</dependency>
+	</dependencies>
+</project>
+]]>
+</source>
+		
+		</subsection>
+		<subsection name="Configuration">
+		
+		</subsection>
+		
+		</section>
+
+		<script src="http://www.google-analytics.com/ga.js"
+			type="text/javascript">
+		</script>
+		<script type="text/javascript">
+			var pageTracker = _gat._getTracker('UA-5308244-1');
+			pageTracker._trackPageview();
+		</script>
+	</body>
+</document>
