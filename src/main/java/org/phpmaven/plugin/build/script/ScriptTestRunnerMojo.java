@@ -108,10 +108,10 @@ public class ScriptTestRunnerMojo extends AbstractMojo {
 		return command;
 	}
 	private String doDefaultReplaces(String command) {
-		
-		command = replaceCommandArgs(command, "includeDirectory", baseDir+includeDirectory);
-		command = replaceCommandArgs(command, "sourceDirectory", baseDir+sourceDirectory);
-		command = replaceCommandArgs(command, "testDirectory", baseDir+testDirectory);
+		String baseDirR = baseDir.getPath().replace("\\", "/");
+		command = replaceCommandArgs(command, "includeDirectory", baseDirR+includeDirectory);
+		command = replaceCommandArgs(command, "sourceDirectory", baseDirR+sourceDirectory);
+		command = replaceCommandArgs(command, "testDirectory", baseDirR+testDirectory);
 		command = replaceCommandArgs(command, "file.pathSeparator", File.pathSeparator);
 		command = replaceCommandArgs(command, "file.separator", File.separator);
 		
