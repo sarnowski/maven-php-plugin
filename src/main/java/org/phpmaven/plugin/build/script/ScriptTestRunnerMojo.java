@@ -159,7 +159,9 @@ public class ScriptTestRunnerMojo extends AbstractMojo {
 
 				public void directoryWalkStep(int arg0, File arg1) {
 					String execCommand = doDefaultReplaces(command);
-					execCommand = replaceCommandArgs(execCommand, "file", arg1.getPath());
+					String filePath =arg1.getPath();
+					filePath = filePath.replace("\\", "/");
+					execCommand = replaceCommandArgs(execCommand, "file", filePath);
 					getLog().debug("file: " + arg1.getPath()); 
 					executeCommand(execCommand);
 					
