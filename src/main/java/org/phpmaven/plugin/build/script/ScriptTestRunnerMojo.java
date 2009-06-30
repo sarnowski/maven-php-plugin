@@ -98,7 +98,10 @@ public class ScriptTestRunnerMojo extends AbstractMojo {
 	 */
 	
 	protected File baseDir;
-	private String includeDirectory;
+	/**
+	 * @parameter "/target/include"
+	 */
+	private String includeDirectory="/target/include";
 
 
 	public String replaceCommandArgs(String command,String arg,String value) { 
@@ -122,10 +125,10 @@ public class ScriptTestRunnerMojo extends AbstractMojo {
 		try {
 			
 			
-			includeDirectory = baseDir.getPath()
-			+ "/target/include";
+			String absoluteIncludeDirectory = baseDir.getPath()
+			+ includeDirectory;
 
-			FileHelper.prepareDependencies(includeDirectory, classpathElements);
+			FileHelper.prepareDependencies(absoluteIncludeDirectory, classpathElements);
 			
 			if (startupCommand!=null && !"".equals(startupCommand)) { 
 				startupCommand = doDefaultReplaces(startupCommand);
