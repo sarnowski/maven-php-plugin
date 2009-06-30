@@ -158,7 +158,7 @@ public class ScriptTestRunnerMojo extends AbstractMojo {
 
 				public void directoryWalkStep(int arg0, File arg1) {
 					String execCommand = doDefaultReplaces(command);
-					execCommand = replaceCommandArgs(execCommand, "file", arg1.toString());
+					execCommand = replaceCommandArgs(execCommand, "file", arg1.getPath());
 					getLog().debug("file: " + arg1.toString()); 
 					executeCommand(execCommand);
 					
