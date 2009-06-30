@@ -103,6 +103,7 @@ public class ScriptTestRunnerMojo extends AbstractMojo {
 
 	public String replaceCommandArgs(String command,String arg,String value) { 
 		String maskedArg = "\\*\\{"+arg+"\\}";
+		
 		command = command.replaceAll(maskedArg, value);
 		return command;
 	}
@@ -121,7 +122,7 @@ public class ScriptTestRunnerMojo extends AbstractMojo {
 		try {
 			
 			
-			includeDirectory = baseDir.toString()
+			includeDirectory = baseDir.getPath()
 			+ "/target/include";
 
 			FileHelper.prepareDependencies(includeDirectory, classpathElements);
@@ -134,7 +135,7 @@ public class ScriptTestRunnerMojo extends AbstractMojo {
 				executeCommand(startupCommand);
 			}
 			DirectoryWalker walker = new DirectoryWalker();
-			walker.setBaseDir(new File(baseDir.toString()+testDirectory));
+			walker.setBaseDir(new File(baseDir.getPath()+testDirectory));
 			if (testExcludes!=null)  {
 				walker.setExcludes(testExcludes);	
 			}
@@ -159,7 +160,7 @@ public class ScriptTestRunnerMojo extends AbstractMojo {
 				public void directoryWalkStep(int arg0, File arg1) {
 					String execCommand = doDefaultReplaces(command);
 					execCommand = replaceCommandArgs(execCommand, "file", arg1.getPath());
-					getLog().debug("file: " + arg1.toString()); 
+					getLog().debug("file: " + arg1.getPath()); 
 					executeCommand(execCommand);
 					
 				}
