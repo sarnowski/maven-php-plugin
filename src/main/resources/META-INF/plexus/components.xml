@@ -65,7 +65,7 @@
 			<role>
 				org.apache.maven.artifact.handler.ArtifactHandler
 			</role>
-			<role-hint>php</role-hint>
+			<role-hint>script</role-hint>
 			<implementation>
 				org.apache.maven.artifact.handler.DefaultArtifactHandler
 			</implementation>
