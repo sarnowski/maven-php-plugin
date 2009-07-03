@@ -13,11 +13,7 @@
 		</dependencySet>
 	</dependencySets>
 	<fileSets>
-		<fileSet>
-			<directory>src/main/resources</directory>
-			<outputDirectory>/</outputDirectory>
-			<useDefaultExcludes>true</useDefaultExcludes>
-		</fileSet>
+		
 		<fileSet>
 			<directory>src/main/script</directory>
 			<outputDirectory>/</outputDirectory>
