@@ -282,7 +282,6 @@ public abstract class AbstractPhpCompile extends AbstractMojo implements
 		DirectoryWalker walker = new DirectoryWalker();
 		walker.setBaseDir(parentFolder);
 		walker.addDirectoryWalkListener(this);
-		walker.setDebugMode(true);
 		walker.addSCMExcludes();
 		for (int i = 0; excludes != null && i < excludes.length; i++) {
 			walker.addExclude(excludes[i]);
