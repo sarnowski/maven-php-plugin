@@ -21,6 +21,12 @@ public abstract class AbstractPhpCompile extends AbstractMojo implements
 		DirectoryWalkListener {
 
 	private ArrayList<Exception> compilerExceptions = new ArrayList<Exception>();
+	/**
+	 * if true php maven will allways overwrite existing php files 
+	 * in the classes folder even if the files in the target folder are newer or at the same date   
+	 * @parameter expression="false" required="true"
+	 */
+	protected boolean forceOverwrite=false;
 	private final static ArrayList<String> ERRORIDENTIFIERS = new ArrayList<String>();
 	/**
 	 * @parameter expression="${project.basedir}" required="true"
@@ -254,13 +260,9 @@ public abstract class AbstractPhpCompile extends AbstractMojo implements
 	public void directoryWalkStep(int percentage, File file) {
 		getLog().debug("percentage: " + percentage);
 		try {
-			if (file.isFile()) {
-				if (file.getName().endsWith(".php"))
+				if (file.isFile() && file.getName().endsWith(".php"))
 					executePhpFile(file);
 				handleProcesedFile(file);
-			} else if (file.isDirectory()) {
-				
-			}
 		} catch (Exception e) {
 			getLog().debug(e);
 			compilerExceptions.add(e);
@@ -279,6 +281,7 @@ public abstract class AbstractPhpCompile extends AbstractMojo implements
 		DirectoryWalker walker = new DirectoryWalker();
 		walker.setBaseDir(parentFolder);
 		walker.addDirectoryWalkListener(this);
+		walker.setDebugMode(true);
 		walker.addSCMExcludes();
 		for (int i = 0; excludes != null && i < excludes.length; i++) {
 			walker.addExclude(excludes[i]);

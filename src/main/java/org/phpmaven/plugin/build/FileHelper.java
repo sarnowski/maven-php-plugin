@@ -54,7 +54,7 @@ public class FileHelper {
 		}
 	}
 	public static final void copyToTargetFolder(File baseDir,String sourceDirectory,
-			File sourceFile, String targetClassFolder)
+			File sourceFile, String targetClassFolder, boolean forceOverwrite)
 			throws MojoExecutionException {
 		String relative = PathUtils.toRelative(new File(baseDir.toString()
 				+ sourceDirectory), sourceFile.toString());
@@ -65,7 +65,11 @@ public class FileHelper {
 
 		
 		try {
-			FileUtils.copyFileIfModified(sourceFile, targetFile);
+			if (forceOverwrite) { 
+				FileUtils.copyFile(sourceFile, targetFile);
+			}else { 
+				FileUtils.copyFileIfModified(sourceFile, targetFile);
+			}
 		} catch (IOException e) {
 			throw new MojoExecutionException(e.getMessage(), e);
 		}
