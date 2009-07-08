@@ -8,11 +8,12 @@
 	<release date="2008-26-06" version="1.1"
 			description="First release">
 			<action dev="cw" type="add" >
-				Added support for other scriptin languages
+				forceOverwrite configuration added.<br/>
+				if you set it to "true" php maven will allways overwrite existing php files 
+				in the classes folder even if the files in the target folder are newer or at the same date.
+				The default is "false"
 			</action>
-			<action dev="cw" type="update" >
-				SCM folders files will be excluded now.
-			</action>
+			
 	</release>
 	<release date="2008-03-16" version="1.0"
 			description="First release">

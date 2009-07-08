@@ -262,7 +262,8 @@ public abstract class AbstractPhpCompile extends AbstractMojo implements
 		try {
 				if (file.isFile() && file.getName().endsWith(".php"))
 					executePhpFile(file);
-				handleProcesedFile(file);
+				if (file.isFile())
+					handleProcesedFile(file);
 		} catch (Exception e) {
 			getLog().debug(e);
 			compilerExceptions.add(e);

@@ -125,22 +125,6 @@ public class PhpUnitCompile extends AbstractPhpCompile {
 
 	}
 
-	/*
-	 * private void compileReports() throws Exception { File[] listFiles =
-	 * resultFolder.listFiles(); for (int i = 0; i < listFiles.length; i++) { if
-	 * (!listFiles[i].isFile()) { continue; } File xmlFile = listFiles[i]; //
-	 * JAXP liest Daten �ber die Source-Schnittstelle Source xmlSource = new
-	 * StreamSource(xmlFile); Source xsltSource = new
-	 * StreamSource(getClass().getResourceAsStream("sunfire.xslt")); // das
-	 * Factory-Pattern unterst�tzt verschiedene XSLT-Prozessoren
-	 * TransformerFactory transFact = TransformerFactory.newInstance();
-	 * Transformer trans = transFact.newTransformer(xsltSource); File surfire =
-	 * new File(baseDir .getAbsoluteFile() + "/target/surefire-reports/" +
-	 * xmlFile.getName()); surfire.getParentFile().mkdirs(); FileWriter
-	 * fileWriter = new FileWriter(surfire); trans.transform(xmlSource, new
-	 * StreamResult(fileWriter)); } }
-	 */
-
 	class SurefireResult {
 		String name;
 		int tests = 0;
@@ -271,7 +255,7 @@ public class PhpUnitCompile extends AbstractPhpCompile {
 
 	@Override
 	protected void handleProcesedFile(File file) throws MojoExecutionException {
-		FileHelper.copyToTargetFolder(baseDir,testDirectory,file,Statics.targetTestClassesFolder);
+		FileHelper.copyToTargetFolder(baseDir,testDirectory,file,Statics.targetTestClassesFolder,forceOverwrite);
 	}
 
 }

@@ -17,6 +17,7 @@ import org.codehaus.plexus.util.cli.CommandLineException;
 import org.codehaus.plexus.util.cli.CommandLineUtils;
 import org.codehaus.plexus.util.cli.Commandline;
 import org.codehaus.plexus.util.cli.StreamConsumer;
+import org.codehaus.plexus.util.cli.shell.Shell;
 import org.phpmaven.plugin.build.ExecutionError;
 import org.phpmaven.plugin.build.FileHelper;
 import org.phpmaven.plugin.build.MultipleCompileException;
@@ -135,7 +136,7 @@ public class ScriptTestRunnerMojo extends AbstractMojo {
 				getLog().info("=====================================================");
 				getLog().info("RUNNING STARTUP COMMAND");
 				getLog().info("=====================================================");
-				executeCommand(startupCommand);
+				executeCommand(null,startupCommand);
 			}
 			DirectoryWalker walker = new DirectoryWalker();
 			walker.setBaseDir(new File(baseDir.getPath()+testDirectory));
@@ -166,7 +167,7 @@ public class ScriptTestRunnerMojo extends AbstractMojo {
 					filePath = filePath.replace("\\", "/");
 					execCommand = replaceCommandArgs(execCommand, "file", filePath);
 					getLog().debug("file: " + arg1.getPath()); 
-					executeCommand(execCommand);
+					executeCommand(arg1.getParentFile(),execCommand);
 					
 				}
 				
@@ -195,13 +196,20 @@ public class ScriptTestRunnerMojo extends AbstractMojo {
 		}
 		
 	}
-	private void executeCommand(String command) { 
+	private void executeCommand(File workingDirectory, String command) { 
 		getLog().info("-----------------------------------------------------");
 		getLog().info("script: " + command);
 		
 		try {
 			
 			Commandline c = new Commandline(command);
+				
+			if (workingDirectory!=null) { 
+				c.setWorkingDirectory(workingDirectory);
+				
+			}
+			c.addEnvironment("LANG", "de_DE.UTF-8");
+			c.addEnvironment("GDM_LANG", "de_DE.UTF-8");
 			if (environmentVariables!=null) {
 				Set<Entry<Object, Object>> entrySet = environmentVariables.entrySet();
 				for (Iterator iterator = entrySet.iterator(); iterator
@@ -212,6 +220,7 @@ public class ScriptTestRunnerMojo extends AbstractMojo {
 					c.addEnvironment((String)entry.getKey(), value );
 					getLog().debug("Adding to env: " + (String)entry.getKey() + " : "+ value );
 				}
+				
 				
 			}
 			CommandLineUtils.executeCommandLine(
