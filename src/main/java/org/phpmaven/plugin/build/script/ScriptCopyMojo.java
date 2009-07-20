@@ -64,7 +64,7 @@ public class ScriptCopyMojo extends AbstractMojo {
 
 				public void directoryWalkStep(int arg0, File arg1) {
 					try {
-						FileHelper.copyToTargetFolder(baseDir, sourceDirectory, arg1, "target/classes",true);
+						FileHelper.copyToTargetFolder(baseDir, sourceDirectory, arg1, "/target/classes",true);
 					} catch (MojoExecutionException e) {
 						getLog().error(e);
 					}

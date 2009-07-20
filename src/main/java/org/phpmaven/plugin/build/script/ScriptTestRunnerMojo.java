@@ -107,7 +107,6 @@ public class ScriptTestRunnerMojo extends AbstractMojo {
 
 	public String replaceCommandArgs(String command,String arg,String value) { 
 		String maskedArg = "\\*\\{"+arg+"\\}";
-		
 		command = command.replaceAll(maskedArg, value);
 		return command;
 	}
