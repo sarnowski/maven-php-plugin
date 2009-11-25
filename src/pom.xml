@@ -8,7 +8,7 @@
 	<parent>
 		<groupId>org.phpmaven</groupId>
 		<artifactId>multimaster</artifactId>
-		<version>1.0-BETA-2</version>
+		<version>1.1-SNAPSHOT</version>
 	</parent>
 	<build>
 	<resources>

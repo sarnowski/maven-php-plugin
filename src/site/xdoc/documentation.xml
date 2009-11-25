@@ -3,7 +3,7 @@
 	<properties>
 		<title />
 
-		<author email="christian.wiedemann@key-tec.de">
+		<author email="christian.wiedemann@key-tec.de"> 
 			Christian Wiedemann
 		</author>
 		<title>Maven for PHP - Create documentation</title>
@@ -63,7 +63,7 @@ target
 
 		<script src="http://www.google-analytics.com/ga.js"
 			type="text/javascript">
-		</script>
+		</script> 
 		<script type="text/javascript">
 			var pageTracker = _gat._getTracker('UA-5308244-1');
 			pageTracker._trackPageview();

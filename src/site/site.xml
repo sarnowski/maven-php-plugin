@@ -44,7 +44,7 @@
 			<item name="The lifecycle" href="lifecycle.html" />
 			<item name="Plugin Goals" href="plugin-info.html" />
 			<item name="Licence" href="license.html" />
-			<item name="Source code" href="source.html" />
+			<item name="Source code" href="source-repository.html" />
 			<item name="Other scripting languages" href="script.html" />
 		</menu>
 		<menu name="Articles">
@@ -52,7 +52,6 @@
 		</menu>
 		<menu name="Support">
 			<item name="Google group" href="http://groups.google.de/group/maven-for-php" />
-			<item name="Issue tracking" href="issue-tracking.html" />
 			<item name="FAQ" href="faq.html" />
 		</menu>
 		

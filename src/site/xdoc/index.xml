@@ -17,10 +17,10 @@ It adapts the Maven build lifecycle to the PHP world while fully supporting PHP 
 PHP for Maven uses <a href="http://www.phpunit.de/" target="_blank"><b>PHPUnit</b></a> for unit testing and <a href="http://www.stack.nl/~dimitri/doxygen/" target="_blank"><b>doxygen</b></a> for creating the api documentation.
 <br/>Use a <b>PHP library project</b> to create a library that can be used by other PHP libraries or PHP web projects. Use a <b>PHP web project</b> to create a standalone web project. 
 
-<subsection name="First release">
+<subsection name="Source code moved">
 <p>
-1.0 is released.<br/>
-Have a look at the <a href="changes-report.html">release history</a>
+Source code moved to subverison.<br/>
+Have a look at the <a href="source-repository.html">source repository</a>
 </p>
 </subsection>
  
@@ -49,7 +49,6 @@ This link will help you get started with Maven for PHP.
 <subsection name="Getting support">
 <ul>
 <!--  <li><a href="faq.html"><span style="white-space: nowrap; font-weight: bold; font-size: 1.25em;">Go to the faq page.</span></a></li>-->
-<li><a href="http://trac.php-maven.org"><span style="white-space: nowrap; font-weight: bold; font-size: 1.25em;">Go to trac.php-maven.org</span></a><br/>Click on New Ticket to open an ticket.</li>
 <li><a href="http://groups.google.de/group/maven-for-php"><span style="white-space: nowrap; font-weight: bold; font-size: 1.25em;">Join google group</span></a><br/></li>
 </ul>
 </subsection> 
