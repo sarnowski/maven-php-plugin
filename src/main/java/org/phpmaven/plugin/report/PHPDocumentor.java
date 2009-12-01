@@ -62,6 +62,7 @@ public class PHPDocumentor extends AbstractApiDocReport {
 	@Override
 	protected void executeReport(Locale locale) throws MavenReportException {
 		try {
+			System.out.println(phpDocConfigFile.getAbsolutePath());
 			if (phpDocConfigFile.isFile()) {
 				Properties properties = new Properties();
 				
@@ -86,14 +87,14 @@ public class PHPDocumentor extends AbstractApiDocReport {
 						}
 					}
 				} else {
-					phpDocFile = new File(getProject().getBasedir() + "/"
-							+ phpDocFile);
+					phpDocFile = new File(phpDocFilePath);
 				}
 				if (phpDocFile == null || !phpDocFile.isFile()) {
 					throw new PHPDocumentorNotFoundException();
 				} 
 				String executing = phpExe
 				+ " phpdoc -c \"" + generatedPhpDocConfigFile.getAbsolutePath()+"\"";
+				getLog().debug("Executing PHPDocumentor: " + executing);
 				Commandline commandLine = new Commandline(executing
 						);
 				commandLine.setWorkingDirectory(phpDocFile.getParent());
