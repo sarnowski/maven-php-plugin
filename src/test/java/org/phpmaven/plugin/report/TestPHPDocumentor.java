@@ -14,13 +14,17 @@ public class TestPHPDocumentor extends TestCase{
 		PHPDocumentor doc = new PHPDocumentor();
 		Model model = new Model();
 		MavenProject mavenProject = new MavenProject(model);
-		mavenProject.setFile(new File("C:/de.keytec.dev/cw/y/workbenches/maventest/org.phpmaven.multimaster/org.phpmaven.php4.sample/pom.xml"));
+		
+		File absoluteFile = new File("/home/cw/workspace/phpmaven/multimaster/org.phpmaven.php5.sample/pom.xml").getAbsoluteFile();
+		mavenProject.setFile(absoluteFile);
 		doc.setProject(mavenProject);
-		doc.phpExe="php.exe";
+		doc.phpDocFilePath="/home/cw/PhpDocumentor-1.4.3/phpdoc";
+		doc.phpExe="php";
 		doc.sourceDirectory="src/main/php";
+		
 		doc.phpDocConfigFile=new File(mavenProject.getBasedir()+"/src/site/phpdoc/phpdoc.config");
 		doc.generatedPhpDocConfigFile=new File(mavenProject.getBasedir()+"/target/site/phpdoc/phpdoc.ini");
 		doc.outputApiDocDirectory=new File(mavenProject.getBasedir()+"target/site/apidocs/phpdoc");
-		//doc.executeReport(new Locale("de"));
+		doc.executeReport(new Locale("de"));
 	}
 }
