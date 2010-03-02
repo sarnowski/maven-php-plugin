@@ -83,7 +83,6 @@ public class PhpValidate extends AbstractPhpCompile {
 
 	@Override
 	protected void handleProcesedFile(File file) throws MojoExecutionException {
-		getLog().info("is file:" + file.isFile());
 		FileHelper.copyToTargetFolder(baseDir,sourceDirectory,file,Statics.targetClassesFolder,forceOverwrite);
 	}
 }
