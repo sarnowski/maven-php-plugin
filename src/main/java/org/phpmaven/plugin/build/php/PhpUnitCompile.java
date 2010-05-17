@@ -14,6 +14,8 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
+import org.apache.maven.project.MavenProject;
+import org.apache.maven.project.ProjectUtils;
 import org.codehaus.plexus.util.FileUtils;
 import org.codehaus.plexus.util.cli.CommandLineException;
 import org.phpmaven.plugin.build.FileHelper;
@@ -33,6 +35,7 @@ import org.xml.sax.SAXException;
  */
 public class PhpUnitCompile extends AbstractPhpCompile {
 
+	 
 	private ArrayList<SurefireResult> surefireResults = new ArrayList<SurefireResult>();
 	/**
 	 * Project test classpath elements.
@@ -76,6 +79,7 @@ public class PhpUnitCompile extends AbstractPhpCompile {
 
 	public void execute() throws MojoExecutionException, MojoFailureException {
 		try {
+			project.addTestCompileSourceRoot(testDirectory);
 			testFile = System.getProperty("testFile")!=null?System.getProperty("testFile"):"";
 			
 			resultFolder = new File(baseDir.getAbsoluteFile()

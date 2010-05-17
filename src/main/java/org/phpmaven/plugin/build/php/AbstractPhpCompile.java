@@ -7,6 +7,8 @@ import java.util.List;
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.project.MavenProject;
+import org.apache.maven.project.ProjectUtils;
 import org.codehaus.plexus.util.DirectoryWalkListener;
 import org.codehaus.plexus.util.DirectoryWalker;
 import org.codehaus.plexus.util.cli.CommandLineException;
@@ -19,7 +21,15 @@ import org.phpmaven.plugin.build.MultipleCompileException;
 
 public abstract class AbstractPhpCompile extends AbstractMojo implements
 		DirectoryWalkListener {
-
+	
+	/**
+	   * The Maven project.
+	   *
+	   * @parameter expression="${project}"
+	   * @required
+	   * @readonly
+	   */
+	protected MavenProject project;
 	private ArrayList<Exception> compilerExceptions = new ArrayList<Exception>();
 	/**
 	 * if true php maven will allways overwrite existing php files 

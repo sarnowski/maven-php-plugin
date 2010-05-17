@@ -52,6 +52,7 @@
 				<type>script</type>
 				<extension>jar</extension>
 				<language>script</language>
+				
 				<addedToClasspath>true</addedToClasspath>
 			</configuration>
 		</component>

@@ -3,6 +3,7 @@ package org.phpmaven.plugin.build.php;
 import java.io.File;
 
 import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.project.MavenProject;
 import org.phpmaven.plugin.build.FileHelper;
 
 
@@ -16,7 +17,7 @@ import org.phpmaven.plugin.build.FileHelper;
  * @goal php-validate
  */
 public class PhpValidate extends AbstractPhpCompile {
-
+	
 	/**
 	 * If true require_once or include_once errors will be ignored Default is
 	 * false.
@@ -68,6 +69,7 @@ public class PhpValidate extends AbstractPhpCompile {
 	}
 
 	public void execute() throws MojoExecutionException {
+		project.addCompileSourceRoot(sourceDirectory);
 		try {
 			if (!ignoreValidate)
 				prepareCompileDependencies();
