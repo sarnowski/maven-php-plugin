@@ -1,82 +1,82 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <document>
-	<properties>
-		<title>Maven for PHP</title>
-		<author email="christian.wiedemann@key-tec.de">cw</author>
-	</properties>
-	<body>
-	<release date="2008-26-06" version="1.1"
-			description="First release">
-			<action dev="cw" type="add" >
-				forceOverwrite configuration added.<br/>
-				if you set it to "true" php maven will allways overwrite existing php files 
-				in the classes folder even if the files in the target folder are newer or at the same date.
-				The default is "false"
-			</action>
-			
-	</release>
-	<release date="2008-03-16" version="1.0"
-			description="First release">
-			<action dev="cw" type="add" >
-				Excludes added. Now you can exclude folders and files from validation.
-			</action>
-			<action dev="cw" type="add" >
-				SCM folders files will be excluded now.
-			</action>
-	</release>
-	<release date="2008-11-20" version="1.0-BETA-2"
-			description="2. BETA release">
-			<action dev="cw" type="add" >
-				PHPUnit 3.3.9 is now supported.
-			</action>
-			<action dev="cw" type="add" >
-				Adding the Maven PHPUnit 3.x bridge PHP file automaticly. Now newer installed versions of PHPUnit can be used.
-			</action>
-			<action dev="cw" type="add" >
-				Add support to run only one unit test. (use the -DtestFile argument at the commandline)
-			</action>
-			<action dev="cw" type="add" >
-				Add support to show php output. (use the -DflushPHPOutput=true)
-			</action>
-			<action dev="cw" type="update" >
-				Unjar dependencies only unjars files if they have changed.(size changed). unit testing is now a lot faster.
-			</action>
-			<action dev="cw" type="update" >
-				Changed the order of the include path at phpunit. Now it is not necassary to run phpvalidate before testing
-			</action>
-	</release>
-	<release date="2008-10-01" version="1.0-BETA-1"
-			description="1. BETA release">
-			<action dev="cw" type="add" >
-				Add support for phpdocumentor.
-			</action>
-			<action dev="cw" type="fix" >
-				PHPUnit Maven Wrapper bugfix. 
-			</action>
-			<action dev="cw" type="add">
-				Works now under lunix
-			</action>
-			<action dev="cw" type="add">
-				New package layout and better integration tests
-			</action>
-			<action dev="cw" type="update">
-				It is now compiled with java 5.
-			</action>
-		</release>
-		<release date="2008-09-01" version="1.0-ALPHA-2"
-			description="2. ALPHA release">
-			<action dev="cw" type="add" >
-				New assemblies: php-lib, php-lib-with-dependencies
-			</action>
-			<action dev="cw" type="add">
-				Better errorhandling for PHPUnit tests.
-			</action>
-			<action dev="cw" type="fix">
-				Bugfix for the XMLWriter for PHPUnit 4
-			</action>
-		</release>
-		<release version="1.0-ALPHA" date="2008-08-18" description="1. Alpha release">
-		</release>
+    <properties>
+        <title>Maven for PHP</title>
+        <author email="christian.wiedemann@key-tec.de">cw</author>
+    </properties>
+    <body>
+        <release date="2008-26-06" version="1.1"
+                 description="First release">
+            <action dev="cw" type="add" >
+                forceOverwrite configuration added.<br/>
+                if you set it to "true" php maven will allways overwrite existing php files
+                in the classes folder even if the files in the target folder are newer or at the same date.
+                The default is "false"
+            </action>
 
-	</body>
+        </release>
+        <release date="2008-03-16" version="1.0"
+                 description="First release">
+            <action dev="cw" type="add" >
+                Excludes added. Now you can exclude folders and files from validation.
+            </action>
+            <action dev="cw" type="add" >
+                SCM folders files will be excluded now.
+            </action>
+        </release>
+        <release date="2008-11-20" version="1.0-BETA-2"
+                 description="2. BETA release">
+            <action dev="cw" type="add" >
+                PHPUnit 3.3.9 is now supported.
+            </action>
+            <action dev="cw" type="add" >
+                Adding the Maven PHPUnit 3.x bridge PHP file automaticly. Now newer installed versions of PHPUnit can be used.
+            </action>
+            <action dev="cw" type="add" >
+                Add support to run only one unit test. (use the -DtestFile argument at the commandline)
+            </action>
+            <action dev="cw" type="add" >
+                Add support to show php output. (use the -DflushPHPOutput=true)
+            </action>
+            <action dev="cw" type="update" >
+                Unjar dependencies only unjars files if they have changed.(size changed). unit testing is now a lot faster.
+            </action>
+            <action dev="cw" type="update" >
+                Changed the order of the include path at phpunit. Now it is not necassary to run phpvalidate before testing
+            </action>
+        </release>
+        <release date="2008-10-01" version="1.0-BETA-1"
+                 description="1. BETA release">
+            <action dev="cw" type="add" >
+                Add support for phpdocumentor.
+            </action>
+            <action dev="cw" type="fix" >
+                PHPUnit Maven Wrapper bugfix.
+            </action>
+            <action dev="cw" type="add">
+                Works now under lunix
+            </action>
+            <action dev="cw" type="add">
+                New package layout and better integration tests
+            </action>
+            <action dev="cw" type="update">
+                It is now compiled with java 5.
+            </action>
+        </release>
+        <release date="2008-09-01" version="1.0-ALPHA-2"
+                 description="2. ALPHA release">
+            <action dev="cw" type="add" >
+                New assemblies: php-lib, php-lib-with-dependencies
+            </action>
+            <action dev="cw" type="add">
+                Better errorhandling for PHPUnit tests.
+            </action>
+            <action dev="cw" type="fix">
+                Bugfix for the XMLWriter for PHPUnit 4
+            </action>
+        </release>
+        <release version="1.0-ALPHA" date="2008-08-18" description="1. Alpha release">
+        </release>
+
+    </body>
 </document>
