@@ -1,0 +1,14 @@
+# maven generated files
+pom.xml.releaseBackup
+release.properties
+target
+
+# ignore eclipse files
+.classpath
+.cvsignore
+.project
+.settings
+
+# ignore intellij idea files
+.idea
+*.iml
