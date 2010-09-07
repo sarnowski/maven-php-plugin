@@ -14,11 +14,10 @@
 
 package org.phpmaven.plugin.build.php;
 
-import java.io.File;
-
 import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.maven.project.MavenProject;
 import org.phpmaven.plugin.build.FileHelper;
+
+import java.io.File;
 
 
 
@@ -29,8 +28,10 @@ import org.phpmaven.plugin.build.FileHelper;
  * 
  * @requiresDependencyResolution
  * @goal php-validate
+ * @author Christian Wiedemann
+ * @author Tobias Sarnowski
  */
-public class PhpValidate extends AbstractPhpCompile {
+public class PhpValidate extends AbstractPhpExecutor {
 	
 	/**
 	 * If true require_once or include_once errors will be ignored Default is
@@ -69,13 +70,13 @@ public class PhpValidate extends AbstractPhpCompile {
 	}
 	protected void executePhpFile(File file) throws MojoExecutionException {
 		
-		String commandString = phpExe +  getCompilerArgs()+" -d include_path=\"" + File.pathSeparator
+		String commandString = getCompilerArgs()+" -d include_path=\"" + File.pathSeparator
 				+ file.getParentFile().getAbsolutePath() + File.pathSeparator
 				+ baseDir.getAbsolutePath() + Statics.phpinc + File.pathSeparator + baseDir
 				+ sourceDirectory + "\" \"" + file.getAbsolutePath() + "\"";
 		try {
 			if (ignoreValidate == false && isExcluded(file)==false) {
-				phpCompile(commandString, file);
+				execute(commandString, file);
 			}
 		} catch (Exception e) {
 			throw new MojoExecutionException(e.getMessage(), e);
@@ -93,7 +94,7 @@ public class PhpValidate extends AbstractPhpCompile {
 			throw new MojoExecutionException(e.getMessage(), e);
 		}
 	}
-	protected boolean getIgnoreIncludeErrors() { 
+	protected boolean isIgnoreIncludeErrors() {
 		return ignoreIncludeErrors;
 	}
 

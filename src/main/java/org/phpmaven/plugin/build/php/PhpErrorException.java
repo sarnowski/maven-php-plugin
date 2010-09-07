@@ -12,27 +12,15 @@
  * limitations under the License.
  */
 
-package org.phpmaven.plugin.report;
+package org.phpmaven.plugin.build.php;
+
+import java.io.File;
 
 /**
- * @author Christian Wiedemann
+ * @author Tobias Sarnowski
  */
-public class PHPDocumentorExecuteException extends Exception {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1L;
-    private final String parent;
-
-    public PHPDocumentorExecuteException(String parent) {
-        this.parent = parent;
+public class PhpErrorException extends PhpExecutionException {
+    public PhpErrorException(File phpFile, String phpErrorMessage) {
+        super(phpFile, phpErrorMessage);
     }
-
-    @Override
-    public String getMessage() {
-        // TODO Auto-generated method stub
-        return "Error while executing phpdoc. ("+parent+")";
-    }
-
 }

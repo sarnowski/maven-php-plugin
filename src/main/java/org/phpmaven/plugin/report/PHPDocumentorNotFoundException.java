@@ -14,6 +14,9 @@
 
 package org.phpmaven.plugin.report;
 
+/**
+ * @author Christian Wiedemann
+ */
 public class PHPDocumentorNotFoundException extends Exception {
 
     /**

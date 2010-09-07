@@ -16,24 +16,25 @@ package org.phpmaven.plugin.build.php;
 
 import java.io.File;
 
-public class PhpCompileException extends Exception {
+/**
+ * @author Christian Wiedemann
+ * @author Tobias Sarnowski
+ */
+public class PhpExecutionException extends PhpException {
 
-    private static final long serialVersionUID = 1L;
-    private final File phpFile;
     private final String phpErrorMessage;
-    public final static int ERROR = 0;
-    public final static int WARNING = 1;
-    private final String commandString;
+    private final File phpFile;
 
-    public PhpCompileException(String commandString, int errorType,
-                               File phpFile, String phpErrorMessage) {
-        this.commandString = commandString;
+    public PhpExecutionException(File phpFile, String phpErrorMessage) {
         this.phpFile = phpFile;
-        this.phpErrorMessage = phpErrorMessage;
+        this.phpErrorMessage = "\n" + phpErrorMessage;
     }
 
     public String getMessage() {
-        return "\n" + phpErrorMessage + " in\nFile:\n " + phpFile.toString()
-                + "\nCommand:\n " + commandString + "+\n";
+        if (phpFile != null) {
+            return phpErrorMessage + "\nin file: " + phpFile.getAbsolutePath();
+        } else {
+            return phpErrorMessage;
+        }
     }
 }

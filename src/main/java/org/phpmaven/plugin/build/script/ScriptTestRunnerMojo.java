@@ -14,14 +14,6 @@
 
 package org.phpmaven.plugin.build.script;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Properties;
-import java.util.Set;
-import java.util.Map.Entry;
-
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
@@ -31,10 +23,13 @@ import org.codehaus.plexus.util.cli.CommandLineException;
 import org.codehaus.plexus.util.cli.CommandLineUtils;
 import org.codehaus.plexus.util.cli.Commandline;
 import org.codehaus.plexus.util.cli.StreamConsumer;
-import org.codehaus.plexus.util.cli.shell.Shell;
 import org.phpmaven.plugin.build.ExecutionError;
 import org.phpmaven.plugin.build.FileHelper;
 import org.phpmaven.plugin.build.MultipleCompileException;
+
+import java.io.File;
+import java.util.*;
+import java.util.Map.Entry;
 
 /**
  *
@@ -42,6 +37,7 @@ import org.phpmaven.plugin.build.MultipleCompileException;
  *
  * @requiresDependencyResolution
  * @goal scripttestrunner
+ * @author Christian Wiedemann
  */
 public class ScriptTestRunnerMojo extends AbstractMojo {
 

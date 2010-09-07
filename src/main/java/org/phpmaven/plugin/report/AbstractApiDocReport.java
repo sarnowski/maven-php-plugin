@@ -14,6 +14,10 @@
 
 package org.phpmaven.plugin.report;
 
+import org.apache.maven.doxia.siterenderer.Renderer;
+import org.apache.maven.project.MavenProject;
+import org.apache.maven.reporting.AbstractMavenReport;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -21,15 +25,10 @@ import java.util.Iterator;
 import java.util.Properties;
 import java.util.Set;
 
-import org.apache.maven.doxia.siterenderer.Renderer;
-import org.apache.maven.project.MavenProject;
-import org.apache.maven.reporting.AbstractMavenReport;
-
 /**
  * Abstract base class for api docs.
  *
- * @author cw
- *
+ * @author Christian Wiedemann
  */
 public abstract class AbstractApiDocReport extends AbstractMavenReport {
     protected abstract String getFolderName();

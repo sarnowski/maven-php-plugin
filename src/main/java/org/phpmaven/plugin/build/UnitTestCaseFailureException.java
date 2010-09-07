@@ -14,6 +14,9 @@
 
 package org.phpmaven.plugin.build;
 
+/**
+ * @author Christian Wiedemann
+ */
 public class UnitTestCaseFailureException extends Exception {
 
     private final int completeFailures;

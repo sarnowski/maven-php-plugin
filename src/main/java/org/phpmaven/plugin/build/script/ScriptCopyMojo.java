@@ -14,10 +14,6 @@
 
 package org.phpmaven.plugin.build.script;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.List;
-
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
@@ -25,13 +21,16 @@ import org.codehaus.plexus.util.DirectoryWalkListener;
 import org.codehaus.plexus.util.DirectoryWalker;
 import org.phpmaven.plugin.build.FileHelper;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+
 
 /**
  * @requiresDependencyResolution
  * @goal scriptcopy
+ * @author Christian Wiedemann
  */
-
-
 public class ScriptCopyMojo extends AbstractMojo {
     /**
      * @parameter expression="${project.basedir}" required="true"

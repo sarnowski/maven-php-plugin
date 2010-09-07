@@ -16,6 +16,9 @@ package org.phpmaven.plugin.build.php;
 
 import java.io.File;
 
+/**
+ * @author Christian Wiedemann
+ */
 final public class Statics {
 
     public static final String testRootFolder = "/src/test/php";

@@ -16,6 +16,9 @@ package org.phpmaven.plugin.build;
 
 import java.util.ArrayList;
 
+/**
+ * @author Christian Wiedemann
+ */
 public class MultipleCompileException extends Exception {
 
 	/**

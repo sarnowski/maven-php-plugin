@@ -23,6 +23,9 @@ import org.apache.maven.wagon.PathUtils;
 import org.codehaus.plexus.util.FileUtils;
 import org.codehaus.plexus.util.IOUtil;
 
+/**
+ * @author Christian Wiedemann
+ */
 public class FileHelper {
     private static void unjar(File jarFile, File destDir) throws IOException {
         java.util.jar.JarFile jar = new java.util.jar.JarFile(jarFile);

@@ -14,6 +14,9 @@
 
 package org.phpmaven.plugin.build;
 
+/**
+ * @author Christian Wiedemann
+ */
 public class ExecutionError extends Exception {
 
     private String message;

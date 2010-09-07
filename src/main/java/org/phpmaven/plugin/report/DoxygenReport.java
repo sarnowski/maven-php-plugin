@@ -14,24 +14,24 @@
 
 package org.phpmaven.plugin.report;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.util.Locale;
-import java.util.Properties;
-
 import org.apache.maven.reporting.MavenReportException;
 import org.codehaus.plexus.util.cli.CommandLineUtils;
 import org.codehaus.plexus.util.cli.Commandline;
 import org.codehaus.plexus.util.cli.StreamConsumer;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.util.Locale;
+import java.util.Properties;
+
 /**
  * A maven 2.0 plugin for generating doxygen documentations.
  * This plugin is used in the <code>site</code> phase.
- * @author Christian Wiedemann
+ *
  * @goal doxygen
  * @phase site
+ * @author Christian Wiedemann
  */
-
 public class DoxygenReport extends AbstractApiDocReport {
     /**
      * Path to the doxygen.exe.
