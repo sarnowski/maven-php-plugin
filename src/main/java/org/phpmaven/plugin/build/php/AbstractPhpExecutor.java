@@ -316,6 +316,8 @@ public abstract class AbstractPhpExecutor extends AbstractMojo implements Direct
                     @Override
                     public void consumeLine(String line) {
                         stderr.append(line);
+                        stderr.append("\n");
+                        throwError.set(true);
                     }
                 }
         );
@@ -327,10 +329,11 @@ public abstract class AbstractPhpExecutor extends AbstractMojo implements Direct
             if (error.length() > 0) {
                 message = message + ":\n" + error;
             }
-            if (throwError.get()) {
-                throw new PhpErrorException(file, message);
-            } else if (throwWarning.get()) {
+
+            if (throwWarning.get()) {
                 throw new PhpWarningException(file, message);
+            } else if (throwError.get()) {
+                throw new PhpErrorException(file, message);
             } else {
                 throw new PhpCoreException(message);
             }
