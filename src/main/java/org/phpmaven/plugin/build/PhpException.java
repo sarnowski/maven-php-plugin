@@ -12,26 +12,45 @@
  * limitations under the License.
  */
 
-package org.phpmaven.plugin.build.php;
+package org.phpmaven.plugin.build;
 
 /**
  * @author Tobias Sarnowski
  */
-public class PhpCoreException extends PhpException {
+public abstract class PhpException extends Exception {
 
-    public PhpCoreException() {
+    private String output;
+
+    protected PhpException() {
         super();
     }
 
-    public PhpCoreException(String message) {
+    protected PhpException(String message) {
         super(message);
     }
 
-    public PhpCoreException(String message, Throwable cause) {
+    protected PhpException(String message, Throwable cause) {
         super(message, cause);
     }
 
-    public PhpCoreException(Throwable cause) {
+    protected PhpException(Throwable cause) {
         super(cause);
+    }
+
+    public void appendOutput(String output) {
+        this.output = output;
+    }
+
+    public String getAppendedOutput() {
+        return output;
+    }
+
+    @Override
+    public String getMessage() {
+        String message = super.getMessage();
+        if (output != null) {
+            message = message + "\n\n" + output;
+        }
+        return message;
     }
 }

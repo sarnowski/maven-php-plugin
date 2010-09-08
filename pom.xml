@@ -40,7 +40,7 @@
             <name>Christian Wiedemann</name>
             <email>christian.wiedemann@key-tec.de</email>
             <roles>
-                <role>Project Leader</role>
+                <role>Project Founder</role>
                 <role>Developer</role>
             </roles>
             <organization>KEY-TEC</organization>
@@ -50,6 +50,16 @@
             <id>tobias.sarnowski</id>
             <name>Tobias Sarnowski</name>
             <email>sarnowski@cosmocode.de</email>
+            <roles>
+                <role>Developer</role>
+            </roles>
+            <organization>CosmoCode GmbH</organization>
+            <timezone>+1</timezone>
+        </developer>
+        <developer>
+            <id>oliver.lorenz</id>
+            <name>Oliver Lorenz</name>
+            <email>olorenz@cosmocode.de</email>
             <roles>
                 <role>Developer</role>
             </roles>

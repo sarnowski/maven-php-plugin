@@ -12,15 +12,29 @@
  * limitations under the License.
  */
 
-package org.phpmaven.plugin.build.php;
+package org.phpmaven.plugin.build;
 
 import java.io.File;
 
 /**
+ * @author Christian Wiedemann
  * @author Tobias Sarnowski
  */
-public class PhpWarningException extends PhpExecutionException {
-    public PhpWarningException(File phpFile, String phpErrorMessage) {
-        super(phpFile, phpErrorMessage);
+public class PhpExecutionException extends PhpException {
+
+    private final String phpErrorMessage;
+    private final File phpFile;
+
+    public PhpExecutionException(File phpFile, String phpErrorMessage) {
+        this.phpFile = phpFile;
+        this.phpErrorMessage = "\n" + phpErrorMessage;
+    }
+
+    public String getMessage() {
+        if (phpFile != null) {
+            return phpErrorMessage + "\nin file: " + phpFile.getAbsolutePath();
+        } else {
+            return phpErrorMessage;
+        }
     }
 }

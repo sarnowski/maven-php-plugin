@@ -12,29 +12,35 @@
  * limitations under the License.
  */
 
-package org.phpmaven.plugin.build.php;
+package org.phpmaven.plugin.build;
 
-import java.io.File;
+import java.util.List;
 
 /**
  * @author Christian Wiedemann
  * @author Tobias Sarnowski
  */
-public class PhpExecutionException extends PhpException {
+public class MultiException extends PhpException {
 
-    private final String phpErrorMessage;
-    private final File phpFile;
+	private final List<Exception> exceptions;
 
-    public PhpExecutionException(File phpFile, String phpErrorMessage) {
-        this.phpFile = phpFile;
-        this.phpErrorMessage = "\n" + phpErrorMessage;
-    }
+	public MultiException(List<Exception> exceptions){
+		this.exceptions = exceptions;
+	}
 
-    public String getMessage() {
-        if (phpFile != null) {
-            return phpErrorMessage + "\nin file: " + phpFile.getAbsolutePath();
-        } else {
-            return phpErrorMessage;
+	@Override
+	public String getMessage() {
+        if (exceptions.size() == 1) {
+            return exceptions.get(0).getMessage();
         }
-    }
+
+		StringBuilder message = new StringBuilder();
+        for (Exception e: exceptions) {
+			message.append(e.getMessage());
+            message.append("\n\n");
+		}
+
+		return message.toString();
+	}
+
 }

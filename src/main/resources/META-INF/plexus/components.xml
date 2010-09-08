@@ -1,64 +1,5 @@
 <component-set>
     <components>
-
-        <component>
-            <role>
-                org.apache.maven.lifecycle.mapping.LifecycleMapping
-            </role>
-            <role-hint>script</role-hint>
-            <implementation>
-                org.apache.maven.lifecycle.mapping.DefaultLifecycleMapping
-            </implementation>
-            <configuration>
-                <phases>
-                    <generate-resources>
-                        org.apache.maven.plugins:maven-plugin-plugin:descriptor
-                    </generate-resources>
-                    <process-resources>
-                        org.apache.maven.plugins:maven-resources-plugin:resources
-                    </process-resources>
-                    <compile>
-                        org.phpmaven:maven-php-plugin:scriptcopy
-                    </compile>
-                    <process-test-resources>
-                        org.apache.maven.plugins:maven-resources-plugin:testResources
-                    </process-test-resources>
-                    <test>
-                        org.phpmaven:maven-php-plugin:scripttestrunner
-                    </test>
-                    <package>
-                        org.apache.maven.plugins:maven-jar-plugin:jar ,
-                        org.apache.maven.plugins:maven-plugin-plugin:addPluginArtifactMetadata
-                    </package>
-                    <install>
-                        org.apache.maven.plugins:maven-install-plugin:install,
-                        org.apache.maven.plugins:maven-plugin-plugin:updateRegistry
-                    </install>
-                    <deploy>
-                        org.apache.maven.plugins:maven-deploy-plugin:deploy
-                    </deploy>
-                </phases>
-            </configuration>
-        </component>
-        <component>
-            <role>
-                org.apache.maven.artifact.handler.ArtifactHandler
-            </role>
-            <role-hint>script</role-hint>
-            <implementation>
-                org.apache.maven.artifact.handler.DefaultArtifactHandler
-            </implementation>
-            <configuration>
-                <type>script</type>
-                <extension>jar</extension>
-                <language>script</language>
-
-                <addedToClasspath>true</addedToClasspath>
-            </configuration>
-        </component>
-
-
-
         <component>
             <role>
                 org.apache.maven.lifecycle.mapping.LifecycleMapping
@@ -76,16 +17,16 @@
                         org.apache.maven.plugins:maven-resources-plugin:resources
                     </process-resources>
                     <compile>
-                        org.phpmaven:maven-php-plugin:php-validate
+                        org.phpmaven:maven-php-plugin:process
                     </compile>
                     <process-test-resources>
                         org.apache.maven.plugins:maven-resources-plugin:testResources
                     </process-test-resources>
                     <test>
-                        org.phpmaven:maven-php-plugin:phpunit
+                        org.phpmaven:maven-php-plugin:test
                     </test>
                     <package>
-                        org.apache.maven.plugins:maven-jar-plugin:jar ,
+                        org.apache.maven.plugins:maven-jar-plugin:jar,
                         org.apache.maven.plugins:maven-plugin-plugin:addPluginArtifactMetadata
                     </package>
                     <install>

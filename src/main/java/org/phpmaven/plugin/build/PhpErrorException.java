@@ -12,12 +12,15 @@
  * limitations under the License.
  */
 
-package org.phpmaven.plugin.build.php;
+package org.phpmaven.plugin.build;
+
+import java.io.File;
 
 /**
- * @author Christian Wiedemann
+ * @author Tobias Sarnowski
  */
-public enum PhpVersion {
-    PHP4,
-    PHP5
+public class PhpErrorException extends PhpExecutionException {
+    public PhpErrorException(File phpFile, String phpErrorMessage) {
+        super(phpFile, phpErrorMessage);
+    }
 }

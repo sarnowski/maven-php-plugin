@@ -14,19 +14,70 @@
 
 package org.phpmaven.plugin.build;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.List;
-
-import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.wagon.PathUtils;
 import org.codehaus.plexus.util.FileUtils;
 import org.codehaus.plexus.util.IOUtil;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+
 /**
  * @author Christian Wiedemann
+ * @author Tobias Sarnowski
  */
-public class FileHelper {
+public final class FileHelper {
+
+    /**
+     * Copies over a file from the sourceDirectory to the targetDirectory perserving its relative subdirectories.
+     *
+     * @param sourceDirectory
+     * @param targetDirectory
+     * @param sourceFile
+     * @param forceOverwrite
+     * @throws IOException
+     */
+    public static void copyToFolder(
+            File sourceDirectory,
+            File targetDirectory,
+            File sourceFile,
+            boolean forceOverwrite)
+            throws IOException {
+
+        String relativeFile = PathUtils.toRelative(sourceDirectory.getAbsoluteFile(), sourceFile.getAbsolutePath());
+        File targetFile = new File(targetDirectory, relativeFile);
+
+        if (forceOverwrite) {
+            FileUtils.copyFile(sourceFile, targetFile);
+        } else {
+            FileUtils.copyFileIfModified(sourceFile, targetFile);
+        }
+    }
+
+    /**
+     * Unzips all files to the given directory (using jar)
+     *
+     * @param targetDirectory
+     * @param elements
+     * @throws IOException
+     */
+    public static void unzipElements(File targetDirectory, List<String> elements) throws IOException {
+        targetDirectory.mkdirs();
+        for (String element: elements) {
+            File sourceFile = new File(element);
+            if (sourceFile.isFile()) {
+                unjar(sourceFile, targetDirectory);
+            }
+        }
+    }
+
+    /**
+     * Unpacks a jar file.
+     *
+     * @param jarFile
+     * @param destDir
+     * @throws IOException
+     */
     private static void unjar(File jarFile, File destDir) throws IOException {
         java.util.jar.JarFile jar = new java.util.jar.JarFile(jarFile);
         java.util.Enumeration<java.util.jar.JarEntry> items = jar.entries();
@@ -54,41 +105,6 @@ public class FileHelper {
 //			}
             fos.close();
             is.close();
-        }
-
-    }
-
-    public final static void prepareDependencies(String targetFolder,List<String> elements)
-            throws IOException {
-
-        File targetFile = new File(targetFolder);
-        targetFile.mkdirs();
-        for (int i = 0; i < elements.size(); i++) {
-            File sourceFile = new File((String) elements.get(i));
-            if (sourceFile.isFile()) {
-                unjar(sourceFile, targetFile);
-            }
-        }
-    }
-    public static final void copyToTargetFolder(File baseDir,String sourceDirectory,
-                                                File sourceFile, String targetClassFolder, boolean forceOverwrite)
-            throws MojoExecutionException {
-        String relative = PathUtils.toRelative(new File(baseDir.toString()
-                + sourceDirectory), sourceFile.toString());
-
-
-        File targetFile = new File(baseDir.toString() + targetClassFolder + "/"
-                + relative);
-
-
-        try {
-            if (forceOverwrite) {
-                FileUtils.copyFile(sourceFile, targetFile);
-            }else {
-                FileUtils.copyFileIfModified(sourceFile, targetFile);
-            }
-        } catch (IOException e) {
-            throw new MojoExecutionException(e.getMessage(), e);
         }
     }
 }

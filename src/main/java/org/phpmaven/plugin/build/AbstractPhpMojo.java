@@ -12,7 +12,7 @@
  * limitations under the License.
  */
 
-package org.phpmaven.plugin.build.php;
+package org.phpmaven.plugin.build;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
@@ -25,12 +25,9 @@ import org.codehaus.plexus.util.cli.CommandLineException;
 import org.codehaus.plexus.util.cli.CommandLineUtils;
 import org.codehaus.plexus.util.cli.Commandline;
 import org.codehaus.plexus.util.cli.StreamConsumer;
-import org.phpmaven.plugin.build.FileHelper;
-import org.phpmaven.plugin.build.MultipleCompileException;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -42,9 +39,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public abstract class AbstractPhpMojo extends AbstractMojo implements DirectoryWalkListener {
 
     /**
-     * Can be defined via -DflushPHPOutput=true
+     * Can be defined via -DphpLogOutput=true
      */
-    public final static String LOG_PHP_OUTPUT = "flushPHPOutput";
+    public final static String LOG_PHP_OUTPUT = "phpLogOutput";
 
     /**
      * How to get PHP versions output
@@ -76,88 +73,150 @@ public abstract class AbstractPhpMojo extends AbstractMojo implements DirectoryW
      * @required
      * @readonly
      */
-    protected MavenProject project;
+    private MavenProject project;
 
     /**
-     * if true php maven will allways overwrite existing php files
-     * in the classes folder even if the files in the target folder are newer or at the same date
-     *
-     * @parameter expression="false" required="true"
-     */
-    protected boolean forceOverwrite = false;
-
-    /**
-     * @parameter expression="${project.basedir}" required="true"
+     * @parameter expression="${project.basedir}"
+     * @required
      * @readonly
      */
-    protected File baseDir;
+    private File baseDir;
+
+    /**
+     * Path to the php executable.
+     *
+     * @parameter
+     */
+    private String phpExecutable = "php";
 
     /**
      * Files and directories to exclude
      *
      * @parameter
      */
-    public String[] excludes = new String[0];
+    private String[] excludes = new String[0];
 
     /**
      * Files and directories to include
      *
      * @parameter
      */
-    public String[] includes = new String[0];
+    private String[] includes = new String[0];
 
     /**
      * PHP arguments. Use php -h to get a list of all php compile arguments.
      *
      * @parameter
      */
-    private String compileArgs;
+    private String additionalPhpParameters;
+
     /**
-     * Project classpath.
+     * Project compile-time classpath.
      *
      * @parameter expression="${project.compileClasspathElements}"
      * @required
      * @readonly
      */
-    private List<String> classpathElements;
+    private List<String> compileClasspathElements;
+
+    /**
+     * Project test classpath elements.
+     *
+     * @parameter expression="${project.testClasspathElements}"
+     * @required
+     * @readonly
+     */
+    private List<String> testClasspathElements;
 
     /**
      * The php source folder.
      *
-     * @parameter expression="/src/main/php"
-     * @required
+     * @parameter
      */
-    protected String sourceDirectory;
+    private String sourceDirectory = "src/main/php";
 
     /**
-     * Path to the php executable.
+     * The php test source folder.
      *
-     * @parameter expression="php"
-     * @required
+     * @parameter
      */
-    protected String phpExe;
-
+    private String testSourceDirectory = "src/test/php";
 
     /**
-     * collects all exceptions during the file walk
+     * Where the output should be stored for jar inclusion
+     *
+     * @parameter
      */
-    private ArrayList<Exception> collectedExceptions = Lists.newArrayList();
+    private String targetClassesDirectory = "target/classes";
+
+    /**
+     * Where the test output should be stored for jar inclusion
+     *
+     * @parameter
+     */
+    private String targetTestClassesDirectory = "target/test-classes";
+
+    /**
+     * Where the php dependency files will be written to.
+     *
+     * @parameter
+     */
+    private String dependenciesTargetDirectory = "target/php-deps";
+
+    /**
+     * Where the php test dependency files will be written to.
+     *
+     * @parameter
+     */
+    private String testDependenciesTargetDirectory = "target/php-test-deps";
+
+    /**
+     * How php files will be identified after the last point.
+     *
+     * @parameter
+     */
+    private String phpFileEnding = "php";
+
+    /**
+     * If the source files should be included in the resulting jar.
+     *
+     * @parameter
+     */
+    private boolean includeInJar = true;
+
+    /**
+     * if true php maven will allways overwrite existing php files
+     * in the classes folder even if the files in the target folder are newer or at the same date
+     *
+     * @parameter
+     */
+    private boolean forceOverwrite = false;
+
+    /**
+     * If true, errors triggered because of missing includes will be ignored.
+     *
+     * @parameter
+     */
+    private boolean ignoreIncludeErrors = false;
 
     /**
      * If the output of the php scripts will be written to the console
      */
-    protected boolean logPhpOutput;
+    private boolean logPhpOutput = false;
 
     /**
-     * The used PHP version
+     * The used PHP version (cached after initial call of {@link #getPhpVersion()}
      */
     private PhpVersion phpVersion;
 
+    /**
+     * collects all exceptions during the file walk
+     */
+    private List<Exception> collectedExceptions = Lists.newArrayList();
+
 
     public AbstractPhpMojo() {
-        if (System.getProperty(LOG_PHP_OUTPUT) == null) {
-            logPhpOutput = false;
-        } else {
+        if (System.getProperty(LOG_PHP_OUTPUT) != null) {
             logPhpOutput = "true".equals(System.getProperty(LOG_PHP_OUTPUT));
         }
     }
@@ -176,7 +235,203 @@ public abstract class AbstractPhpMojo extends AbstractMojo implements DirectoryW
      * @param file the PHP file to process
      * @throws MojoExecutionException
      */
-    abstract protected void handleProcesedFile(File file) throws MojoExecutionException;
+    abstract protected void handleProcessedFile(File file) throws MojoExecutionException;
+
+    /**
+     *
+     * @return the current maven project.
+     */
+    public MavenProject getProject() {
+        return project;
+    }
+
+    /**
+     *
+     * @return the project's basedir
+     */
+    public File getBaseDir() {
+        return baseDir;
+    }
+
+    /**
+     *
+     * @return path of the php executable
+     */
+    public String getPhpExecutable() {
+        return phpExecutable;
+    }
+
+    /**
+     *
+     * @return paths and files to exclude
+     */
+    public String[] getExcludes() {
+        return excludes;
+    }
+
+    /**
+     *
+     * @return paths and files to include
+     */
+    public String[] getIncludes() {
+        return includes;
+    }
+
+    /**
+     *
+     * @return additional arguments for php execution
+     */
+    public String getAdditionalPhpParameters() {
+        return additionalPhpParameters;
+    }
+
+    /**
+     *
+     * @return elements used in compile scope
+     */
+    public List<String> getCompileClasspathElements() {
+        return compileClasspathElements;
+    }
+
+    /**
+     *
+     * @return elements used in test scope
+     */
+    public List<String> getTestClasspathElements() {
+        return testClasspathElements;
+    }
+
+    /**
+     *
+     * @return where the php sources can be found
+     */
+    public File getSourceDirectory() {
+        return new File(getBaseDir(), sourceDirectory);
+    }
+
+    /**
+     *
+     * @return the configured probably relative directory
+     */
+    public String getPlainSourceDirectory() {
+        return sourceDirectory;
+    }
+
+    /**
+     *
+     * @return where the php test sources can be found
+     */
+    public File getTestSourceDirectory() {
+        return new File(getBaseDir(), testSourceDirectory);
+    }
+
+    /**
+     *
+     * @return the configured probably relative directory
+     */
+    public String getPlainTestSourceDirectory() {
+        return testSourceDirectory;
+    }
+
+    /**
+     *
+     * @return where to store the dependency files
+     */
+    public File getDependenciesTargetDirectory() {
+        return new File(getBaseDir(), dependenciesTargetDirectory);
+    }
+
+    /**
+     *
+     * @return the configured probably relative directory
+     */
+    public String getPlainDependenciesTargetDirectory() {
+        return dependenciesTargetDirectory;
+    }
+
+    /**
+     *
+     * @return where to store the test dependency files
+     */
+    public File getTestDependenciesTargetDirectory() {
+        return new File(getBaseDir(), testDependenciesTargetDirectory);
+    }
+
+    /**
+     *
+     * @return the configured probably relative directory
+     */
+    public String getPlainTestDependenciesTargetDirectory() {
+        return testDependenciesTargetDirectory;
+    }
+
+    /**
+     *
+     * @return where the jar inclusion directory is
+     */
+    public File getTargetClassesDirectory() {
+        return new File(getBaseDir(), targetClassesDirectory);
+    }
+
+    /**
+     *
+     * @return the configured probably relative directory
+     */
+    public String getPlainTargetClassesDirectory() {
+        return targetClassesDirectory;
+    }
+
+    /**
+     *
+     * @return where the test-har inclusion directory is
+     */
+    public File getTargetTestClassesDirectory() {
+        return new File(getBaseDir(), targetTestClassesDirectory);
+    }
+
+    /**
+     *
+     * @return the configured probably relative directory
+     */
+    public String getPlainTargetTestClassesDirectory() {
+        return targetTestClassesDirectory;
+    }
+
+    public String getPhpFileEnding() {
+        return phpFileEnding;
+    }
+
+    /**
+     *
+     * @return if the php sources should be included in the resulting jar
+     */
+    public boolean isIncludeInJar() {
+        return includeInJar;
+    }
+
+    /**
+     *
+     * @return forces target files to be overwritten
+     */
+    public boolean isForceOverwrite() {
+        return forceOverwrite;
+    }
+
+    /**
+     *
+     * @return if include errors should be ignored
+     */
+    public boolean isIgnoreIncludeErrors() {
+        return ignoreIncludeErrors;
+    }
+
+    /**
+     *
+     * @return if php output will be printed to the log
+     */
+    public boolean isLogPhpOutput() {
+        return logPhpOutput;
+    }
 
     /**
      * nessecary for the DirectoryWalker
@@ -221,27 +476,6 @@ public abstract class AbstractPhpMojo extends AbstractMojo implements DirectoryW
     }
 
     /**
-     *
-     * @return configured additional parameters for validation
-     */
-    protected String getCompilerArgs() {
-        if (compileArgs == null) {
-            compileArgs = "";
-        } else if (!compileArgs.startsWith(" ")) {
-            compileArgs = " " + compileArgs;
-        }
-        return compileArgs;
-    }
-
-    /**
-     *
-     * @return will always return false
-     */
-    protected boolean isIgnoreIncludeErrors() {
-        return false;
-    }
-
-    /**
      * Executes PHP with the given arguments
      *
      * @param arguments string of arguments for PHP
@@ -255,7 +489,14 @@ public abstract class AbstractPhpMojo extends AbstractMojo implements DirectoryW
         Preconditions.checkNotNull(stdout, "stdout");
         Preconditions.checkNotNull(stderr, "stderr");
 
-        final Commandline commandLine = new Commandline(phpExe + " " + arguments);
+        final String command;
+        if (getAdditionalPhpParameters() != null) {
+            command = phpExecutable + " " + getAdditionalPhpParameters() + " " + arguments;
+        } else {
+            command = phpExecutable + " " + arguments;
+        }
+
+        final Commandline commandLine = new Commandline(command);
 
         try {
             getLog().debug("Executing " + commandLine);
@@ -365,6 +606,17 @@ public abstract class AbstractPhpMojo extends AbstractMojo implements DirectoryW
         return stdout.toString();
     }
 
+    public String includePathParameter(String[] paths) {
+        StringBuilder includePath = new StringBuilder();
+        includePath.append("-d include_path=\"");
+        for (String path: paths) {
+            includePath.append(File.pathSeparator);
+            includePath.append(path);
+        }
+        includePath.append("\"");
+        return includePath.toString();
+    }
+
     /**
      * Retrieves the used PHP version.
      *
@@ -406,18 +658,31 @@ public abstract class AbstractPhpMojo extends AbstractMojo implements DirectoryW
     }
 
     /**
+     * Unzips all compile dependency sources.
      *
      * @throws IOException
+     * @throws PhpException
      */
-    protected final void prepareCompileDependencies() throws IOException {
-        FileHelper.prepareDependencies(baseDir.toString() + Statics.phpinc, classpathElements);
+    protected void prepareCompileDependencies() throws IOException, PhpException {
+        FileHelper.unzipElements(getDependenciesTargetDirectory(), getCompileClasspathElements());
+    }
+
+    /**
+     * Unzips all test dependency sources.
+     *
+     * @throws IOException
+     * @throws PhpException
+     */
+    protected void prepareTestDependencies() throws IOException, PhpException {
+        FileHelper.unzipElements(getTestDependenciesTargetDirectory(), getTestClasspathElements());
     }
 
     /**
      * Event hook
      */
+    @Override
     public void directoryWalkFinished() {
-        getLog().debug("--- All files processed.");
+        /* ignore */
     }
 
     /**
@@ -425,8 +690,9 @@ public abstract class AbstractPhpMojo extends AbstractMojo implements DirectoryW
      *
      * @param basedir
      */
+    @Override
     public void directoryWalkStarting(File basedir) {
-        getLog().debug("--- Starting folder walking in: " + basedir.getAbsoluteFile());
+        /* ignore */
     }
 
     /**
@@ -435,13 +701,13 @@ public abstract class AbstractPhpMojo extends AbstractMojo implements DirectoryW
      * @param percentage
      * @param file
      */
+    @Override
     public void directoryWalkStep(int percentage, File file) {
-        getLog().debug("percentage: " + percentage);
         try {
-            if (file.isFile() && file.getName().endsWith(".php"))
+            if (file.isFile() && file.getName().endsWith("." + getPhpFileEnding()))
                 executePhpFile(file);
             if (file.isFile())
-                handleProcesedFile(file);
+                handleProcessedFile(file);
         } catch (Exception e) {
             getLog().debug(e);
             collectedExceptions.add(e);
@@ -452,9 +718,9 @@ public abstract class AbstractPhpMojo extends AbstractMojo implements DirectoryW
      * Triggers the walk process
      *
      * @param parentFolder the folder to start in
-     * @throws MultipleCompileException
+     * @throws MultiException
      */
-    protected final void goRecursiveAndCall(File parentFolder) throws MultipleCompileException {
+    protected final void goRecursiveAndCall(File parentFolder) throws MultiException {
         if (!parentFolder.isDirectory()) {
             getLog().error("Source directory (" + parentFolder.getAbsolutePath() + ")");
             return;
@@ -480,7 +746,7 @@ public abstract class AbstractPhpMojo extends AbstractMojo implements DirectoryW
         walker.scan();
 
         if (collectedExceptions.size() != 0) {
-            throw new MultipleCompileException(collectedExceptions);
+            throw new MultiException(collectedExceptions);
         }
     }
 }

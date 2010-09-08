@@ -14,30 +14,10 @@
 
 package org.phpmaven.plugin.build;
 
-import java.util.ArrayList;
-
 /**
  * @author Christian Wiedemann
  */
-public class MultipleCompileException extends Exception {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	private final ArrayList<Exception> exceptions;
-	public MultipleCompileException(ArrayList<Exception> exceptions){
-		this.exceptions = exceptions;
-		
-	}
-	@Override
-	public String getMessage() {
-		StringBuffer message = new StringBuffer(); 
-		for (int i = 0; i < exceptions.size(); i++) {
-			message.append(exceptions.get(i).getMessage()+" \n");
-		}
-		return message.toString();
-	}
-
-
+public enum PhpVersion {
+    PHP4,
+    PHP5
 }
