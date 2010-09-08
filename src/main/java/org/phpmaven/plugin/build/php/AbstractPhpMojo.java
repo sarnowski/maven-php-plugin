@@ -39,7 +39,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * @author Christian Wiedemann
  * @author Tobias Sarnowski
  */
-public abstract class AbstractPhpExecutor extends AbstractMojo implements DirectoryWalkListener {
+public abstract class AbstractPhpMojo extends AbstractMojo implements DirectoryWalkListener {
 
     /**
      * Can be defined via -DflushPHPOutput=true
@@ -154,7 +154,7 @@ public abstract class AbstractPhpExecutor extends AbstractMojo implements Direct
     private PhpVersion phpVersion;
 
 
-    public AbstractPhpExecutor() {
+    public AbstractPhpMojo() {
         if (System.getProperty(LOG_PHP_OUTPUT) == null) {
             logPhpOutput = false;
         } else {

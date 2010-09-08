@@ -42,7 +42,7 @@ import java.util.List;
  * @requiresDependencyResolution test
  * @goal phpunit
  */
-public class PhpTest extends AbstractPhpExecutor {
+public class PhpTest extends AbstractPhpMojo {
     private List<SurefireResult> surefireResults = Lists.newArrayList();
 
     /**

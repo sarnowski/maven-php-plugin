@@ -31,7 +31,7 @@ import java.io.File;
  * @author Christian Wiedemann
  * @author Tobias Sarnowski
  */
-public class PhpValidate extends AbstractPhpExecutor {
+public class PhpValidate extends AbstractPhpMojo {
 	
 	/**
 	 * If true require_once or include_once errors will be ignored Default is
