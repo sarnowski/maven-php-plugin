@@ -56,16 +56,6 @@
             <organization>CosmoCode GmbH</organization>
             <timezone>+1</timezone>
         </developer>
-        <developer>
-            <id>oliver.lorenz</id>
-            <name>Oliver Lorenz</name>
-            <email>olorenz@cosmocode.de</email>
-            <roles>
-                <role>Developer</role>
-            </roles>
-            <organization>CosmoCode GmbH</organization>
-            <timezone>+1</timezone>
-        </developer>
     </developers>
 
     <mailingLists>
