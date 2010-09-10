@@ -227,7 +227,7 @@ public abstract class AbstractPhpMojo extends AbstractMojo implements DirectoryW
      * @param file the PHP file to execute
      * @throws MojoExecutionException if something goes wrong during the execution
      */
-    protected abstract void executePhpFile(File file) throws MojoExecutionException;
+    protected abstract void handlePhpFile(File file) throws MojoExecutionException;
 
     /**
      * Callback for file processing.
@@ -756,7 +756,7 @@ public abstract class AbstractPhpMojo extends AbstractMojo implements DirectoryW
     public void directoryWalkStep(int percentage, File file) {
         try {
             if (file.isFile() && file.getName().endsWith("." + getPhpFileEnding()))
-                executePhpFile(file);
+                handlePhpFile(file);
             if (file.isFile())
                 handleProcessedFile(file);
         /*CHECKSTYLE:OFF*/

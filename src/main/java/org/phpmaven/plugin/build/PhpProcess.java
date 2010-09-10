@@ -98,7 +98,7 @@ public final class PhpProcess extends AbstractPhpMojo {
     }
 
     @Override
-    protected void executePhpFile(File file) throws MojoExecutionException {
+    protected void handlePhpFile(File file) throws MojoExecutionException {
         if (isIgnoreValidate() || isExcluded(file)) {
             return;
         }
