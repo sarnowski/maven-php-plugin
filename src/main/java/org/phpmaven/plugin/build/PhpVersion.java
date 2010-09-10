@@ -18,6 +18,8 @@ package org.phpmaven.plugin.build;
  * @author Christian Wiedemann
  */
 public enum PhpVersion {
+    UNKNOWN,
     PHP4,
-    PHP5
+    PHP5,
+    PHP6
 }

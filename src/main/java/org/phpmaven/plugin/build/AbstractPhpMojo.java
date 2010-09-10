@@ -32,37 +32,39 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
+ * Helper class to give fast access to the PHP executable and the basic configuration.
  *
  * @author Christian Wiedemann
  * @author Tobias Sarnowski
  */
 public abstract class AbstractPhpMojo extends AbstractMojo implements DirectoryWalkListener {
+    /**
+     * Parameter to let PHP print out its version.
+     */
+    public static final String PHP_FLAG_VERSION = "-v";
 
     /**
-     * Can be defined via -DphpLogOutput=true
+     * Parameter to specify the include paths for PHP.
      */
-    public final static String LOG_PHP_OUTPUT = "phpLogOutput";
+    public static final String PHP_FLAG_INCLUDES = "-d include_path";
 
     /**
-     * How to get PHP versions output
+     * This list describes all keywords which will be printed out by PHP
+     * if an error occurs.
      */
-    public final static String PHP_FLAG_VERSION = "-v";
-
-    /**
-     * List of PHP error keywords
-     */
-    private final static String[] ERROR_IDENTIFIERS = new String[]{
-            "Fatal error",
-            "Error",
-            "Parse error"
+    private static final String[] ERROR_IDENTIFIERS = new String[]{
+        "Fatal error",
+        "Error",
+        "Parse error"
     };
 
     /**
-     * List of PHP warning keywords
+     * This list describes all keywords which will be printed out by PHP
+     * if a warrning occurs.
      */
-    private final static String[] WARNING_IDENTIFIERS = new String[]{
-            "Warning",
-            "Notice"
+    private static final String[] WARNING_IDENTIFIERS = new String[]{
+        "Warning",
+        "Notice"
     };
 
 
@@ -76,6 +78,8 @@ public abstract class AbstractPhpMojo extends AbstractMojo implements DirectoryW
     private MavenProject project;
 
     /**
+     * The project's base directory.
+     *
      * @parameter expression="${project.basedir}"
      * @required
      * @readonly
@@ -90,14 +94,14 @@ public abstract class AbstractPhpMojo extends AbstractMojo implements DirectoryW
     private String phpExecutable = "php";
 
     /**
-     * Files and directories to exclude
+     * Files and directories to exclude.
      *
      * @parameter
      */
     private String[] excludes = new String[0];
 
     /**
-     * Files and directories to include
+     * Files and directories to include.
      *
      * @parameter
      */
@@ -143,14 +147,14 @@ public abstract class AbstractPhpMojo extends AbstractMojo implements DirectoryW
     private String testSourceDirectory = "src/test/php";
 
     /**
-     * Where the output should be stored for jar inclusion
+     * Where the output should be stored for jar inclusion.
      *
      * @parameter
      */
     private String targetClassesDirectory = "target/classes";
 
     /**
-     * Where the test output should be stored for jar inclusion
+     * Where the test output should be stored for jar inclusion.
      *
      * @parameter
      */
@@ -185,59 +189,56 @@ public abstract class AbstractPhpMojo extends AbstractMojo implements DirectoryW
     private boolean includeInJar = true;
 
     /**
-     * if true php maven will allways overwrite existing php files
-     * in the classes folder even if the files in the target folder are newer or at the same date
+     * If true, php maven will allways overwrite existing php files in the classes folder
+     * even if the files in the target folder are newer or at the same date.
      *
      * @parameter
      */
-    private boolean forceOverwrite = false;
+    private boolean forceOverwrite;
 
     /**
      * If true, errors triggered because of missing includes will be ignored.
      *
      * @parameter
      */
-    private boolean ignoreIncludeErrors = false;
+    private boolean ignoreIncludeErrors;
 
     /**
-     * If the output of the php scripts will be written to the console
+     * If the output of the php scripts will be written to the console.
+     *
+     * @parameter
      */
-    private boolean logPhpOutput = false;
+    private boolean logPhpOutput;
 
     /**
-     * The used PHP version (cached after initial call of {@link #getPhpVersion()}
+     * The used PHP version (cached after initial call of {@link #getPhpVersion()}.
      */
     private PhpVersion phpVersion;
 
     /**
-     * collects all exceptions during the file walk
+     * collects all exceptions during the file walk.
      */
     private List<Exception> collectedExceptions = Lists.newArrayList();
 
-
-    public AbstractPhpMojo() {
-        if (System.getProperty(LOG_PHP_OUTPUT) != null) {
-            logPhpOutput = "true".equals(System.getProperty(LOG_PHP_OUTPUT));
-        }
-    }
 
     /**
      * Callback for executing a file.
      *
      * @param file the PHP file to execute
-     * @throws MojoExecutionException
+     * @throws MojoExecutionException if something goes wrong during the execution
      */
-    abstract protected void executePhpFile(File file) throws MojoExecutionException;
+    protected abstract void executePhpFile(File file) throws MojoExecutionException;
 
     /**
      * Callback for file processing.
      *
      * @param file the PHP file to process
-     * @throws MojoExecutionException
+     * @throws MojoExecutionException if something goes wrong during the execution
      */
-    abstract protected void handleProcessedFile(File file) throws MojoExecutionException;
+    protected abstract void handleProcessedFile(File file) throws MojoExecutionException;
 
     /**
+     * Represents the maven project.
      *
      * @return the current maven project.
      */
@@ -246,6 +247,7 @@ public abstract class AbstractPhpMojo extends AbstractMojo implements DirectoryW
     }
 
     /**
+     * The project's base directory.
      *
      * @return the project's basedir
      */
@@ -254,6 +256,7 @@ public abstract class AbstractPhpMojo extends AbstractMojo implements DirectoryW
     }
 
     /**
+     * Path to the PHP executable.
      *
      * @return path of the php executable
      */
@@ -262,6 +265,7 @@ public abstract class AbstractPhpMojo extends AbstractMojo implements DirectoryW
     }
 
     /**
+     * Array of paths to exclude.
      *
      * @return paths and files to exclude
      */
@@ -270,6 +274,7 @@ public abstract class AbstractPhpMojo extends AbstractMojo implements DirectoryW
     }
 
     /**
+     * Array of paths to include.
      *
      * @return paths and files to include
      */
@@ -278,6 +283,7 @@ public abstract class AbstractPhpMojo extends AbstractMojo implements DirectoryW
     }
 
     /**
+     * Parameters which should be added to the generated PHP parameters.
      *
      * @return additional arguments for php execution
      */
@@ -286,6 +292,7 @@ public abstract class AbstractPhpMojo extends AbstractMojo implements DirectoryW
     }
 
     /**
+     * List of dependencies of the compile scope.
      *
      * @return elements used in compile scope
      */
@@ -294,6 +301,7 @@ public abstract class AbstractPhpMojo extends AbstractMojo implements DirectoryW
     }
 
     /**
+     * List of dependencies of the test scope.
      *
      * @return elements used in test scope
      */
@@ -302,6 +310,7 @@ public abstract class AbstractPhpMojo extends AbstractMojo implements DirectoryW
     }
 
     /**
+     * Where the PHP source files can be found.
      *
      * @return where the php sources can be found
      */
@@ -310,7 +319,9 @@ public abstract class AbstractPhpMojo extends AbstractMojo implements DirectoryW
     }
 
     /**
+     * The configured path to the source directory.
      *
+     * @see #getSourceDirectory()
      * @return the configured probably relative directory
      */
     public String getPlainSourceDirectory() {
@@ -318,6 +329,7 @@ public abstract class AbstractPhpMojo extends AbstractMojo implements DirectoryW
     }
 
     /**
+     * Where the PHP test sources can be found.
      *
      * @return where the php test sources can be found
      */
@@ -326,7 +338,9 @@ public abstract class AbstractPhpMojo extends AbstractMojo implements DirectoryW
     }
 
     /**
+     * The configured source directory.
      *
+     * @see #getTestSourceDirectory()
      * @return the configured probably relative directory
      */
     public String getPlainTestSourceDirectory() {
@@ -334,6 +348,7 @@ public abstract class AbstractPhpMojo extends AbstractMojo implements DirectoryW
     }
 
     /**
+     * Where the dependencies should be unpacked to.
      *
      * @return where to store the dependency files
      */
@@ -342,7 +357,9 @@ public abstract class AbstractPhpMojo extends AbstractMojo implements DirectoryW
     }
 
     /**
+     * The configured dependency target directory.
      *
+     * @see #getDependenciesTargetDirectory()
      * @return the configured probably relative directory
      */
     public String getPlainDependenciesTargetDirectory() {
@@ -350,6 +367,7 @@ public abstract class AbstractPhpMojo extends AbstractMojo implements DirectoryW
     }
 
     /**
+     * Where the test dependencies should be unpacked to.
      *
      * @return where to store the test dependency files
      */
@@ -357,8 +375,10 @@ public abstract class AbstractPhpMojo extends AbstractMojo implements DirectoryW
         return new File(getBaseDir(), testDependenciesTargetDirectory);
     }
 
-    /**
+    /**                                      e
+     * The configured test dependency target directory.
      *
+     * @see #getTargetTestClassesDirectory()
      * @return the configured probably relative directory
      */
     public String getPlainTestDependenciesTargetDirectory() {
@@ -366,6 +386,7 @@ public abstract class AbstractPhpMojo extends AbstractMojo implements DirectoryW
     }
 
     /**
+     * Where the sources should get copied to.
      *
      * @return where the jar inclusion directory is
      */
@@ -374,7 +395,9 @@ public abstract class AbstractPhpMojo extends AbstractMojo implements DirectoryW
     }
 
     /**
+     * The configured target directory.
      *
+     * @see #getTargetClassesDirectory()
      * @return the configured probably relative directory
      */
     public String getPlainTargetClassesDirectory() {
@@ -382,26 +405,36 @@ public abstract class AbstractPhpMojo extends AbstractMojo implements DirectoryW
     }
 
     /**
+     * The target directory where to copy the test sources to.
      *
-     * @return where the test-har inclusion directory is
+     * @return where the test-jar inclusion directory is
      */
     public File getTargetTestClassesDirectory() {
         return new File(getBaseDir(), targetTestClassesDirectory);
     }
 
     /**
+     * The configured target directory.
      *
+     * @see #getPlainTargetTestClassesDirectory()
      * @return the configured probably relative directory
      */
     public String getPlainTargetTestClassesDirectory() {
         return targetTestClassesDirectory;
     }
 
+    /**
+     * Wich file ending to use for identifying php files.
+     *
+     * @return the file ending (except the dot)
+     */
     public String getPhpFileEnding() {
         return phpFileEnding;
     }
 
     /**
+     * If the sources should be included in the resulting jar file. If not,
+     * the sourcess won't be copied to the target directory.
      *
      * @return if the php sources should be included in the resulting jar
      */
@@ -410,6 +443,7 @@ public abstract class AbstractPhpMojo extends AbstractMojo implements DirectoryW
     }
 
     /**
+     * Do not care about file timestamps and copy every time.
      *
      * @return forces target files to be overwritten
      */
@@ -418,6 +452,7 @@ public abstract class AbstractPhpMojo extends AbstractMojo implements DirectoryW
     }
 
     /**
+     * Returns if include errors should be ignored.
      *
      * @return if include errors should be ignored
      */
@@ -426,6 +461,7 @@ public abstract class AbstractPhpMojo extends AbstractMojo implements DirectoryW
     }
 
     /**
+     * Returns if output from the PHP executable should be logged.
      *
      * @return if php output will be printed to the log
      */
@@ -434,25 +470,28 @@ public abstract class AbstractPhpMojo extends AbstractMojo implements DirectoryW
     }
 
     /**
-     * nessecary for the DirectoryWalker
+     * Nessecary for the DirectoryWalker, do not use.
      *
      * @param message message to log
+     * @deprecated use getLog() instead
      */
     @Override
+    @Deprecated
     public void debug(String message) {
         getLog().debug(message);
     }
 
     /**
+     * Checks if a line (string) contains a PHP error message.
      *
      * @param line output line
      * @return if the line contains php error messages
      */
     private boolean isError(String line) {
-        line = line.trim();
-        for (String errorIdentifier: ERROR_IDENTIFIERS) {
-            if (line.startsWith(errorIdentifier + ":")
-                    || line.startsWith("<b>" + errorIdentifier + "</b>:")) {
+        final String trimmedLine = line.trim();
+        for (String errorIdentifier : ERROR_IDENTIFIERS) {
+            if (trimmedLine.startsWith(errorIdentifier + ":")
+                || trimmedLine.startsWith("<b>" + errorIdentifier + "</b>:")) {
                 return true;
             }
         }
@@ -460,15 +499,16 @@ public abstract class AbstractPhpMojo extends AbstractMojo implements DirectoryW
     }
 
     /**
+     * Checks if a line (string) contains a PHP warning message.
      *
      * @param line output line
      * @return if the line contains php warning messages
      */
     private boolean isWarning(String line) {
-        line = line.trim();
-        for (String warningIdentifier: WARNING_IDENTIFIERS) {
-            if (line.startsWith(warningIdentifier + ":")
-                    || line.startsWith("<b>" + warningIdentifier + "</b>:")) {
+        final String trimmedLine = line.trim();
+        for (String warningIdentifier : WARNING_IDENTIFIERS) {
+            if (trimmedLine.startsWith(warningIdentifier + ":")
+                || trimmedLine.startsWith("<b>" + warningIdentifier + "</b>:")) {
                 return true;
             }
         }
@@ -476,7 +516,7 @@ public abstract class AbstractPhpMojo extends AbstractMojo implements DirectoryW
     }
 
     /**
-     * Executes PHP with the given arguments
+     * Executes PHP with the given arguments.
      *
      * @param arguments string of arguments for PHP
      * @param stdout handler for stdout lines
@@ -523,46 +563,46 @@ public abstract class AbstractPhpMojo extends AbstractMojo implements DirectoryW
         final AtomicBoolean throwWarning = new AtomicBoolean(false);
 
         final int returnCode = execute(
-                arguments,
-                new StreamConsumer() {
-                    @Override
-                    public void consumeLine(String line) {
-                        if (logPhpOutput) {
-                            getLog().info("php.out: " + line);
-                        } else {
-                            getLog().debug("php.out: " + line);
-                        }
-
-                        stdout.consumeLine(line);
-
-                        final boolean error = isError(line);
-                        final boolean warning = isWarning(line);
-                        if (error || warning) {
-                            if (isIgnoreIncludeErrors()
-                                    && !line.contains("require_once")
-                                    && !line.contains("include_once")
-                                    ) {
-                                stderr.append(line);
-                                stderr.append("\n");
-                            } else if (!isIgnoreIncludeErrors()) {
-                                stderr.append(line);
-                                stderr.append("\n");
-                            }
-                            if (error) throwError.set(true);
-                            if (warning) throwWarning.set(true);
-                        }
+            arguments,
+            new StreamConsumer() {
+                @Override
+                public void consumeLine(String line) {
+                    if (logPhpOutput) {
+                        getLog().info("php.out: " + line);
+                    } else {
+                        getLog().debug("php.out: " + line);
                     }
-                },
-                new StreamConsumer() {
-                    @Override
-                    public void consumeLine(String line) {
-                        stderr.append(line);
-                        stderr.append("\n");
-                        throwError.set(true);
+
+                    stdout.consumeLine(line);
+
+                    final boolean error = isError(line);
+                    final boolean warning = isWarning(line);
+                    if (error || warning) {
+                        if (isIgnoreIncludeErrors()
+                            && !line.contains("require_once")
+                            && !line.contains("include_once")
+                            ) {
+                            stderr.append(line);
+                            stderr.append("\n");
+                        } else if (!isIgnoreIncludeErrors()) {
+                            stderr.append(line);
+                            stderr.append("\n");
+                        }
+                        if (error) throwError.set(true);
+                        if (warning) throwWarning.set(true);
                     }
                 }
+            },
+            new StreamConsumer() {
+                @Override
+                public void consumeLine(String line) {
+                    stderr.append(line);
+                    stderr.append("\n");
+                    throwError.set(true);
+                }
+            }
         );
-        String error = stderr.toString();
+        final String error = stderr.toString();
         if (returnCode == 0 && !throwError.get() && !throwWarning.get()) {
             return returnCode;
         } else {
@@ -606,10 +646,18 @@ public abstract class AbstractPhpMojo extends AbstractMojo implements DirectoryW
         return stdout.toString();
     }
 
+    /**
+     * Generates a string which can be used as a parameter for the PHP
+     * executable defining the include paths to use.
+     *
+     * @param paths a list of paths
+     * @return the complete parameter for PHP
+     */
     public String includePathParameter(String[] paths) {
-        StringBuilder includePath = new StringBuilder();
-        includePath.append("-d include_path=\"");
-        for (String path: paths) {
+        final StringBuilder includePath = new StringBuilder();
+        includePath.append(PHP_FLAG_INCLUDES);
+        includePath.append("=\"");
+        for (String path : paths) {
             includePath.append(File.pathSeparator);
             includePath.append(path);
         }
@@ -632,26 +680,28 @@ public abstract class AbstractPhpMojo extends AbstractMojo implements DirectoryW
 
         // execute PHP
         execute(PHP_FLAG_VERSION,
-                (File)null,
-                new StreamConsumer() {
-                    @Override
-                    public void consumeLine(String line) {
-                        if (phpVersion == null && line.startsWith("PHP")) {
-                            String version = line.substring(4, 5);
-                            if (version.equals("5") || version.equals("6")) {
-                                phpVersion = PhpVersion.PHP5;
-                            } else if (version.equals("4")) {
-                                phpVersion = PhpVersion.PHP4;
-                            } else {
-                                getLog().error("Unsupported PHP version: " + version + " [" + line + "]");
-                            }
+            (File) null,
+            new StreamConsumer() {
+                @Override
+                public void consumeLine(String line) {
+                    if (phpVersion == null && line.startsWith("PHP")) {
+                        final String version = line.substring(4, 5);
+                        if ("6".equals(version)) {
+                            phpVersion = PhpVersion.PHP6;
+                            getLog().warn("PHP6 is not supported yet!");
+                        } else if ("5".equals(version)) {
+                            phpVersion = PhpVersion.PHP5;
+                        } else if ("4".equals(version)) {
+                            phpVersion = PhpVersion.PHP4;
+                            getLog().warn("PHP4 will not be supported anymore!");
+                        } else {
+                            phpVersion = PhpVersion.UNKNOWN;
+                            getLog().error("Cannot find out PHP version: " + line);
                         }
                     }
                 }
+            }
         );
-        if (phpVersion == null) {
-            throw new PhpCoreException("Cannot resolve PHP version");
-        }
 
         getLog().debug("PHP version: " + phpVersion.name());
         return phpVersion;
@@ -660,8 +710,8 @@ public abstract class AbstractPhpMojo extends AbstractMojo implements DirectoryW
     /**
      * Unzips all compile dependency sources.
      *
-     * @throws IOException
-     * @throws PhpException
+     * @throws IOException if something goes wrong while prepareing the dependencies
+     * @throws PhpException php exceptions can fly everywhere..
      */
     protected void prepareCompileDependencies() throws IOException, PhpException {
         FileHelper.unzipElements(getDependenciesTargetDirectory(), getCompileClasspathElements());
@@ -670,15 +720,17 @@ public abstract class AbstractPhpMojo extends AbstractMojo implements DirectoryW
     /**
      * Unzips all test dependency sources.
      *
-     * @throws IOException
-     * @throws PhpException
+     * @throws IOException if something goes wrong while prepareing the dependencies
+     * @throws PhpException php exceptions can fly everywhere..
      */
     protected void prepareTestDependencies() throws IOException, PhpException {
         FileHelper.unzipElements(getTestDependenciesTargetDirectory(), getTestClasspathElements());
     }
 
     /**
-     * Event hook
+     * Forced to implement by the {@link org.codehaus.plexus.util.DirectoryWalkListener}.
+     *
+     * {@inheritDoc}
      */
     @Override
     public void directoryWalkFinished() {
@@ -686,9 +738,9 @@ public abstract class AbstractPhpMojo extends AbstractMojo implements DirectoryW
     }
 
     /**
-     * Event hook
+     * Forced to implement by the {@link org.codehaus.plexus.util.DirectoryWalkListener}.
      *
-     * @param basedir
+     * {@inheritDoc}
      */
     @Override
     public void directoryWalkStarting(File basedir) {
@@ -696,10 +748,9 @@ public abstract class AbstractPhpMojo extends AbstractMojo implements DirectoryW
     }
 
     /**
-     * Event hook
+     * Will be triggered for every file in the directory.
      *
-     * @param percentage
-     * @param file
+     * {@inheritDoc}
      */
     @Override
     public void directoryWalkStep(int percentage, File file) {
@@ -708,17 +759,19 @@ public abstract class AbstractPhpMojo extends AbstractMojo implements DirectoryW
                 executePhpFile(file);
             if (file.isFile())
                 handleProcessedFile(file);
+        /*CHECKSTYLE:OFF*/
         } catch (Exception e) {
+        /*CHECKSTYLE:ON*/
             getLog().debug(e);
             collectedExceptions.add(e);
         }
     }
 
     /**
-     * Triggers the walk process
+     * Triggers the walk process.
      *
      * @param parentFolder the folder to start in
-     * @throws MultiException
+     * @throws MultiException every catched exception collected during the walk
      */
     protected final void goRecursiveAndCall(File parentFolder) throws MultiException {
         if (!parentFolder.isDirectory()) {
@@ -726,16 +779,16 @@ public abstract class AbstractPhpMojo extends AbstractMojo implements DirectoryW
             return;
         }
 
-        DirectoryWalker walker = new DirectoryWalker();
+        final DirectoryWalker walker = new DirectoryWalker();
 
         walker.setBaseDir(parentFolder);
         walker.addDirectoryWalkListener(this);
         walker.addSCMExcludes();
 
-        for (String exlude: excludes) {
-            walker.addExclude(exlude);
+        for (String exclude : excludes) {
+            walker.addExclude(exclude);
         }
-        for (String include: includes) {
+        for (String include : includes) {
             walker.addInclude(include);
         }
 

@@ -133,7 +133,7 @@
                 <artifactId>maven-checkstyle-plugin</artifactId>
                 <version>2.5</version>
                 <configuration>
-                    <configLocation>config/maven_checks.xml</configLocation>
+                    <configLocation>${project.basedir}/checkstyle.xml</configLocation>
                     <consoleOutput>true</consoleOutput>
                 </configuration>
                 <!--
