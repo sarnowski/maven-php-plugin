@@ -17,30 +17,32 @@ package org.phpmaven.plugin.build;
 import java.util.List;
 
 /**
+ * Symbolizes multiple exceptions at once.
+ *
  * @author Christian Wiedemann
  * @author Tobias Sarnowski
  */
 public class MultiException extends PhpException {
 
-	private final List<Exception> exceptions;
+    private final List<Exception> exceptions;
 
-	public MultiException(List<Exception> exceptions){
-		this.exceptions = exceptions;
-	}
+    public MultiException(List<Exception> exceptions) {
+        this.exceptions = exceptions;
+    }
 
-	@Override
-	public String getMessage() {
+    @Override
+    public String getMessage() {
         if (exceptions.size() == 1) {
             return exceptions.get(0).getMessage();
         }
 
-		StringBuilder message = new StringBuilder();
-        for (Exception e: exceptions) {
-			message.append(e.getMessage());
+        final StringBuilder message = new StringBuilder();
+        for (Exception e : exceptions) {
+            message.append(e.getMessage());
             message.append("\n\n");
-		}
+        }
 
-		return message.toString();
-	}
+        return message.toString();
+    }
 
 }
