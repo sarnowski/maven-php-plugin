@@ -15,6 +15,8 @@
 package org.phpmaven.plugin.build;
 
 /**
+ * Something with the basic PHP execution went wrong.
+ *
  * @author Tobias Sarnowski
  */
 public class PhpCoreException extends PhpException {

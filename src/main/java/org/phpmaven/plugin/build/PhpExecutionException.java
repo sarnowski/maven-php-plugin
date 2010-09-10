@@ -17,6 +17,8 @@ package org.phpmaven.plugin.build;
 import java.io.File;
 
 /**
+ * An exception occured during the PHP execution.
+ *
  * @author Christian Wiedemann
  * @author Tobias Sarnowski
  */
@@ -30,6 +32,7 @@ public class PhpExecutionException extends PhpException {
         this.phpErrorMessage = "\n" + phpErrorMessage;
     }
 
+    @Override
     public String getMessage() {
         if (phpFile != null) {
             return phpErrorMessage + "\nin file: " + phpFile.getAbsolutePath();

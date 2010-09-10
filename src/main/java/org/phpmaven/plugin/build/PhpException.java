@@ -15,11 +15,17 @@
 package org.phpmaven.plugin.build;
 
 /**
+ * Something with PHP is wrong.
+ *
  * @author Tobias Sarnowski
  */
 public abstract class PhpException extends Exception {
 
-    private String output;
+    // checkstyle wants exceptions to be immutable but we
+    // can not implement that at the moment
+    /*CHECKSTYLE:OFF*/
+    private String phpOutput;
+    /*CHECKSTYLE:ON*/
 
     protected PhpException() {
         super();
@@ -37,19 +43,29 @@ public abstract class PhpException extends Exception {
         super(cause);
     }
 
+    /**
+     * Adds php outputs to the exception.
+     *
+     * @param output the output string
+     */
     public void appendOutput(String output) {
-        this.output = output;
+        this.phpOutput = output;
     }
 
+    /**
+     * Returns the given output.
+     *
+     * @return the output string
+     */
     public String getAppendedOutput() {
-        return output;
+        return phpOutput;
     }
 
     @Override
     public String getMessage() {
         String message = super.getMessage();
-        if (output != null) {
-            message = message + "\n\n" + output;
+        if (phpOutput != null) {
+            message = message + "\n\n" + phpOutput;
         }
         return message;
     }
