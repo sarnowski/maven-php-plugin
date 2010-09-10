@@ -25,8 +25,10 @@ import java.io.IOException;
  * All dependencies will be part of the include_path. 
  * The command line call looks like php {compileArgs} -d={generatedIncludePath} {sourceFile}
  *
+ * CHECKSTYLE:OFF unknown tags
  * @requiresDependencyResolution compile
  * @goal process
+ * CHECKSTYLE:ON
  * @author Tobias Sarnowski
  * @author Christian Wiedemann
  */
@@ -45,9 +47,10 @@ public final class PhpProcess extends AbstractPhpMojo {
      *
      * @parameter
      */
-    private boolean ignoreValidate = false;
+    private boolean ignoreValidate;
 
     /**
+     * Returns if the PHP validation should be skipped.
      *
      * @return if the validation should be skipped
      */
@@ -56,12 +59,13 @@ public final class PhpProcess extends AbstractPhpMojo {
     }
 
     /**
+     * Checks a file if it should be excluded from processing.
      *
      * @param file
      * @return if the file should be excluded from validation
      */
     private boolean isExcluded(File file) {
-        for (String excluded: excludeFromValidation) {
+        for (String excluded : excludeFromValidation) {
             if (file.getAbsolutePath().replace("\\", "/").endsWith(excluded.replace("\\", "/"))) {
                 return true;
             }
@@ -84,7 +88,11 @@ public final class PhpProcess extends AbstractPhpMojo {
                 prepareCompileDependencies();
             }
             goRecursiveAndCall(getSourceDirectory());
-        } catch (Exception e) {
+        } catch (MultiException e) {
+            throw new MojoExecutionException(e.getMessage(), e);
+        } catch (PhpException e) {
+            throw new MojoExecutionException(e.getMessage(), e);
+        } catch (IOException e) {
             throw new MojoExecutionException(e.getMessage(), e);
         }
     }
@@ -95,12 +103,12 @@ public final class PhpProcess extends AbstractPhpMojo {
             return;
         }
 
-        String includePath = includePathParameter(new String[] {
+        final String includePath = includePathParameter(new String[] {
                 file.getParentFile().getAbsolutePath(),
                 getDependenciesTargetDirectory().getAbsolutePath(),
                 getSourceDirectory().getAbsolutePath(),
         });
-        String command = includePath + " \"" + file.getAbsolutePath() + "\"";
+        final String command = includePath + " \"" + file.getAbsolutePath() + "\"";
 
         try {
             getLog().debug("Validating: " + file.getAbsolutePath());
