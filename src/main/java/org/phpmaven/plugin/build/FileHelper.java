@@ -19,33 +19,48 @@ import org.codehaus.plexus.util.FileUtils;
 import org.codehaus.plexus.util.IOUtil;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Enumeration;
 import java.util.List;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 
 /**
+ * Static utilities for file handling.
+ *
  * @author Christian Wiedemann
  * @author Tobias Sarnowski
  */
 public final class FileHelper {
 
+    private FileHelper() {
+        // we only have static methods
+    }
+
     /**
      * Copies over a file from the sourceDirectory to the targetDirectory perserving its relative subdirectories.
      *
-     * @param sourceDirectory
-     * @param targetDirectory
-     * @param sourceFile
-     * @param forceOverwrite
-     * @throws IOException
+     * @param sourceDirectory where the main source directory is
+     * @param targetDirectory where the target directory is
+     * @param sourceFile which file to copy to the target directory
+     * @param forceOverwrite if timestamps should be ignored
+     * @throws IOException if something goes wrong while copying
      */
     public static void copyToFolder(
-            File sourceDirectory,
-            File targetDirectory,
-            File sourceFile,
-            boolean forceOverwrite)
-            throws IOException {
+        File sourceDirectory,
+        File targetDirectory,
+        File sourceFile,
+        boolean forceOverwrite)
+        throws IOException {
 
-        String relativeFile = PathUtils.toRelative(sourceDirectory.getAbsoluteFile(), sourceFile.getAbsolutePath());
-        File targetFile = new File(targetDirectory, relativeFile);
+        final String relativeFile = PathUtils.toRelative(
+            sourceDirectory.getAbsoluteFile(),
+            sourceFile.getAbsolutePath()
+        );
+        final File targetFile = new File(targetDirectory, relativeFile);
 
         if (forceOverwrite) {
             FileUtils.copyFile(sourceFile, targetFile);
@@ -55,16 +70,16 @@ public final class FileHelper {
     }
 
     /**
-     * Unzips all files to the given directory (using jar)
+     * Unzips all files to the given directory (using jar).
      *
-     * @param targetDirectory
-     * @param elements
-     * @throws IOException
+     * @param targetDirectory where to unpack the files to
+     * @param elements list of files to unpack
+     * @throws IOException if something goes wrong while copying
      */
     public static void unzipElements(File targetDirectory, List<String> elements) throws IOException {
         targetDirectory.mkdirs();
-        for (String element: elements) {
-            File sourceFile = new File(element);
+        for (String element : elements) {
+            final File sourceFile = new File(element);
             if (sourceFile.isFile()) {
                 unjar(sourceFile, targetDirectory);
             }
@@ -79,32 +94,31 @@ public final class FileHelper {
      * @throws IOException
      */
     private static void unjar(File jarFile, File destDir) throws IOException {
-        java.util.jar.JarFile jar = new java.util.jar.JarFile(jarFile);
-        java.util.Enumeration<java.util.jar.JarEntry> items = jar.entries();
+        final JarFile jar = new JarFile(jarFile);
 
+        final Enumeration<JarEntry> items = jar.entries();
         while (items.hasMoreElements()) {
-            java.util.jar.JarEntry file = (java.util.jar.JarEntry) items
-                    .nextElement();
+            final JarEntry entry = items.nextElement();
+            final File destFile = new File(destDir, entry.getName());
 
-            java.io.File f = new java.io.File(destDir + java.io.File.separator
-                    + file.getName());
-            if (f.exists() ) {
+            if (destFile.exists()) {
                 continue;
             }
-            if (file.isDirectory()) { // if its a directory, create it
-                f.mkdir();
+            if (entry.isDirectory()) {
+                destFile.mkdir();
                 continue;
             }
 
-            java.io.InputStream is = jar.getInputStream(file); // get the input
-            // stream
-            java.io.FileOutputStream fos = new java.io.FileOutputStream(f);
-            IOUtil.copy(is, fos);
-//			while (is.available() > 0) { // write contents of 'is' to 'fos'
-//				fos.write(is.read());
-//			}
-            fos.close();
-            is.close();
+            InputStream in = null;
+            OutputStream out = null;
+            try {
+                in = jar.getInputStream(entry);
+                out = new FileOutputStream(destFile);
+                IOUtil.copy(in, out);
+            } finally {
+                if (out != null) out.close();
+                if (in != null) in.close();
+            }
         }
     }
 }
