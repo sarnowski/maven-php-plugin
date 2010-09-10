@@ -44,7 +44,7 @@
                 <role>Developer</role>
             </roles>
             <organization>KEY-TEC</organization>
-            <timezone>-2</timezone>
+            <timezone>+1</timezone>
         </developer>
         <developer>
             <id>tobias.sarnowski</id>
@@ -54,6 +54,16 @@
                 <role>Developer</role>
             </roles>
             <organization>CosmoCode GmbH</organization>
+            <timezone>+1</timezone>
+        </developer>
+        <developer>
+            <id>rafael.schally</id>
+            <name>Rafael Schally</name>
+            <email>rafael.schally@key-tec.de</email>
+            <roles>
+                <role>Developer</role>
+            </roles>
+            <organization>KEY-TEC</organization>
             <timezone>+1</timezone>
         </developer>
     </developers>
@@ -118,6 +128,25 @@
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>2.5</version>
+                <configuration>
+                    <configLocation>config/maven_checks.xml</configLocation>
+                    <consoleOutput>true</consoleOutput>
+                </configuration>
+                <!--
+                <executions>
+                    <execution>
+                        <phase>process-sources</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                -->
+            </plugin>
             <plugin>
                 <groupId>com.mycila.maven-license-plugin</groupId>
                 <artifactId>maven-license-plugin</artifactId>
