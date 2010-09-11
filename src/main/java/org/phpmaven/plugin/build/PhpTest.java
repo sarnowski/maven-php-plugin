@@ -37,10 +37,8 @@ import java.util.List;
  * PHPUnit executes <a href="http://www.phpunit.de/">phpunit</a> TestCases and
  * generate SourceFire Reports.
  *
- * CHECKSTYLE:OFF unknown tags
  * @requiresDependencyResolution test
  * @goal test
- * CHECKSTYLE:ON
  * @author Christian Wiedemann
  * @author Tobias Sarnowski
  */

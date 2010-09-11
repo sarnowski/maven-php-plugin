@@ -25,10 +25,8 @@ import java.io.IOException;
  * All dependencies will be part of the include_path. 
  * The command line call looks like php {compileArgs} -d={generatedIncludePath} {sourceFile}
  *
- * CHECKSTYLE:OFF unknown tags
  * @requiresDependencyResolution compile
  * @goal process
- * CHECKSTYLE:ON
  * @author Tobias Sarnowski
  * @author Christian Wiedemann
  */

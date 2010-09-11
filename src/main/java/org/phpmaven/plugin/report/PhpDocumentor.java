@@ -28,10 +28,8 @@ import org.codehaus.plexus.util.cli.StreamConsumer;
  * A maven 2.0 plugin for generating phpdocumentor documentations.This plugin is
  * used in the <code>site</code> phase.
  *
- * CHECKSTYLE:OFF
  * @goal phpdocumentor
  * @phase site
- * CHECKSTYLE:ON
  * @author Christian Wiedemann
  * @author Tobias Sarnowski
  */
