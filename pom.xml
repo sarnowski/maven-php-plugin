@@ -140,7 +140,6 @@
                     <failOnViolation>true</failOnViolation>
                     <failsOnError>true</failsOnError>
                 </configuration>
-                <!--
                 <executions>
                     <execution>
                         <phase>process-sources</phase>
@@ -149,7 +148,6 @@
                         </goals>
                     </execution>
                 </executions>
-                -->
             </plugin>
             <plugin>
                 <groupId>com.mycila.maven-license-plugin</groupId>

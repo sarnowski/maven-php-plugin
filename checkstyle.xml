@@ -145,7 +145,13 @@
             <property name="suppressLoadErrors" value="true"/>
             <property name="tokens" value="METHOD_DEF"/>
         </module>
-        <module name="JavadocType"/>
+        <!--
+        As long as maven-checkstyle-plugin uses checkstyle 5.0 we can not use this
+        because of http://sourceforge.net/tracker/index.php?func=detail&aid=2882261&group_id=29721&atid=397081
+        <module name="JavadocType">
+            <property name="allowUnknownTags" value="true"/>
+        </module>
+        -->
     </module>
     <module name="Translation"/>
     <module name="FileLength"/>
