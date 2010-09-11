@@ -29,16 +29,17 @@ import java.util.Set;
  * Abstract base class for api docs.
  *
  * @author Christian Wiedemann
+ * @author Tobias Sarnowski
  */
 public abstract class AbstractApiDocReport extends AbstractMavenReport {
-    protected abstract String getFolderName();
+
     /**
      * The output directory of doxygen generated documentation.
      *
      * @parameter expression="${project.build.directory}/site/apidocs"
      * @required
      */
-    protected File outputApiDocDirectory;
+    private File outputApiDocDirectory;
 
     /**
      * The source code directory where doxygen start generating documentation.
@@ -46,7 +47,7 @@ public abstract class AbstractApiDocReport extends AbstractMavenReport {
      * @parameter expression="/src/main/php";
      * @required
      */
-    protected String sourceDirectory = "/src/main/php";
+    private String sourceDirectory = "/src/main/php";
 
     /**
      * <i>Maven Internal</i>: The Doxia Site Renderer.
@@ -64,6 +65,13 @@ public abstract class AbstractApiDocReport extends AbstractMavenReport {
      */
     private MavenProject project;
 
+    /**
+     * Where to store the output.
+     *
+     * @return the folder
+     */
+    protected abstract String getFolderName();
+
     protected File getApiDocOutputDirectory() {
         return outputApiDocDirectory;
     }
@@ -72,27 +80,37 @@ public abstract class AbstractApiDocReport extends AbstractMavenReport {
         return sourceDirectory;
     }
 
+    /**
+     * Creates a property file.
+     *
+     * @param properties the properties to use
+     * @param generatedPhpDocConfigFile the resulting file
+     * @param preFileContent templates
+     * @throws IOException if something goes wrong while writing
+     */
     protected void writePropFile(Properties properties,
                                  File generatedPhpDocConfigFile, String preFileContent)
-            throws IOException {
-        String lineSeparator = System.getProperty("line.separator");
+        throws IOException {
+        final String lineSeparator = System.getProperty("line.separator");
         generatedPhpDocConfigFile.getParentFile().mkdirs();
-        FileWriter fileWriter = new FileWriter(generatedPhpDocConfigFile);
-        Set<Object> keySet = properties.keySet();
+        final FileWriter fileWriter = new FileWriter(generatedPhpDocConfigFile);
+        final Set<Object> keySet = properties.keySet();
         if (preFileContent != null)
             fileWriter.append(preFileContent + lineSeparator);
 
-        for (Iterator<Object> iterator = keySet.iterator(); iterator.hasNext();) {
-            String key = (String) iterator.next();
-            String value = properties.getProperty(key);
+        final Iterator<Object> iterator = keySet.iterator();
+        while (iterator.hasNext()) {
+            final String key = (String) iterator.next();
+            final String value = properties.getProperty(key);
             fileWriter.append(key + "=" + value + lineSeparator);
         }
         fileWriter.close();
     }
 
     /**
-     * @param siteRenderer
-     *            The siteRenderer to set.
+     * Sets the renderer for site generation.
+     *
+     * @param siteRenderer the siteRenderer to set.
      */
     public void setSiteRenderer(Renderer siteRenderer) {
         this.siteRenderer = siteRenderer;

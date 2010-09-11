@@ -15,19 +15,22 @@
 package org.phpmaven.plugin.report;
 
 /**
+ * Something went wrong while executing phpDocumentor.
+ *
  * @author Christian Wiedemann
+ * @author Tobias Sarnowski
  */
-public class PHPDocumentorNotFoundException extends Exception {
+public class PhpDocumentorExecuteException extends Exception {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1L;
+    private final String parent;
+
+    public PhpDocumentorExecuteException(String parent) {
+        this.parent = parent;
+    }
 
     @Override
     public String getMessage() {
-        // TODO Auto-generated method stub
-        return "PHPDocumentor not found";
+        return "Error while executing phpdoc. (" + parent + ")";
     }
 
 }

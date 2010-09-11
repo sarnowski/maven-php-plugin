@@ -15,24 +15,16 @@
 package org.phpmaven.plugin.report;
 
 /**
+ * Will be thrown if phpDocumentor was not found.
+ *
  * @author Christian Wiedemann
+ * @author Tobias Sarnowski
  */
-public class PHPDocumentorExecuteException extends Exception {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1L;
-    private final String parent;
-
-    public PHPDocumentorExecuteException(String parent) {
-        this.parent = parent;
-    }
+public class PhpDocumentorNotFoundException extends Exception {
 
     @Override
     public String getMessage() {
-        // TODO Auto-generated method stub
-        return "Error while executing phpdoc. ("+parent+")";
+        return "PHPDocumentor not found";
     }
 
 }

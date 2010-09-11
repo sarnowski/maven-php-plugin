@@ -135,6 +135,10 @@
                 <configuration>
                     <configLocation>${project.basedir}/checkstyle.xml</configLocation>
                     <consoleOutput>true</consoleOutput>
+                    <logViolationsToConsole>true</logViolationsToConsole>
+                    <detail>true</detail>
+                    <failOnViolation>true</failOnViolation>
+                    <failsOnError>true</failsOnError>
                 </configuration>
                 <!--
                 <executions>
