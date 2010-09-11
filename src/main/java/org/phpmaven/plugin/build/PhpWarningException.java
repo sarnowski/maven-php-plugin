@@ -17,6 +17,8 @@ package org.phpmaven.plugin.build;
 import java.io.File;
 
 /**
+ * Symbolizes an error, printed out by a PHP execution.
+ *
  * @author Tobias Sarnowski
  */
 public class PhpWarningException extends PhpExecutionException {

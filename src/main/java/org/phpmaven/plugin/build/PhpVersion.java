@@ -15,7 +15,10 @@
 package org.phpmaven.plugin.build;
 
 /**
+ * Several PHP versions.
+ *
  * @author Christian Wiedemann
+ * @author Tobias Sarnowski
  */
 public enum PhpVersion {
     UNKNOWN,

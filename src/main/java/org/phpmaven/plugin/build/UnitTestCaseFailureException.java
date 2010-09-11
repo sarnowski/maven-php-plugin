@@ -15,6 +15,8 @@
 package org.phpmaven.plugin.build;
 
 /**
+ * Result of a failed unit test case.
+ *
  * @author Christian Wiedemann
  */
 public class UnitTestCaseFailureException extends Exception {
@@ -28,15 +30,11 @@ public class UnitTestCaseFailureException extends Exception {
         this.completeFailures = completeFailures;
     }
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -4919747847798685627L;
-
     @Override
     public String getMessage() {
-
-        return "Unit Test fails with "+completeFailures+" failures and "+completeErrors+" errors.";
+        return "Unit Test fails with "
+            + completeFailures + " failures and "
+            + completeErrors + " errors.";
     }
 
 }

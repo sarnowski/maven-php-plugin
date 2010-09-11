@@ -198,45 +198,20 @@ public final class PhpTest extends AbstractPhpMojo {
         // by definition, handlePhpFile will only be called for .php files.
         final String ending = "." + getPhpFileEnding();
 
+        if (!isTestFile(file)) {
+            return;
+        }
+
         // replace file ending with .xml
         String name = file.getName();
         name = name.substring(0, name.length() - ending.length()) + ".xml";
         final File targetFile = new File(getResultFolder(), name);
 
-        // check if the test file matches the path
-        if (testFile != null && !(File.separatorChar + file.getAbsolutePath()).endsWith(testFile)) {
-            return;
-        }
-
-        // only files ending with "Test" are treated as testcase files
-        if (!file.getName().toLowerCase().endsWith(getTestPostfix().toLowerCase() + "." + getPhpFileEnding())) {
-            return;
-        }
-
         // create report directory
         targetFile.getParentFile().mkdirs();
 
         try {
-            String command = includePathParameter(new String[]{
-                getSourceDirectory().getAbsolutePath(),
-                getTestSourceDirectory().getAbsolutePath(),
-                getDependenciesTargetDirectory().getAbsolutePath(),
-                getTestDependenciesTargetDirectory().getAbsolutePath(),
-                file.getParentFile().getAbsolutePath()
-            });
-
-            if (getPhpVersion() == PhpVersion.PHP5) {
-                command +=
-                    " \"" + getTestDependenciesTargetDirectory().getAbsolutePath() + "/PHPUnit/TextUI/Maven.php\""
-                        + " \"" + file.getAbsolutePath() + "\""
-                        + " \"" + targetFile.getAbsolutePath() + "\"";
-            } else if (getPhpVersion() == PhpVersion.PHP4) {
-                command +=
-                    " \"" + getTestDependenciesTargetDirectory().getAbsolutePath() + "/XMLWriter.php\""
-                        + " \"" + file.getAbsolutePath() + "\""
-                        + " \"" + targetFile.getAbsolutePath() + "\"";
-            }
-
+            final String command = createCommandLine(file, targetFile);
             String output = "-no output-";
             try {
                 output = execute(command, file);
@@ -263,6 +238,43 @@ public final class PhpTest extends AbstractPhpMojo {
         } catch (IOException e) {
             throw new MojoExecutionException(e.getMessage(), e);
         }
+    }
+
+    private boolean isTestFile(File file) {
+        // check if the test file matches the path
+        if (testFile != null && !(File.separatorChar + file.getAbsolutePath()).endsWith(testFile)) {
+            return false;
+        }
+
+        // only files ending with "Test" are treated as testcase files
+        if (!file.getName().toLowerCase().endsWith(getTestPostfix().toLowerCase() + "." + getPhpFileEnding())) {
+            return false;
+        }
+
+        return true;
+    }
+
+    private String createCommandLine(File file, File targetFile) throws PhpException {
+        String command = includePathParameter(new String[]{
+            getSourceDirectory().getAbsolutePath(),
+            getTestSourceDirectory().getAbsolutePath(),
+            getDependenciesTargetDirectory().getAbsolutePath(),
+            getTestDependenciesTargetDirectory().getAbsolutePath(),
+            file.getParentFile().getAbsolutePath()
+        });
+
+        if (getPhpVersion() == PhpVersion.PHP5) {
+            command +=
+                " \"" + getTestDependenciesTargetDirectory().getAbsolutePath() + "/PHPUnit/TextUI/Maven.php\""
+                    + " \"" + file.getAbsolutePath() + "\""
+                    + " \"" + targetFile.getAbsolutePath() + "\"";
+        } else if (getPhpVersion() == PhpVersion.PHP4) {
+            command +=
+                " \"" + getTestDependenciesTargetDirectory().getAbsolutePath() + "/XMLWriter.php\""
+                    + " \"" + file.getAbsolutePath() + "\""
+                    + " \"" + targetFile.getAbsolutePath() + "\"";
+        }
+        return command;
     }
 
     /**
@@ -308,10 +320,13 @@ public final class PhpTest extends AbstractPhpMojo {
 
         getLog().error("Testcase: " + testCase.getName() + " fails.");
         getLog().error("See log: " + logFile);
-        FileWriter fstream = new FileWriter(logFile);
-        BufferedWriter out = new BufferedWriter(fstream);
-        out.write(output);
-        out.close();
+        final FileWriter fstream = new FileWriter(logFile);
+        final BufferedWriter out = new BufferedWriter(fstream);
+        try {
+            out.write(output);
+        } finally {
+            out.close();
+        }
     }
 
     @Override
@@ -335,19 +350,11 @@ public final class PhpTest extends AbstractPhpMojo {
      * Represents a surefire result parsed from its xml output.
      */
     class SurefireResult {
-        String name;
-        int tests = 0;
-        int failure = 0;
-        int errors = 0;
-        String time;
-
-        public String toString() {
-            return "Running " + name + "\n"
-                + "Tests run: " + tests
-                + ", Failures: " + failure
-                + ", Errors: " + errors
-                + ", Time elapsed: " + time;
-        }
+        private final String name;
+        private final int tests;
+        private final int failure;
+        private final int errors;
+        private final String time;
 
         public SurefireResult(String name, int tests, int failure, int errors, String time) {
             super();
@@ -356,6 +363,15 @@ public final class PhpTest extends AbstractPhpMojo {
             this.failure = failure;
             this.errors = errors;
             this.time = time;
+        }
+
+        @Override
+        public String toString() {
+            return "Running " + name + "\n"
+                + "Tests run: " + tests
+                + ", Failures: " + failure
+                + ", Errors: " + errors
+                + ", Time elapsed: " + time;
         }
 
         public int getTests() {
