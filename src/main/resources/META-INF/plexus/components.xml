@@ -16,9 +16,9 @@
                     <process-resources>
                         org.apache.maven.plugins:maven-resources-plugin:resources
                     </process-resources>
-                    <compile>
+                    <process>
                         org.phpmaven:maven-php-plugin:process
-                    </compile>
+                    </process>
                     <process-test-resources>
                         org.apache.maven.plugins:maven-resources-plugin:testResources
                     </process-test-resources>

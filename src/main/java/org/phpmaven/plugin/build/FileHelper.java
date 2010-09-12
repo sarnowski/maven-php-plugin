@@ -14,6 +14,7 @@
 
 package org.phpmaven.plugin.build;
 
+import com.google.common.base.Preconditions;
 import org.apache.maven.wagon.PathUtils;
 import org.codehaus.plexus.util.FileUtils;
 import org.codehaus.plexus.util.IOUtil;
@@ -23,10 +24,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URI;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
+import java.util.jar.JarInputStream;
 
 /**
  * Static utilities for file handling.
@@ -49,11 +52,7 @@ public final class FileHelper {
      * @param forceOverwrite if timestamps should be ignored
      * @throws IOException if something goes wrong while copying
      */
-    public static void copyToFolder(
-        File sourceDirectory,
-        File targetDirectory,
-        File sourceFile,
-        boolean forceOverwrite)
+    public static void copyToFolder(File sourceDirectory, File targetDirectory, File sourceFile, boolean forceOverwrite)
         throws IOException {
 
         final String relativeFile = PathUtils.toRelative(
@@ -77,7 +76,15 @@ public final class FileHelper {
      * @throws IOException if something goes wrong while copying
      */
     public static void unzipElements(File targetDirectory, List<String> elements) throws IOException {
+        Preconditions.checkArgument(
+            !targetDirectory.exists() || targetDirectory.isDirectory(),
+            "Destination Directory");
+
         targetDirectory.mkdirs();
+        if (!targetDirectory.exists()) {
+            throw new IllegalStateException("Could not create target directory " + targetDirectory.getAbsolutePath());
+        }
+
         for (String element : elements) {
             final File sourceFile = new File(element);
             if (sourceFile.isFile()) {
@@ -89,36 +96,91 @@ public final class FileHelper {
     /**
      * Unpacks a jar file.
      *
-     * @param jarFile
-     * @param destDir
-     * @throws IOException
+     * @param jarFile the jar file
+     * @param destDir the destination directory
+     * @throws IOException if something goes wrong
      */
-    private static void unjar(File jarFile, File destDir) throws IOException {
+    public static void unjar(File jarFile, File destDir) throws IOException {
+        Preconditions.checkNotNull(jarFile, "JarFile");
+
         final JarFile jar = new JarFile(jarFile);
 
         final Enumeration<JarEntry> items = jar.entries();
         while (items.hasMoreElements()) {
             final JarEntry entry = items.nextElement();
-            final File destFile = new File(destDir, entry.getName());
+            unpackJarEntry(entry, jar.getInputStream(entry), destDir);
+        }
+    }
 
-            if (destFile.exists()) {
-                continue;
-            }
-            if (entry.isDirectory()) {
-                destFile.mkdir();
-                continue;
-            }
+    /**
+     * Unpacks a jar URI.
+     *
+     * @param jarUri the jar uri
+     * @param destDir the destination directory
+     * @throws IOException if something goes wrong
+     */
+    public static void unjar(URI jarUri, File destDir) throws IOException {
+        Preconditions.checkNotNull(jarUri, "JarFile");
 
-            InputStream in = null;
-            OutputStream out = null;
-            try {
-                in = jar.getInputStream(entry);
-                out = new FileOutputStream(destFile);
-                IOUtil.copy(in, out);
-            } finally {
-                if (out != null) out.close();
-                if (in != null) in.close();
+        unjar(jarUri.toURL().openStream(), destDir);
+    }
+
+    /**
+     * Unpacks a jar stream.
+     *
+     * @param inputStream the jar stream
+     * @param destDir the destination directory
+     * @throws IOException if something goes wrong
+     */
+    public static void unjar(InputStream inputStream, File destDir) throws IOException {
+        Preconditions.checkNotNull(inputStream, "InputStream");
+
+        final JarInputStream jarInputStream = new JarInputStream(inputStream);
+        while (true) {
+            final JarEntry entry = jarInputStream.getNextJarEntry();
+            if (entry == null) {
+                break;
             }
+            unpackJarEntry(entry, jarInputStream, destDir);
+        }
+    }
+
+    /**
+     * Unpacks a single jar entry.
+     *
+     * @param jarEntry the jar entry
+     * @param jarEntryInputStream the source stream of the entry
+     * @param destDir the destination directory
+     * @throws IOException if something goes wrong
+     */
+    public static void unpackJarEntry(JarEntry jarEntry, InputStream jarEntryInputStream, File destDir)
+        throws IOException {
+
+        Preconditions.checkNotNull(jarEntry, "JarEntry");
+        Preconditions.checkNotNull(jarEntryInputStream, "JarEntryInputStream");
+        Preconditions.checkNotNull(destDir, "Destination Directory");
+        Preconditions.checkArgument(!destDir.exists() || destDir.isDirectory(), "Destination Directory");
+
+        // final name
+        final File destFile = new File(destDir, jarEntry.getName());
+
+        // already there
+        if (destFile.exists()) {
+            return;
+        }
+
+        // just a directory to create
+        if (jarEntry.isDirectory()) {
+            destFile.mkdir();
+            return;
+        }
+
+        OutputStream out = null;
+        try {
+            out = new FileOutputStream(destFile);
+            IOUtil.copy(jarEntryInputStream, out);
+        } finally {
+            if (out != null) out.close();
         }
     }
 }

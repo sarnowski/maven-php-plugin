@@ -73,6 +73,13 @@ public final class PhpProcess extends AbstractPhpMojo {
 
     @Override
     public void execute() throws MojoExecutionException {
+        // trigger to automatically check for supported PHP version
+        try {
+            getPhpVersion();
+        } catch (PhpException e) {
+            throw new MojoExecutionException("PHP not usable", e);
+        }
+
         if (isIgnoreValidate()) {
             getLog().info("Validation of php sources is disabled.");
         }

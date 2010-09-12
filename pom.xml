@@ -139,6 +139,7 @@
                     <detail>true</detail>
                     <failOnViolation>true</failOnViolation>
                     <failsOnError>true</failsOnError>
+                    <violationSeverity>warning</violationSeverity>
                 </configuration>
                 <executions>
                     <execution>
