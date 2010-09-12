@@ -155,7 +155,10 @@
     </module>
     <module name="Translation"/>
     <module name="FileLength"/>
+    <!--
+    Not the same effect on unix / windows systems.
     <module name="NewlineAtEndOfFile"/>
+    -->
     <module name="FileTabCharacter"/>
     <module name="SuppressionCommentFilter"/>
 </module>
