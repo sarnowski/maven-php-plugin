@@ -31,8 +31,8 @@
     </licenses>
 
     <scm>
-        <connection>scm:git:git://github.com/sarnowski/maven-php-plugin.git</connection>
-        <developerConnection>scm:git:git@github.com/sarnowski/maven-php-plugin.git</developerConnection>
+        <connection>scm:git:git://github.com/sarnowski/${project.artifactId}.git</connection>
+        <developerConnection>scm:git:git@github.com:sarnowski/${project.artifactId}.git</developerConnection>
     </scm>
 
     <issueManagement>
