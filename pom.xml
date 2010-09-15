@@ -292,11 +292,4 @@
             </plugin>
         </plugins>
     </reporting>
-
-    <distributionManagement>
-        <site>
-            <id>www.php-maven.org</id>
-            <url>dav:http://www.php-maven.org</url>
-        </site>
-    </distributionManagement>
 </project>
